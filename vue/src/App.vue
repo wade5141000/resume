@@ -8,10 +8,18 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue'
 
+
 export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  created(){
+    // let self = this;
+    // self.$http.get('http://localhost:5000/user')
+    // .then(function(response){
+    //   console.log(response.data);
+    // });
   }
 }
 </script>
