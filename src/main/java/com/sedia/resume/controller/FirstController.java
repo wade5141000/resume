@@ -3,6 +3,7 @@ package com.sedia.resume.controller;
 import com.sedia.resume.entity.User;
 import com.sedia.resume.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +26,14 @@ public class FirstController {
 
   @ResponseBody
   @PostMapping("/user")
-  public User createUser(@RequestBody User user){
-    return repository.save(user);
+  public ResponseEntity<User> createUser(@RequestBody User user){
+	  return ResponseEntity.ok(repository.save(user));
   }
+
+	@GetMapping("/")
+	public String index(){
+		return "redirect:https://www.google.com"; //TODO change to s3
+	}
 
 
 }
