@@ -1,18 +1,39 @@
 package com.sedia.resume.config;
 
+import com.sedia.resume.utils.CustomAuthenticationProvider;
+import com.sedia.resume.utils.JWTAuthenticationFilter;
+import com.sedia.resume.utils.LoginFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	final CustomAuthenticationProvider customAuthenticationProvider;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
+				.authorizeRequests().antMatchers("/login").permitAll().and()
+				.authorizeRequests().anyRequest().authenticated().and()
+				.addFilterBefore(new LoginFilter("/login", authenticationManager()),
+						UsernamePasswordAuthenticationFilter.class)// 添加過濾器，針對/login的請求，交給LoginFilter處理
+				// 添加過濾器，針對其他請求進行JWT的驗證
+				.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.csrf().disable();
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) {
+		auth.authenticationProvider(customAuthenticationProvider);
 	}
 
 
