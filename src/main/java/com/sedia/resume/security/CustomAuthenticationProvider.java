@@ -1,6 +1,5 @@
 package com.sedia.resume.security;
 
-import com.sedia.resume.service.UserLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

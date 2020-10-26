@@ -1,4 +1,4 @@
-package com.sedia.resume.service;
+package com.sedia.resume.security;
 
 import com.sedia.resume.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
