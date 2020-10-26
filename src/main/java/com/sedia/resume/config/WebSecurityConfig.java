@@ -1,8 +1,8 @@
 package com.sedia.resume.config;
 
-import com.sedia.resume.utils.CustomAuthenticationProvider;
-import com.sedia.resume.utils.JWTAuthenticationFilter;
-import com.sedia.resume.utils.LoginFilter;
+import com.sedia.resume.security.CustomAuthenticationProvider;
+import com.sedia.resume.security.JWTAuthenticationFilter;
+import com.sedia.resume.security.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

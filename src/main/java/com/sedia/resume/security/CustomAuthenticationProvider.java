@@ -1,4 +1,4 @@
-package com.sedia.resume.utils;
+package com.sedia.resume.security;
 
 import com.sedia.resume.service.UserLoginService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		if (account.equals(user.getUsername()) && password.equals(user.getPassword())) {
 
 			// 生成Authentication令牌
-			Authentication auth = new UsernamePasswordAuthenticationToken(account, password, user.getAuthorities());
+			Authentication auth = new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
 			return auth;
 		} else {
 			throw new BadCredentialsException("Password error");
