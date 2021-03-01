@@ -7,7 +7,7 @@
       <router-link to="/temp2">temp2</router-link> |
       <router-link to="/temp3">temp3</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
