@@ -17,7 +17,7 @@ import java.util.Collection;
 @Table(name = "all_user")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

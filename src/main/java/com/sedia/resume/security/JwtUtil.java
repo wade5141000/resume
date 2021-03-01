@@ -2,7 +2,7 @@ package com.sedia.resume.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sedia.resume.domain.LoginUser;
-import com.sedia.resume.entity.User;
+import com.sedia.resume.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -37,7 +37,7 @@ public class JwtUtil {
 		try {
 			response.setContentType("application/json");
 			response.setStatus(HttpServletResponse.SC_OK);
-			User user = (User) auth.getPrincipal();
+			UserEntity user = (UserEntity) auth.getPrincipal();
 			LoginUser loginUser = LoginUser.builder().id(user.getId()).username(user.getUsername()).jwt(jwt).build();
 			response.getOutputStream().println(MAPPER.writeValueAsString(loginUser));
 			System.out.println("login ok");

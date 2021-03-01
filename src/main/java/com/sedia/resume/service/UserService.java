@@ -1,6 +1,6 @@
 package com.sedia.resume.service;
 
-import com.sedia.resume.entity.User;
+import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,11 +17,11 @@ public class UserService {
 	final UserRepository repository;
 	final BCryptPasswordEncoder passwordEncoder;
 
-	public List<User> getUsers() {
+	public List<UserEntity> getUsers() {
 		return repository.findAll();
 	}
 
-	public User save(User user) {
+	public UserEntity save(UserEntity user) {
 		if (!repository.existsByUsername(user.getUsername())) {
 			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			return repository.save(user);
@@ -29,7 +29,7 @@ public class UserService {
 		throw new RuntimeException("account already exists");
 	}
 
-	public User getUserById(int id) {
+	public UserEntity getUserById(int id) {
 		return repository.findById(id).get();
 	}
 
