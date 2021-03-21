@@ -1,6 +1,6 @@
 ### 開發環境配置
 > 需要安裝的軟體
-> - JDK 8 以上
+> - JDK 11 以上
 > - Java 開發工具：建議使用 Intellij IDEA 或 Eclipse
 > - Git：版本控制。建議同時安裝 SourceTree，這是一個 git 的 GUI 應用程式
 > - Postman：測試 API 用的
