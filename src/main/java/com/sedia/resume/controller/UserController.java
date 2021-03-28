@@ -17,7 +17,6 @@ public class UserController {
   @GetMapping("/user")
   public List<UserEntity> getUser(@AuthenticationPrincipal String username){
 //    String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    System.out.println(username);
     return service.getUsers();
   }
 

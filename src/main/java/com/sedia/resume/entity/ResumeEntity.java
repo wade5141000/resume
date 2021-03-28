@@ -1,28 +1,13 @@
 package com.sedia.resume.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-@Entity
-@Data
+@Getter
+@Setter
 @Builder
-@Table(name = "resume")
-@NoArgsConstructor
-@AllArgsConstructor
-public class ResumeEntity {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+public class ResumeEntity extends GenericEntity {
 
   private Integer userId;
 
@@ -39,7 +24,6 @@ public class ResumeEntity {
 //	private List<Integer> license;
 //	// language id
 //	private List<Integer> languageSkill;
-
 
 
 }

@@ -1,6 +1,6 @@
 package com.sedia.resume.security;
 
-import com.sedia.resume.repository.UserRepository;
+import com.sedia.resume.repository.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserLoginService implements UserDetailsService {
 
-  final UserRepository userRepository;
+  final UserMapper userMapper;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return userRepository.findByUsername(username)
+    return userMapper.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("user not found"));
   }
 }

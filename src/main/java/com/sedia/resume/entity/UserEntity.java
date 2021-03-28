@@ -1,27 +1,18 @@
 package com.sedia.resume.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Entity
-@Data
+@Getter
+@Setter
 @Builder
-@Table(name = "all_user")
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserEntity implements UserDetails {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+public class UserEntity extends GenericEntity implements UserDetails {
 
   /** 帳號 */
   private String username;
@@ -29,8 +20,6 @@ public class UserEntity implements UserDetails {
   private String password;
 
   private String name;
-
-  private int age;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
