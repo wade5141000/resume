@@ -14,35 +14,35 @@ import java.util.Collection;
 @Builder
 public class UserEntity extends GenericEntity implements UserDetails {
 
-  /** 帳號 */
-  private String username;
+    /** 帳號 */
+    private String username;
 
-  private String password;
+    private String password;
 
-  private String name;
+    private String name;
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return new ArrayList<>();
-  }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>();
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

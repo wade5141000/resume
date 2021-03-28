@@ -19,26 +19,24 @@ import static org.springframework.http.HttpMethod.POST;
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	final CustomAuthenticationProvider customAuthenticationProvider;
+    final CustomAuthenticationProvider customAuthenticationProvider;
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
-				.authorizeRequests().antMatchers(POST, "/user").permitAll().and()
-				.authorizeRequests().antMatchers("/login", "/h2/**", "/actuator/**").permitAll().and()
-				.authorizeRequests().anyRequest().authenticated().and()
-				.addFilterBefore(new LoginFilter("/login", authenticationManager()),
-						UsernamePasswordAuthenticationFilter.class)// 添加過濾器，針對/login的請求，交給LoginFilter處理
-				// 添加過濾器，針對其他請求進行JWT的驗證
-				.addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-				.headers().frameOptions().disable().and()
-				.csrf().disable();
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
+                .authorizeRequests().antMatchers(POST, "/user").permitAll().and().authorizeRequests()
+                .antMatchers("/login", "/h2/**", "/actuator/**").permitAll().and().authorizeRequests().anyRequest()
+                .authenticated().and()
+                .addFilterBefore(new LoginFilter("/login", authenticationManager()),
+                        UsernamePasswordAuthenticationFilter.class)// 添加過濾器，針對/login的請求，交給LoginFilter處理
+                // 添加過濾器，針對其他請求進行JWT的驗證
+                .addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).headers()
+                .frameOptions().disable().and().csrf().disable();
+    }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) {
-		auth.authenticationProvider(customAuthenticationProvider);
-	}
-
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(customAuthenticationProvider);
+    }
 
 }

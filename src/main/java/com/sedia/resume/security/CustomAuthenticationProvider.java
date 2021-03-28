@@ -14,26 +14,26 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-	final UserLoginService userLoginService;
-	final BCryptPasswordEncoder passwordEncoder;
+    final UserLoginService userLoginService;
+    final BCryptPasswordEncoder passwordEncoder;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		// 獲得使用者帳號及密碼
-		String account = authentication.getName();
-		String password = authentication.getCredentials().toString();
-		UserDetails user = userLoginService.loadUserByUsername(account);
-		// 帳號密碼驗證邏輯
-		if (account.equals(user.getUsername()) && passwordEncoder.matches(password, user.getPassword())) {
-			// 生成Authentication令牌
-			return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
-		} else {
-			throw new BadCredentialsException("Password error");
-		}
-	}
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        // 獲得使用者帳號及密碼
+        String account = authentication.getName();
+        String password = authentication.getCredentials().toString();
+        UserDetails user = userLoginService.loadUserByUsername(account);
+        // 帳號密碼驗證邏輯
+        if (account.equals(user.getUsername()) && passwordEncoder.matches(password, user.getPassword())) {
+            // 生成Authentication令牌
+            return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
+        } else {
+            throw new BadCredentialsException("Password error");
+        }
+    }
 
-	@Override
-	public boolean supports(Class<?> authentication) {
-		return authentication.equals(UsernamePasswordAuthenticationToken.class);
-	}
-}  
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
+    }
+}

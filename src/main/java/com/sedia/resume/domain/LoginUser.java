@@ -7,10 +7,10 @@ import lombok.Data;
 @Builder
 public class LoginUser {
 
-	private Integer id;
+    private Integer id;
 
-	private String username;
+    private String username;
 
-	private String jwt;
+    private String jwt;
 
 }

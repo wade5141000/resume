@@ -12,23 +12,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-  final UserService service;
+    final UserService service;
 
-  @GetMapping("/user")
-  public List<UserEntity> getUser(@AuthenticationPrincipal String username){
-//    String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return service.getUsers();
-  }
+    @GetMapping("/user")
+    public List<UserEntity> getUser(@AuthenticationPrincipal String username) {
+        // String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return service.getUsers();
+    }
 
-  @PostMapping("/user")
-  public UserEntity createUser(@RequestBody UserEntity user){
-	  return service.save(user);
-  }
+    @PostMapping("/user")
+    public UserEntity createUser(@RequestBody UserEntity user) {
+        return service.save(user);
+    }
 
-  @GetMapping("/user/{id}")
-  public UserEntity getUser(@PathVariable int id){
-    return service.getUserById(id);
-  }
-
+    @GetMapping("/user/{id}")
+    public UserEntity getUser(@PathVariable int id) {
+        return service.getUserById(id);
+    }
 
 }
