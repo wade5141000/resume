@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="blue" flat>
       <v-container class="py-0 fill-height">
-        <Navigator />
+        <theNavigator />
       </v-container>
     </v-app-bar>
     <v-main class="grey lighten-3">
@@ -15,10 +15,10 @@
 
 <script>
 // @ is an alias to /src
-import Navigator from "@/components/Navigator.vue";
+import theNavigator from "@/components/theNavigator.vue";
 export default {
   components: {
-    Navigator
+    theNavigator
   }
 };
 </script>

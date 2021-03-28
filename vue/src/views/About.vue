@@ -30,17 +30,15 @@
 <script>
 import http from "../utils/http";
 import axios from "axios";
+
 export default {
-  data() {
-    return {
-      username: "",
-      password: ""
-    };
-  },
-  computed: {},
+  data: () => ({
+    username: "",
+    password: ""
+  }),
   methods: {
     getUser() {
-      http.get("/user").then(function(response) {
+      http.get("/user").then(response => {
         console.log(response);
       });
     },
