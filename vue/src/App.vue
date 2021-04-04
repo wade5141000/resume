@@ -6,7 +6,7 @@
       </v-container>
     </v-app-bar>
     <v-main class="grey lighten-3">
-      <v-container>
+      <v-container class="fill-height justify-center container--fluid">
         <router-view />
       </v-container>
     </v-main>
