@@ -1,5 +1,5 @@
 <template>
-  <v-container id="login" fluid tag="section">
+  <v-container id="signup" fluid tag="section">
     <v-row justify="center">
       <v-col cols="12" md="7" sm="8">
         <v-card :loading="loading" class="mx-auto my-0 pa-0" max-width="800">
@@ -7,15 +7,15 @@
             <v-col cols="12" md="6" class="px-5">
               <v-row justify="center" class="fill-height ma-0 align-center">
                 <v-responsive>
-                  <v-img src="../assets/secure_login.svg"> </v-img>
+                  <v-img src="../assets/register.svg"> </v-img>
                 </v-responsive>
               </v-row>
             </v-col>
 
             <v-col cols="12" md="6" class="px-5">
               <div class="my-8 align-center text-center">
-                <h2 justify="center">登入帳號</h2>
-                <div class="subtitle-2 mt-2">請輸入您的帳號/密碼</div>
+                <h2 justify="center">註冊帳號</h2>
+                <div class="subtitle-2 mt-2">建立新帳號</div>
               </div>
               <v-sheet max-width="500">
                 <form>
@@ -27,7 +27,7 @@
                     label="帳號"
                     prepend-inner-icon="mdi-account-outline"
                     hide-details="auto"
-                    placeholder="請輸入帳號"
+                    placeholder="帳號(須為4-10個英文或數字)"
                     :error-messages="usernameErrors"
                     @input="$v.username.$touch()"
                     @blur="$v.username.$touch()"
@@ -41,26 +41,19 @@
                     label="密碼"
                     prepend-inner-icon="mdi-lock-outline"
                     hide-details="auto"
-                    placeholder="請輸入密碼"
+                    placeholder="密碼(須為4-10個英文組合)"
                     :error-messages="passwordErrors"
                     @input="$v.password.$touch()"
                     @blur="$v.password.$touch()"
                   ></v-text-field>
 
-                  <div class="d-flex justify-space-between">
-                    <v-checkbox
-                      v-model="checkbox"
-                      :error-messages="checkboxErrors"
-                      label="記住我的帳號密碼"
-                      class="mt-0"
-                      required
-                      outlined
-                      @change="$v.checkbox.$touch()"
-                      @blur="$v.checkbox.$touch()"
-                    ></v-checkbox>
-                    <a href="/resetpw" class="py-1 text-decoration-none"
-                      >忘記密碼？</a
-                    >
+                  <div class="d-flex my-2 caption">
+                    註冊後，即表示已閱讀且同意
+                    <a href="/terms" class="text-decoration-none">使用條款 </a
+                    >和
+                    <a href="/privacy" class="text-decoration-none"
+                      >隱私政策
+                    </a>
                   </div>
 
                   <v-btn
@@ -71,12 +64,10 @@
                     color="primary"
                     @click="submit"
                   >
-                    立即登入
+                    立即註冊
                   </v-btn>
                   <div class="text-center my-5">
-                    <a href="/signup" class="py-1 text-decoration-none"
-                      >立即註冊！</a
-                    >
+                    <a href="/" class="py-1 text-decoration-none">帳號登入！</a>
                   </div>
                 </form>
               </v-sheet>
@@ -110,15 +101,17 @@ export default {
     usernameErrors() {
       const errors = [];
       if (!this.$v.username.$dirty) return errors;
-      !this.$v.username.maxLength && errors.push("帳號為4-10個英文或數字");
-      !this.$v.username.required && errors.push("請輸入帳號.");
+      !this.$v.username.maxLength && errors.push("帳號為10個英文或數字");
+      !this.$v.username.required &&
+        errors.push("請輸入帳號(須為4-10個英文或數字)");
       return errors;
     },
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
-      !this.$v.password.maxLength && errors.push("密碼為4-10個英文數字組合");
-      !this.$v.password.required && errors.push("請輸入密碼");
+      !this.$v.password.maxLength && errors.push("密碼為10個英文或數字");
+      !this.$v.password.required &&
+        errors.push("請輸入密碼(須為4-10個英文組合)");
       return errors;
     }
   },

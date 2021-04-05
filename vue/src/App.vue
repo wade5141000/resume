@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="blue" flat>
-      <v-container class="py-0 fill-height">
+      <v-container class="px-0 py-0 fill-height">
         <Navigator />
       </v-container>
     </v-app-bar>
