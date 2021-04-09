@@ -1,5 +1,5 @@
 <template>
-  <v-container id="login" fluid tag="section">
+  <v-content id="login" fluid tag="section">
     <v-row justify="center">
       <v-col cols="12" md="7" sm="8">
         <v-card :loading="loading" class="mx-auto my-0 pa-0" max-width="800">
@@ -58,7 +58,7 @@
                       @change="$v.checkbox.$touch()"
                       @blur="$v.checkbox.$touch()"
                     ></v-checkbox>
-                    <a href="/resetpw" class="py-1 text-decoration-none"
+                    <a href="/forgetpw" class="py-1 text-decoration-none"
                       >忘記密碼？</a
                     >
                   </div>
@@ -85,7 +85,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </v-content>
 </template>
 
 <script>

@@ -4,7 +4,9 @@ import About from "../views/About.vue";
 import Login from "../views/Login.vue";
 import Signup from "../views/Signup.vue";
 import Privacy from "../views/Privacy.vue";
-
+import Terms from "../views/Terms.vue";
+import Forgetpw from "../views/Forgetpw.vue";
+import Resetpw from "../views/Resetpw.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -14,6 +16,22 @@ const routes = [
     component: Login,
     meta: {
       title: "帳號登入"
+    }
+  },
+  {
+    path: "/forgetpw",
+    name: "Forgetpw",
+    component: Forgetpw,
+    meta: {
+      title: "忘記密碼"
+    }
+  },
+  {
+    path: "/resetpw",
+    name: "Resetpw",
+    component: Resetpw,
+    meta: {
+      title: "重設密碼"
     }
   },
   {
@@ -33,11 +51,19 @@ const routes = [
     }
   },
   {
+    path: "/terms",
+    name: "Terms",
+    component: Terms,
+    meta: {
+      title: "使用條款"
+    }
+  },
+  {
     path: "/privacy",
     name: "Privacy",
     component: Privacy,
     meta: {
-      title: "使用條款"
+      title: "隱私權政策"
     }
   },
   {
