@@ -10,22 +10,23 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     final UserService service;
 
-    @GetMapping("/user")
+    @GetMapping
     public List<UserEntity> getUser(@AuthenticationPrincipal String username) {
         // String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return service.getUsers();
     }
 
-    @PostMapping("/user")
+    @PostMapping
     public UserEntity createUser(@RequestBody UserEntity user) {
         return service.save(user);
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public UserEntity getUser(@PathVariable int id) {
         return service.getUserById(id);
     }
