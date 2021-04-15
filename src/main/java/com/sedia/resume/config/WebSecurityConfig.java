@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
                 .authorizeRequests().antMatchers(POST, "/user").permitAll().and().authorizeRequests()
-                .antMatchers("/login", "/h2/**", "/actuator/**", "/test/**").permitAll().and().authorizeRequests()
+                .antMatchers("/", "/login", "/actuator/**", "/test/**").permitAll().and().authorizeRequests()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(new LoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)// 添加過濾器，針對/login的請求，交給LoginFilter處理
