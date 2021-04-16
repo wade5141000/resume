@@ -1,5 +1,6 @@
 package com.sedia.resume.controller;
 
+import com.sedia.resume.queue.MessageSender;
 import com.sedia.resume.utils.AwsUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
@@ -21,6 +22,8 @@ public class TestController {
 
     final AwsUtils awsUtils;
 
+    final MessageSender sender;
+
     @GetMapping("/upload")
     public String testUpload() throws IOException {
         Resource resource = new ClassPathResource("temp/test.txt");
@@ -31,5 +34,12 @@ public class TestController {
         }
         return "上傳失敗";
     }
+
+	@GetMapping("/queue")
+	public String testQueue() {
+		sender.send("Hello World!");
+		// sender.sendObj();
+		return "成功放入queue";
+	}
 
 }
