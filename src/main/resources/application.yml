@@ -38,6 +38,11 @@ spring:
     port: 5671
     username: root
     password: ENC(Kd3Mg7odDUXoLoRpfUp0kLpadOlmLT8ueGJtskcLAwb2JjywsOGqn2uyalzIdqhX)
+  mail:
+    host: email-smtp.ap-northeast-1.amazonaws.com
+    username: AKIAULGZ7ETA3S5UGHU2
+    password: BHweIfYy4iSZcWptgmGGK7hyNbC/pjrOLwQsD9jfAI54
+    port: 587
 
 jasypt:
   encryptor:
