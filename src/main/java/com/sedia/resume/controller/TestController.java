@@ -35,18 +35,18 @@ public class TestController {
         return "上傳失敗";
     }
 
-		@GetMapping("/queue")
-		public String testQueue() {
-			sender.send("Hello World!");
-			// sender.sendObj();
-			return "成功放入queue";
-		}
+    @GetMapping("/queue")
+    public String testQueue() {
+        sender.send("Hello World!");
+        // sender.sendObj();
+        return "成功放入queue";
+    }
 
-	@GetMapping("/mail")
-	public String testSendMail() {
-		awsUtils.sendMail();
-		// sender.sendObj();
-		return "成功發信";
-	}
+    @GetMapping("/mail")
+    public String testSendMail() {
+        awsUtils.sendMail();
+        // sender.sendObj();
+        return "成功發信";
+    }
 
 }

@@ -1,17 +1,14 @@
 package com.sedia.resume.config;
 
 import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.mail.simplemail.SimpleEmailServiceJavaMailSender;
-import org.springframework.cloud.aws.mail.simplemail.SimpleEmailServiceMailSender;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -36,17 +33,16 @@ public class StorageConfig {
                 .withRegion(AP_NORTHEAST_1).build();
     }
 
-		@Bean
-		public AmazonSimpleEmailService amazonSimpleEmailService() {
-			AWSCredentials credentials = new BasicAWSCredentials(accessKey, accessSecret);
-			return AmazonSimpleEmailServiceClientBuilder.standard()
-			.withCredentials(new AWSStaticCredentialsProvider(credentials))
-			.withRegion(AP_NORTHEAST_1).build();
-		}
+    @Bean
+    public AmazonSimpleEmailService amazonSimpleEmailService() {
+        AWSCredentials credentials = new BasicAWSCredentials(accessKey, accessSecret);
+        return AmazonSimpleEmailServiceClientBuilder.standard()
+                .withCredentials(new AWSStaticCredentialsProvider(credentials)).withRegion(AP_NORTHEAST_1).build();
+    }
 
-		@Bean
-		public MailSender mailSender(AmazonSimpleEmailService ses) {
-//			return new SimpleEmailServiceMailSender(ses);
-			return new SimpleEmailServiceJavaMailSender(ses);
-		}
+    @Bean
+    public MailSender mailSender(AmazonSimpleEmailService ses) {
+        // return new SimpleEmailServiceMailSender(ses);
+        return new SimpleEmailServiceJavaMailSender(ses);
+    }
 }

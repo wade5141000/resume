@@ -37,14 +37,14 @@ public class AwsUtils {
         return true;
     }
 
-	public boolean sendMail() {
-		SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-		simpleMailMessage.setFrom("wade5141000@outlook.com");
-		simpleMailMessage.setTo("wade5141000@outlook.com");
-		simpleMailMessage.setSubject("test subject");
-		simpleMailMessage.setText("test text");
-		mailSender.send(simpleMailMessage);
-		return true;
-	}
+    public boolean sendMail() {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("wade5141000@outlook.com");
+        simpleMailMessage.setTo("wade5141000@outlook.com");
+        simpleMailMessage.setSubject("test subject");
+        simpleMailMessage.setText("test text");
+        mailSender.send(simpleMailMessage);
+        return true;
+    }
 
 }
