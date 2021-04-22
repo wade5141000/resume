@@ -10,6 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.InputStream;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class AwsUtils {
 
     final MailSender mailSender;
 
-    public boolean uploadToS3(File file) {
+    public boolean uploadFileToS3(File file) {
         // String path = "test/";
         String fileName = file.getName();
         log.info("Uploading file: [{}] to aws s3.", fileName);
@@ -35,6 +36,16 @@ public class AwsUtils {
             return false;
         }
         return true;
+    }
+
+    public InputStream downloadFileFromS3(String fileName) {
+        log.info("Downloading file: [{}] from aws s3.", fileName);
+        try {
+            return s3Client.getObject(bucketName, fileName).getObjectContent();
+        } catch (Exception e) {
+            log.error("Download file: [{}] from aws s3 failed.", fileName, e);
+            throw e;
+        }
     }
 
     public boolean sendMail() {
