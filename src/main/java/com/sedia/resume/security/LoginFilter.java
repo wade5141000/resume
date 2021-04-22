@@ -1,5 +1,6 @@
 package com.sedia.resume.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -8,12 +9,11 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Optional;
 
+@Slf4j
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     public LoginFilter(String url, AuthenticationManager authManager) {
@@ -40,6 +40,6 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
             AuthenticationException failed) {
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        System.out.println("Login fail");
+	      log.info("登入失敗");
     }
 }

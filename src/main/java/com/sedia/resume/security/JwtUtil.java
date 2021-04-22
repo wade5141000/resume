@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.crypto.MacProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 public class JwtUtil {
     private static final long EXPIRATION_TIME = 432_000_000; // 5天
     private static final String TOKEN_PREFIX = "Bearer"; // Token前缀
@@ -38,9 +40,9 @@ public class JwtUtil {
             UserEntity user = (UserEntity) auth.getPrincipal();
             LoginUser loginUser = LoginUser.builder().id(user.getId()).username(user.getUsername()).jwt(jwt).build();
             response.getOutputStream().println(MAPPER.writeValueAsString(loginUser));
-            System.out.println("login ok");
+            log.info("登入成功");
         } catch (Exception e) {
-            e.printStackTrace();
+	          log.error("產生 JWT 時發生錯誤", e);
         }
     }
 
@@ -64,8 +66,8 @@ public class JwtUtil {
                         .commaSeparatedStringToAuthorityList((String) claims.get("authorize"));
                 return StringUtils.hasText(username)
                         ? new UsernamePasswordAuthenticationToken(username, null, authorities) : null;
-            } catch (JwtException ex) {
-                System.out.println(ex);
+            } catch (JwtException e) {
+            	  log.error("JWT 驗證發生錯誤", e);
             }
 
         }
