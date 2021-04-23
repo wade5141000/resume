@@ -6,12 +6,9 @@
           <v-row class="ma-0">
             <v-col cols="12" md="12" class="px-5 pt-5">
               <div justify="center" class="align-center text-center">
-                <v-responsive >
-                  <v-img
-                  src="../assets/resetpw.svg"
-                  max-height="150"
-                  contain
-              > </v-img>
+                <v-responsive>
+                  <v-img src="../assets/resetpw.svg" max-height="150" contain>
+                  </v-img>
                 </v-responsive>
               </div>
             </v-col>
@@ -49,7 +46,7 @@
                     hide-details="auto"
                     placeholder="再次輸入密碼"
                   ></v-text-field>
-                 
+
                   <v-btn
                     depressed
                     block
@@ -95,12 +92,12 @@ export default {
       !this.$v.password.maxLength && errors.push("密碼為4-10個英文數字組合");
       !this.$v.password.required && errors.push("請輸入密碼");
       return errors;
-    },
+    }
   },
   methods: {
-    submit () {
-        this.$v.$touch()
-      }
+    submit() {
+      this.$v.$touch();
+    }
   }
 };
 </script>
