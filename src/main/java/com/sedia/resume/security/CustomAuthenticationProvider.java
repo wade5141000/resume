@@ -28,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             // 生成Authentication令牌
             return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
         } else {
-            throw new BadCredentialsException("Password error");
+            throw new BadCredentialsException("Account or password verification failed");
         }
     }
 

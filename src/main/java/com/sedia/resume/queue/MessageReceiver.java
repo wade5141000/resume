@@ -10,11 +10,11 @@ public class MessageReceiver {
 
     @RabbitHandler
     public void receive(String in) {
-    	log.info(" [x] Received '{}'", in);
+        log.info(" [x] Received '{}'", in);
     }
 
-//		@RabbitHandler
-//		public void receive2(MessageSender.Man in) {
-//			System.out.println(" [x] Received2 '" + in + "'");
-//		}
+    // @RabbitHandler
+    // public void receive2(MessageSender.Man in) {
+    // System.out.println(" [x] Received2 '" + in + "'");
+    // }
 }
