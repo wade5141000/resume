@@ -17,7 +17,7 @@ import org.springframework.mail.MailSender;
 import static com.amazonaws.regions.Regions.*;
 
 @Configuration
-public class StorageConfig {
+public class AwsConfig {
 
     @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;

@@ -22,11 +22,11 @@ import java.util.List;
 
 @Slf4j
 public class JwtUtil {
-    private static final long EXPIRATION_TIME = 432_000_000; // 5天
-    private static final String TOKEN_PREFIX = "Bearer"; // Token前缀
-    private static final String HEADER_STRING = "Authorization";// 存放Token的Header Key
-    private static final Key key = MacProvider.generateKey(); // 給定一組密鑰，用來解密以及加密使用
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    public static final long EXPIRATION_TIME = 432_000_000; // 5天
+    public static final String TOKEN_PREFIX = "Bearer"; // Token前缀
+    public static final String HEADER_STRING = "Authorization";// 存放Token的Header Key
+    public static final Key key = MacProvider.generateKey(); // 給定一組密鑰，用來解密以及加密使用
+    public static final ObjectMapper MAPPER = new ObjectMapper();
 
     // JWT產生方法
     public static void addAuthentication(HttpServletResponse response, Authentication auth) {
@@ -42,7 +42,7 @@ public class JwtUtil {
             response.getOutputStream().println(MAPPER.writeValueAsString(loginUser));
             log.info("登入成功");
         } catch (Exception e) {
-	          log.error("產生 JWT 時發生錯誤", e);
+            log.error("產生 JWT 時發生錯誤", e);
         }
     }
 
@@ -67,7 +67,7 @@ public class JwtUtil {
                 return StringUtils.hasText(username)
                         ? new UsernamePasswordAuthenticationToken(username, null, authorities) : null;
             } catch (JwtException e) {
-            	  log.error("JWT 驗證發生錯誤", e);
+                log.error("JWT 驗證發生錯誤", e);
             }
 
         }

@@ -1,7 +1,9 @@
 package com.sedia.resume.controller;
 
 import com.sedia.resume.queue.MessageSender;
+import com.sedia.resume.security.JwtUtil;
 import com.sedia.resume.utils.AwsUtils;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
@@ -10,11 +12,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import static org.springframework.http.MediaType.*;
 
@@ -70,6 +74,14 @@ public class TestController {
         awsUtils.sendMail();
         // sender.sendObj();
         return "成功發信";
+    }
+
+    @GetMapping("/mock-login")
+    @ResponseBody
+    public String mockLogin(String username) {
+        return Jwts.builder().setSubject(username)
+                .setExpiration(new Date(System.currentTimeMillis() + JwtUtil.EXPIRATION_TIME)).signWith(JwtUtil.key)
+                .compact();
     }
 
 }

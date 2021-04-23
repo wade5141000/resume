@@ -3,3 +3,9 @@ spring:
     url: jdbc:mysql://resume-db.cq0kh8e6xcju.ap-northeast-1.rds.amazonaws.com:3306/resume?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
     username: root
     password: ENC(X4sXBhBNmpX7nzqa+3bA3shv9maa/m3ktrRokbmPYkCdqNWDa/qiAflnkEk9SYLv)
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

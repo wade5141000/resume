@@ -16,7 +16,7 @@ public class UserController {
     final UserService service;
 
     @GetMapping
-    public List<UserEntity> getUser(@AuthenticationPrincipal String username) {
+    public List<UserEntity> getUser() {
         // String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return service.getUsers();
     }

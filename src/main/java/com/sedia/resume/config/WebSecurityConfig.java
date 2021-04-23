@@ -28,10 +28,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] allowPass = { "/", "/login", "/actuator/**", "/test/**", "/v3/api-docs/**", "/swagger-ui/**",
+                "/swagger-ui.html" };
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
                 .authorizeRequests().antMatchers(POST, "/user").permitAll().and().authorizeRequests()
-                .antMatchers("/", "/login", "/actuator/**", "/test/**").permitAll().and().authorizeRequests()
-                .anyRequest().authenticated().and()
+                .antMatchers(allowPass).permitAll().and().authorizeRequests().anyRequest().authenticated().and()
                 .addFilterBefore(new LoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)// 添加過濾器，針對/login的請求，交給LoginFilter處理
                 // 添加過濾器，針對其他請求進行JWT的驗證
