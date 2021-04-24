@@ -9,8 +9,12 @@ import java.time.LocalDateTime;
 @Setter
 class GenericEntity {
 
-    private Integer id;
+	//識別碼
+//    private String id;
 
-    private LocalDateTime createDate;
-
+    //建立時間
+    private LocalDateTime CR_DATETIME;
+    
+    //更新時間
+    private LocalDateTime UP_DATETIME;
 }

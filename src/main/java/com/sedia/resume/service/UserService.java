@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,25 +13,54 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
+	//使用者類別
     final UserMapper userMapper;
+    
+    //密碼加密器
     final BCryptPasswordEncoder passwordEncoder;
+        
+    
+    //檢查使用者是否存在
+    public boolean checkUser(String id) {
+    	try {
+    		userMapper.findById(id).orElseThrow(() -> new RuntimeException("查無使用者"));
+    	}
+    	catch(RuntimeException ex) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
 
+	//取得所有使用者清單
     public List<UserEntity> getUsers() {
         return userMapper.findAll();
     }
-
-    public UserEntity save(UserEntity user) {
-        if (userMapper.findByUsername(user.getUsername()).isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setCreateDate(LocalDateTime.now());
-            userMapper.save(user);
-            return user;
-        }
-        throw new RuntimeException("account already exists");
+    
+    //取得單一使用者by ID
+    public UserEntity getUserById(String id) {
+        return userMapper.findById(id).orElseThrow(() -> new RuntimeException("查無使用者"));
     }
-
-    public UserEntity getUserById(int id) {
-        return userMapper.findById(id).orElseThrow(() -> new RuntimeException("找不到 User"));
+    
+    //新增使用者
+    public boolean insertUser(UserEntity user) {
+    	if(checkUser(user.getUSER_ID()))
+    		return userMapper.insert(user);
+    	else
+    		return false;
     }
-
+    
+    //編輯使用者
+    public boolean updateUser(UserEntity user) {
+    	if(checkUser(user.getUSER_ID()))
+    		return userMapper.update(user);
+    	else
+    		return false;
+    }
+    
+    //刪除使用者
+    public boolean deleteUser(String id) {
+    	return userMapper.delete(id);    	
+    }
+	
 }

@@ -15,6 +15,6 @@ public class UserLoginService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userMapper.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
+        return userMapper.findById(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 }

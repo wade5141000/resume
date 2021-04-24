@@ -36,7 +36,7 @@ public class JwtUtil {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
             UserEntity user = (UserEntity) auth.getPrincipal();
-            LoginUser loginUser = LoginUser.builder().id(user.getId()).username(user.getUsername()).jwt(jwt).build();
+            LoginUser loginUser = LoginUser.builder().id(user.getUSER_ID()).username(user.getUsername()).jwt(jwt).build();
             response.getOutputStream().println(MAPPER.writeValueAsString(loginUser));
             System.out.println("login ok");
         } catch (Exception e) {
