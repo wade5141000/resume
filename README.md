@@ -1,6 +1,11 @@
 #### API 操作介面
 <code>http://localhost:5000/swagger-ui.html</code>
 
+#### 程式碼排版
+> 使用 cmd cd 到專案的根目錄 ( pom.xml 所在的位置 )
+> - 下指令 <code>mvn compile -e</code>
+
+
 ### 開發環境配置
 > 需要安裝的軟體
 > - JDK 11 以上
