@@ -69,12 +69,12 @@ public class TestController {
         return "成功放入queue";
     }
 
-    @GetMapping("/mail")
-    public String testSendMail() {
-        awsUtils.sendMail();
-        // sender.sendObj();
-        return "成功發信";
-    }
+    // @GetMapping("/mail")
+    // public String testSendMail() {
+    // awsUtils.sendMail();
+    // // sender.sendObj();
+    // return "成功發信";
+    // }
 
     @GetMapping("/mock-login")
     @ResponseBody

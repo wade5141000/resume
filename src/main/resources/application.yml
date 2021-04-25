@@ -39,10 +39,18 @@ spring:
     username: root
     password: ENC(Kd3Mg7odDUXoLoRpfUp0kLpadOlmLT8ueGJtskcLAwb2JjywsOGqn2uyalzIdqhX)
   mail:
-    host: email-smtp.ap-northeast-1.amazonaws.com
-    username: AKIAULGZ7ETA3S5UGHU2
-    password: BHweIfYy4iSZcWptgmGGK7hyNbC/pjrOLwQsD9jfAI54
+    default-encoding: UTF-8
+    host: smtp.gmail.com
     port: 587
+    username: # fixme
+    password: # fixme
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enabled: true
+            required: true
 
 jasypt:
   encryptor:
