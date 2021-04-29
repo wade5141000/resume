@@ -14,7 +14,7 @@
 
             <v-col cols="12" md="6" class="px-5">
               <div class="my-8 align-center text-center">
-                <h2 justify="center">登入帳號</h2>
+                <h2 justify="center" class="my-green">登入帳號</h2>
                 <div class="subtitle-2 mt-2">請輸入您的帳號/密碼</div>
               </div>
               <v-sheet max-width="500">
@@ -167,3 +167,11 @@ export default {
   }
 };
 </script>
+
+<!-- 自訂 css with vuetify sass -->
+<style lang="sass" scoped>
+	@import '~vuetify/src/styles/styles.sass'
+
+	.my-green
+		color: map-get($green, 'base')
+</style>
