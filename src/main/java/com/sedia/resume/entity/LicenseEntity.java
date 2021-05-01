@@ -17,7 +17,7 @@ public class LicenseEntity extends GenericEntity {
     private int sn;
 
     // 使用者帳號
-    private String uid;
+    private int uid;
 
     // ,號區隔
     private String LsName;

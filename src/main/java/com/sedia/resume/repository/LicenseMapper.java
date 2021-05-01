@@ -11,10 +11,10 @@ public interface LicenseMapper {
     // 從ctrl->service->repostitory->DB
 
     // 證照資料表 查詢第一筆符合查詢的資料
-    Optional<LicenseEntity> findFirstLicense(int sn, int uid);
+    Optional<LicenseEntity> findFirstLicense(int sn, String uid);
 
     // 證照資料表 查詢資料
-    List<LicenseEntity> findAll(int uid);
+    List<LicenseEntity> findAll(String uid);
 
     // 證照資料表 新增資料
     LicenseEntity insertLicense(LicenseEntity license);
@@ -23,7 +23,7 @@ public interface LicenseMapper {
     LicenseEntity updateLicense(LicenseEntity license);
 
     // 證照資料表 刪除資料
-    LicenseEntity deleteLicense(int sn, int uid);
+    LicenseEntity deleteLicense(int sn, String uid);
 
     // 證照資料表 是否已存在
     boolean isExistLicense(int sn, String uid);

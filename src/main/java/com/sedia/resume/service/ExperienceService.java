@@ -16,7 +16,7 @@ public class ExperienceService {
     final ExperienceMapper experienceMapper;
 
     // 檢查經歷ID是否存在
-    boolean checkExperienceID(int sn, int uid) {
+    boolean checkExperienceID(int sn, String uid) {
         if (experienceMapper.isExistExperience(sn, uid))
             return true;
         else
@@ -24,12 +24,12 @@ public class ExperienceService {
     }
 
     // 取得經歷
-    public Optional<ExperienceEntity> getExperience(int sn, int uid) {
+    public Optional<ExperienceEntity> getExperience(int sn, String uid) {
         return experienceMapper.firstExperience(sn, uid);
     }
 
     // 取得經歷清單
-    public List<ExperienceEntity> getExperienceList(int uid) {
+    public List<ExperienceEntity> getExperienceList(String uid) {
         return experienceMapper.listExperience(uid);
     }
 
@@ -47,7 +47,7 @@ public class ExperienceService {
     }
 
     // 刪除經歷
-    public boolean deleteExperience(int sn, int uid) {
+    public boolean deleteExperience(int sn, String uid) {
         return experienceMapper.deleteExperience(sn, uid);
 
     }
