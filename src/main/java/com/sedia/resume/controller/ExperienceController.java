@@ -19,13 +19,13 @@ public class ExperienceController {
 
     // 取得所有經歷列表
     @GetMapping("/experience/{id}")
-    public List<ExperienceEntity> getExperienceList(int uid) {
+    public List<ExperienceEntity> getExperienceList(String uid) {
         return service.getExperienceList(uid);
     }
 
     // 取得經歷列表
     @GetMapping("/experience/{SN}&{id}")
-    public Optional<ExperienceEntity> getExperience(@PathVariable int sn, int uid) {
+    public Optional<ExperienceEntity> getExperience(@PathVariable int sn, String uid) {
         return service.getExperience(sn, uid);
     }
 
@@ -44,7 +44,7 @@ public class ExperienceController {
 
     // 刪除經歷列表
     @DeleteMapping("/experience/{SN}&{id}")
-    public boolean deleteExperience(@PathVariable int sn, int uid) {
+    public boolean deleteExperience(@PathVariable int sn, String uid) {
         return service.deleteExperience(sn, uid);
     }
 

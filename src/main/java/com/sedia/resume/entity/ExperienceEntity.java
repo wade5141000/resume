@@ -14,7 +14,7 @@ public class ExperienceEntity {
     // 流水號
     private int sn;
     // userID
-    private int uid;
+    private String uid;
     // 公司名稱
     private String company_name;
     // 職稱
