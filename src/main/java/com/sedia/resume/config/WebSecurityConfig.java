@@ -1,5 +1,6 @@
 package com.sedia.resume.config;
 
+import com.sedia.resume.utils.LoginFilter;
 import com.sedia.resume.security.CustomAuthenticationProvider;
 import com.sedia.resume.security.JWTAuthenticationFilter;
 import com.sedia.resume.security.LoginFilter;
