@@ -36,7 +36,7 @@ export default {
       { text: "隱私權政策", link: "/privacy" },
       { text: "忘記密碼", link: "/forgetpw" },
       { text: "重設密碼", link: "/resetpw" },
-        { text: "基本資料", link: "/basic" }
+      { text: "基本資料", link: "/basic" }
     ]
   })
 };
