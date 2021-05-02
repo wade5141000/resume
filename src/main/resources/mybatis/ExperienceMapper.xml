@@ -5,9 +5,34 @@
 <mapper namespace="com.sedia.resume.repository.ExperienceMapper">
 
     <resultMap id="ExperienceResultMap" type="com.sedia.resume.entity.ExperienceEntity">
-     <!-- 這邊是否會關連到我們用SN及UID驗證 -->
-        <id column="user_id" property="id" jdbcType="STRING" />
-        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    	<!-- //property指的是在javabean裡的屬性，而column就是在資料表的欄名 -->
+    	<!-- 有關時間是要統一用timestamp還是另外的data -->
+    	
+    	<!-- mybatis常用的型別
+    	<result property="FLD_NUMBER" column="FLD_NUMBER" javaType="double" jdbcType="NUMERIC"/>
+  		<result property="FLD_VARCHAR" column="FLD_VARCHAR" javaType="string" jdbcType="VARCHAR"/>
+  		<result property="FLD_DATE" column="FLD_DATE" javaType="java.sql.Date" jdbcType="DATE"/>
+  		<result property="FLD_INTEGER" column="FLD_INTEGER"  javaType="int" jdbcType="INTEGER"/>
+  		<result property="FLD_DOUBLE" column="FLD_DOUBLE"  javaType="double" jdbcType="DOUBLE"/>
+  		<result property="FLD_LONG" column="FLD_LONG"  javaType="long" jdbcType="INTEGER"/>
+  		<result property="FLD_CHAR" column="FLD_CHAR"  javaType="string" jdbcType="CHAR"/>
+  		<result property="FLD_BLOB" column="FLD_BLOB"  javaType="[B" jdbcType="BLOB" />
+  		<result property="FLD_CLOB" column="FLD_CLOB"  javaType="string" jdbcType="CLOB"/>
+  		<result property="FLD_FLOAT" column="FLD_FLOAT"  javaType="float" jdbcType="FLOAT"/>
+  		<result property="FLD_TIMESTAMP" column="FLD_TIMESTAMP"  javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/> -->
+  		
+  		
+     	<result column="sn" property="sn" jdbcType="INTEGER" />
+        <result column="user_id" property="FLD_CHAR" jdbcType="INTEGER" />
+        <result column="companyName" property="FLD_CHAR" jdbcType="CHAR" />
+        <result column="position" property="FLD_CHAR" jdbcType="CHAR" />
+        <result column="start_date" property="FLD_TIMESTAMP" jdbcType="TIMESTAMP" />
+        <result column="end_date" property="FLD_TIMESTAMP" jdbcType="TIMESTAMP" />
+        <result column="experience_desc" property="FLD_CHAR" jdbcType="CHAR" />
+        <result column="ability" property="FLD_CHAR" jdbcType="CHAR" />
+        <result column="crdate_time" property="TIMESTAMP" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="TIMESTAMP" jdbcType="TIMESTAMP" />
+
     </resultMap>
     
 	<!-- 查詢第一筆資料 -->
@@ -41,3 +66,5 @@
     <select id="isExistExperience" resultMap="ExperienceResultMap">
         SELECT * FROM EXPERIENCE WHERE SN = #{SN};
     </select>
+    
+</mapper>
