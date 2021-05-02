@@ -170,8 +170,8 @@ export default {
 
 <!-- 自訂 css with vuetify sass -->
 <style lang="sass" scoped>
-	@import '~vuetify/src/styles/styles.sass'
+@import '~vuetify/src/styles/styles.sass'
 
-	.my-green
-		color: map-get($green, 'base')
+.my-green
+	color: map-get($green, 'base')
 </style>
