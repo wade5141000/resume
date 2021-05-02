@@ -16,13 +16,13 @@ public class LicenseController {
 
     // 取得全部證照列表
     @GetMapping("/license/{id}") // http標籤
-    public List<LicenseEntity> getLicenseList(String uid) {
+    public List<LicenseEntity> getLicenseList(int uid) {
         return service.getLicenseList(uid);
     }
 
     // 取得證照
     @GetMapping("/license/{SN}&{id}")
-    public LicenseEntity getLicense(@PathVariable int sn, String uid) {
+    public LicenseEntity getLicense(@PathVariable int sn, int uid) {
         return service.getLicense(sn, uid);
     }
 
@@ -42,7 +42,7 @@ public class LicenseController {
 
     // 刪除證照資料
     @DeleteMapping("/license/{SN}&{id}")
-    public boolean deleteLicense(@PathVariable int sn, String uid) {
+    public boolean deleteLicense(@PathVariable int sn, int uid) {
         return service.deleteLicense(sn, uid);
     }
 }

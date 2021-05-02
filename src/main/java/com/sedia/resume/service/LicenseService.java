@@ -17,7 +17,7 @@ public class LicenseService {
     final LicenseMapper licenseMapper;
 
     // 確認證照ID是否存在
-    public boolean checkLicenseID(int sn, String uid) {
+    public boolean checkLicenseID(int sn, int uid) {
         if (licenseMapper.isExistLicense(sn, uid))
             return true;
         else
@@ -26,13 +26,13 @@ public class LicenseService {
 
     // 取得證照
     // 0422先保留exception
-    public LicenseEntity getLicense(int sn, String uid) {
+    public LicenseEntity getLicense(int sn, int uid) {
         return licenseMapper.findFirstLicense(sn, uid).orElseThrow(() -> new RuntimeException("找不到 證照"));
         // return licenseMapper.findById(id).orElseThrow(() -> new RuntimeException("找不到 User"));
     }
 
     // 取得證照清單
-    public List<LicenseEntity> getLicenseList(String uid) {
+    public List<LicenseEntity> getLicenseList(int uid) {
         return licenseMapper.findAll(uid);
     }
 
@@ -49,7 +49,7 @@ public class LicenseService {
     }
 
     // 刪除證照
-    public boolean deleteLicense(int sn, String uid) {
+    public boolean deleteLicense(int sn, int uid) {
         licenseMapper.deleteLicense(sn, uid);
         return true;
     }

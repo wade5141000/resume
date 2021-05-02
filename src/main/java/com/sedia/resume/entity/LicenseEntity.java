@@ -20,11 +20,11 @@ public class LicenseEntity extends GenericEntity {
     private int uid;
 
     // ,號區隔
-    private String LsName;
+    private String lsName;
 
     // 建立日期
-    private LocalDateTime cr_datetime;
+    private LocalDateTime crDatetime;
 
     // 更新日期
-    private LocalDateTime up_datetime;
+    private LocalDateTime upDatetime;
 }
