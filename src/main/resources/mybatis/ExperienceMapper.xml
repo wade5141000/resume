@@ -5,7 +5,7 @@
 <mapper namespace="com.sedia.resume.repository.ExperienceMapper">
 
     <resultMap id="ExperienceResultMap" type="com.sedia.resume.entity.ExperienceEntity">
-    	<!-- //property指的是在javabean裡的屬性，而column就是在資料表的欄名 -->
+    	<!-- //property指的是在Entity裡的屬性，而column就是在資料表的欄名 -->
     	<!-- 有關時間是要統一用timestamp還是另外的data -->
     	
     	<!-- mybatis常用的型別
@@ -23,15 +23,15 @@
   		
   		
      	<result column="sn" property="sn" jdbcType="INTEGER" />
-        <result column="user_id" property="FLD_CHAR" jdbcType="INTEGER" />
-        <result column="companyName" property="FLD_CHAR" jdbcType="CHAR" />
-        <result column="position" property="FLD_CHAR" jdbcType="CHAR" />
-        <result column="start_date" property="FLD_TIMESTAMP" jdbcType="TIMESTAMP" />
-        <result column="end_date" property="FLD_TIMESTAMP" jdbcType="TIMESTAMP" />
-        <result column="experience_desc" property="FLD_CHAR" jdbcType="CHAR" />
-        <result column="ability" property="FLD_CHAR" jdbcType="CHAR" />
-        <result column="crdate_time" property="TIMESTAMP" jdbcType="TIMESTAMP" />
-        <result column="update_time" property="TIMESTAMP" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="uid" jdbcType="INTEGER" />
+        <result column="companyName" property="company_name" jdbcType="CHAR" />
+        <result column="position" property="position" jdbcType="CHAR" />
+        <result column="start_date" property="start_date" jdbcType="TIMESTAMP" />
+        <result column="end_date" property="end_date" jdbcType="TIMESTAMP" />
+        <result column="experience_desc" property="experience_description" jdbcType="CHAR" />
+        <result column="ability" property="ability" jdbcType="CHAR" />
+        <result column="crdate_time" property="cr_datetime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="up_datetime" jdbcType="TIMESTAMP" />
 
     </resultMap>
     

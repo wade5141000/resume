@@ -4,9 +4,12 @@
 <mapper namespace="com.sedia.resume.repository.LicenseMapper">
 
     <resultMap id="LicenseResultMap" type="com.sedia.resume.entity.LicenseEntity">
-    <!-- 這邊是否會關連到我們用SN及UID驗證 -->
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    
+        <result column="sn" property="sn" jdbcType="INTEGER" />
+        <result column="user_id" property="uid" jdbcType="INTEGER" />
+        <result column="license_name" property="lsName" jdbcType="CHAR" />
+        <result column="cr_datetime" property="crDatetime" jdbcType="TIMESTAMP" />
+        <result column="up_datetime" property="upDatetime" jdbcType="TIMESTAMP" />
     </resultMap>
 	<!-- 查詢第一筆資料 -->
 	<select id="findFirstLicense" resultMap="LicenseResultMap">
