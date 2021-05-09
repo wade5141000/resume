@@ -1,5 +1,10 @@
 package com.sedia.resume.controller;
 
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import com.sedia.resume.queue.MessageSender;
 import com.sedia.resume.security.JwtUtil;
 import com.sedia.resume.utils.AwsUtils;
@@ -16,11 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
-import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
 
 /**
  * 這是方便測試使用的 controller，這裡的方法不需要登入使用者也可以操作
@@ -82,6 +88,23 @@ public class TestController {
         return Jwts.builder().setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + JwtUtil.EXPIRATION_TIME)).signWith(JwtUtil.key)
                 .compact();
+    }
+
+    @GetMapping("/cv")
+    @ResponseBody
+    public void htmlToPdf(String html) throws IOException {
+
+        File template = new ClassPathResource("templates/" + html + ".html").getFile();
+
+        PdfWriter writer = new PdfWriter("test.pdf");
+        PdfDocument pdf = new PdfDocument(writer);
+        PageSize a4 = PageSize.A4;
+        a4.applyMargins(0, 0, 0, 0, false);
+        pdf.setDefaultPageSize(a4);
+        ConverterProperties prop= new ConverterProperties();
+
+
+        HtmlConverter.convertToPdf(new FileInputStream(template), pdf, prop);
     }
 
 }
