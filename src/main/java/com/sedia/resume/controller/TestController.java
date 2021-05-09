@@ -8,8 +8,16 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.sedia.resume.queue.MessageSender;
 import com.sedia.resume.security.JwtUtil;
 import com.sedia.resume.utils.AwsUtils;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -39,6 +47,9 @@ public class TestController {
     final AwsUtils awsUtils;
 
     final MessageSender sender;
+
+    @Value("${sendgrid.api-key}")
+    private String sendGridKey;
 
     @GetMapping("/upload")
     public String testUpload() throws IOException {
@@ -75,12 +86,32 @@ public class TestController {
         return "成功放入queue";
     }
 
-    // @GetMapping("/mail")
-    // public String testSendMail() {
-    // awsUtils.sendMail();
-    // // sender.sendObj();
-    // return "成功發信";
-    // }
+     @GetMapping("/mail")
+     public String testSendMail() throws IOException {
+
+       Email from = new Email("wade5141000@outlook.com");
+       Email to = new Email("wade5141000@gmail.com");
+       from.setName("resume-service");
+       String subject = "Sending with Twilio SendGrid is Fun";
+       Content content = new Content("text/html", "and <em>easy</em> to do anywhere with <strong>Java</strong>");
+
+       Mail mail = new Mail(from, subject, to, content);
+
+
+       SendGrid sg = new SendGrid(sendGridKey);
+       Request request = new Request();
+
+       request.setMethod(Method.POST);
+       request.setEndpoint("mail/send");
+       request.setBody(mail.build());
+
+       Response response = sg.api(request);
+
+       System.out.printf("response code: %d", response.getStatusCode());
+//       System.out.println(response.getHeaders());
+//       System.out.println(response.getBody());
+     return "成功發信";
+     }
 
     @GetMapping("/mock-login")
     @ResponseBody
