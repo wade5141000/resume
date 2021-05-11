@@ -86,32 +86,31 @@ public class TestController {
         return "成功放入queue";
     }
 
-     @GetMapping("/mail")
-     public String testSendMail() throws IOException {
+    @GetMapping("/mail")
+    public String testSendMail() throws IOException {
 
-       Email from = new Email("wade5141000@outlook.com");
-       Email to = new Email("wade5141000@gmail.com");
-       from.setName("resume-service");
-       String subject = "Sending with Twilio SendGrid is Fun";
-       Content content = new Content("text/html", "and <em>easy</em> to do anywhere with <strong>Java</strong>");
+        Email from = new Email("wade5141000@outlook.com");
+        Email to = new Email("wade5141000@gmail.com");
+        from.setName("resume-service");
+        String subject = "Sending with Twilio SendGrid is Fun";
+        Content content = new Content("text/html", "and <em>easy</em> to do anywhere with <strong>Java</strong>");
 
-       Mail mail = new Mail(from, subject, to, content);
+        Mail mail = new Mail(from, subject, to, content);
 
+        SendGrid sg = new SendGrid(sendGridKey);
+        Request request = new Request();
 
-       SendGrid sg = new SendGrid(sendGridKey);
-       Request request = new Request();
+        request.setMethod(Method.POST);
+        request.setEndpoint("mail/send");
+        request.setBody(mail.build());
 
-       request.setMethod(Method.POST);
-       request.setEndpoint("mail/send");
-       request.setBody(mail.build());
+        Response response = sg.api(request);
 
-       Response response = sg.api(request);
-
-       System.out.printf("response code: %d", response.getStatusCode());
-//       System.out.println(response.getHeaders());
-//       System.out.println(response.getBody());
-     return "成功發信";
-     }
+        System.out.printf("response code: %d", response.getStatusCode());
+        // System.out.println(response.getHeaders());
+        // System.out.println(response.getBody());
+        return "成功發信";
+    }
 
     @GetMapping("/mock-login")
     @ResponseBody
@@ -132,8 +131,7 @@ public class TestController {
         PageSize a4 = PageSize.A4;
         a4.applyMargins(0, 0, 0, 0, false);
         pdf.setDefaultPageSize(a4);
-        ConverterProperties prop= new ConverterProperties();
-
+        ConverterProperties prop = new ConverterProperties();
 
         HtmlConverter.convertToPdf(new FileInputStream(template), pdf, prop);
     }
