@@ -169,7 +169,7 @@
                 <span>自我簡介</span>
               </v-col>
               <v-col cols="6" sm="6" md="4" lg="4" class="d-flex justify-end">
-                <span class="justify-end"
+                <span
                   ><v-icon color="blue">mdi-chat-question</v-icon>看看範例</span
                 ></v-col
               >
@@ -177,7 +177,6 @@
             <v-row no-gutters justify="center">
               <v-col cols="12" sm="12" md="8" lg="8">
                 <v-textarea
-                  class="float-none"
                   outlined
                   label="簡單描述特長、成就，讓企業快速瞭解你"
                   v-model="user.introduction"
