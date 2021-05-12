@@ -1,149 +1,127 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" sm="12" md="8" lg="6" class="px-12">
+    <v-col cols="12" sm="12" md="8" lg="6">
       <v-expansion-panels v-model="panel" multiple>
         <v-expansion-panel disabled>
           <v-expansion-panel-header color="blue">
             <span class="white--text">基本資料</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row class="mt-6" no-gutters>
-              <v-spacer />
+            <v-row class="mt-6" no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
                 <span>姓名</span>
-                <div class="mx-auto mt-2">
-                  <v-text-field
-                    outlined
-                    dense
-                    v-model="user.name"
-                  ></v-text-field>
-                </div>
+                <v-text-field outlined dense v-model="user.name"></v-text-field>
               </v-col>
-              <v-spacer />
             </v-row>
-            <v-row no-gutters>
-              <v-spacer />
+            <v-row no-gutters justify="center">
               <v-col cols="12" sm="12" md="8" lg="8">
                 <span>生日</span>
-                <div class="mx-auto mt-2">
-                  <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                  >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="user.birthday"
-                        outlined
-                        dense
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-date-picker
-                      ref="picker"
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
                       v-model="user.birthday"
-                      :max="new Date().toISOString().substr(0, 10)"
-                      min="1950-01-01"
-                      @change="pickDate"
-                    ></v-date-picker>
-                  </v-menu>
-                </div>
-              </v-col>
-              <v-spacer />
-            </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">性別</span>
-                <div class="mx-auto mt-2" style="max-width: 80%">
-                  <v-radio-group v-model="user.sex" row>
-                    <v-radio label="男" value="0"></v-radio>
-                    <v-radio label="女" value="1"></v-radio>
-                  </v-radio-group>
-                </div>
+                      outlined
+                      dense
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    ref="picker"
+                    v-model="user.birthday"
+                    :max="new Date().toISOString().substr(0, 10)"
+                    min="1950-01-01"
+                    @change="pickDate"
+                  ></v-date-picker>
+                </v-menu>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">兵役狀況</span>
-                <div class="mx-auto mt-2" style="max-width: 80%">
-                  <v-select
-                    :items="militaryItems"
-                    outlined
-                    v-model="user.militaryService"
-                  ></v-select>
-                </div>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>性別</span>
+                <v-radio-group v-model="user.sex" row class="mt-0">
+                  <v-radio label="男" value="0"></v-radio>
+                  <v-radio label="女" value="1"></v-radio>
+                </v-radio-group>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">通訊地址</span>
-                <div class="mx-auto mt-2" style="max-width: 80%">
-                  <v-text-field
-                    outlined
-                    dense
-                    v-model="user.address"
-                  ></v-text-field>
-                </div>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>兵役狀況</span>
+                <v-select
+                  :items="militaryItems"
+                  outlined
+                  v-model="user.militaryService"
+                ></v-select>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">email</span>
-                <div class="mx-auto mt-2" style="max-width: 80%">
-                  <v-text-field
-                    outlined
-                    dense
-                    v-model="user.email"
-                  ></v-text-field>
-                </div>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>通訊地址</span>
+                <v-text-field
+                  outlined
+                  dense
+                  v-model="user.address"
+                ></v-text-field>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">聯絡電話</span>
-                <div class="mx-auto mt-2" style="max-width: 80%">
-                  <v-text-field
-                    outlined
-                    dense
-                    v-model="user.phone"
-                  ></v-text-field>
-                </div>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>email</span>
+                <v-text-field
+                  outlined
+                  dense
+                  v-model="user.email"
+                ></v-text-field>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">駕駛執照</span>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>聯絡電話</span>
+                <v-text-field
+                  outlined
+                  dense
+                  v-model="user.phone"
+                ></v-text-field>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="3">
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>駕駛執照</span>
+              </v-col>
+            </v-row>
+            <v-row no-gutters justify="center">
+              <v-col cols="3" sm="3" md="2" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="輕型機車50CC"
                   value="a"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="3" sm="3" md="3" lg="3">
                 <v-checkbox
                   v-model="driverLicense"
                   label="重型機車50~250CC"
                   value="b"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="3" sm="3" md="2" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="汽車駕駛執照"
                   value="c"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="3" sm="3" md="1" lg="1">
                 <v-checkbox
                   v-model="driverLicense"
                   label="無"
@@ -151,34 +129,34 @@
                 ></v-checkbox>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">特殊身份</span>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>特殊身份</span>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="3">
+            <v-row no-gutters justify="center">
+              <v-col cols="3" sm="3" md="2" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="外籍人士"
                   value="a"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="3" sm="3" md="2" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="原住民"
                   value="b"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="3" sm="3" md="2" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="二度就業"
                   value="c"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="3" sm="3" md="2" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="身心障礙"
@@ -186,49 +164,58 @@
                 ></v-checkbox>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">自我簡介</span
-                ><span style="float: right" class="mr-14"
+            <v-row no-gutters justify="center">
+              <v-col cols="6" sm="6" md="4" lg="4">
+                <span>自我簡介</span>
+              </v-col>
+              <v-col cols="6" sm="6" md="4" lg="4" class="d-flex justify-end">
+                <span class="justify-end"
                   ><v-icon color="blue">mdi-chat-question</v-icon>看看範例</span
-                >
+                ></v-col
+              >
+            </v-row>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
                 <v-textarea
+                  class="float-none"
                   outlined
                   label="簡單描述特長、成就，讓企業快速瞭解你"
                   v-model="user.introduction"
                   rows="3"
+                  auto-grow
                   no-resize
+                  maxLength="200"
+                  counter="200"
                 ></v-textarea>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">個人特色</span>
-                <div class="mx-auto mt-2" style="max-width: 80%">
-                  <v-text-field
-                    outlined
-                    dense
-                    v-model="feature"
-                    v-on:keyup.enter="onFeatureEnter()"
-                    maxLength="10"
-                    counter="10"
-                  ></v-text-field>
-                </div>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>個人特色</span>
+                <v-text-field
+                  outlined
+                  dense
+                  v-model="feature"
+                  v-on:keyup.enter="onFeatureEnter()"
+                  maxLength="10"
+                  counter="10"
+                ></v-text-field>
                 <v-chip
                   v-for="(item, index) in features"
                   v-bind:key="index"
                   close
                   color="blue"
                   text-color="white"
+                  class="mr-2 mb-2"
                   @click:close="close(item)"
                 >
                   {{ item }}
                 </v-chip>
               </v-col>
             </v-row>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <span class="ml-14">個人連結</span>
+            <v-row no-gutters justify="center">
+              <v-col cols="12" sm="12" md="8" lg="8">
+                <span>個人連結</span>
                 <v-text-field outlined dense></v-text-field>
               </v-col>
             </v-row>
