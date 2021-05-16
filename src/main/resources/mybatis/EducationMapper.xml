@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sedia.resume.repository.EducationMapper">
+
+    <resultMap id="EducationResultMap" type="com.sedia.resume.entity.EducationEntity">
+    	<!-- //property指的是在Entity裡的屬性，而column就是在資料表的欄名 -->
+    	
+    	<!-- mybatis常用的型別
+    	<result property="FLD_NUMBER" column="FLD_NUMBER" javaType="double" jdbcType="NUMERIC"/>
+  		<result property="FLD_VARCHAR" column="FLD_VARCHAR" javaType="string" jdbcType="VARCHAR"/>
+  		<result property="FLD_DATE" column="FLD_DATE" javaType="java.sql.Date" jdbcType="DATE"/>
+  		<result property="FLD_INTEGER" column="FLD_INTEGER"  javaType="int" jdbcType="INTEGER"/>
+  		<result property="FLD_DOUBLE" column="FLD_DOUBLE"  javaType="double" jdbcType="DOUBLE"/>
+  		<result property="FLD_LONG" column="FLD_LONG"  javaType="long" jdbcType="INTEGER"/>
+  		<result property="FLD_CHAR" column="FLD_CHAR"  javaType="string" jdbcType="CHAR"/>
+  		<result property="FLD_BLOB" column="FLD_BLOB"  javaType="[B" jdbcType="BLOB" />
+  		<result property="FLD_CLOB" column="FLD_CLOB"  javaType="string" jdbcType="CLOB"/>
+  		<result property="FLD_FLOAT" column="FLD_FLOAT"  javaType="float" jdbcType="FLOAT"/>
+  		<result property="FLD_TIMESTAMP" column="FLD_TIMESTAMP"  javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/> -->
+  		
+  		
+     	<result column="ID" property="id" jdbcType="INTEGER" />
+        <result column="UID" property="uid" jdbcType="INTEGER" />
+        <result column="SCHOOL_NAME" property="schoolName" jdbcType="CHAR" />
+        <result column="LEVEL" property="level" jdbcType="CHAR" />
+        <result column="MAJOR" property="major" jdbcType="CHAR" />
+        <result column="SECOND_MAJOR" property="secondMajor" jdbcType="CHAR" />
+        <result column="STATUS" property="status" jdbcType="CHAR" />
+        <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+        <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+        <result column="COUNTRY" property="country" jdbcType="CHAR" />
+        <result column="GPA" property="GPA" jdbcType="FLOAT" />
+        <result column="CR_DATETIME" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="CR_USER" property="createUser" jdbcType="CHAR" />
+         <result column="UP_USER" property="updateUser" jdbcType="CHAR" />
+
+    </resultMap>
+    
+	<!-- 查詢符合查詢條件的資料 -->
+	<select id="findByEducationID" resultMap="EducationResultMap">
+        SELECT * FROM RESUME.EDUCATION WHERE UID = #{uid};
+    </select>
+    
+    <!-- 查詢所有資料 -->
+    <select id="findAll" resultMap="EducationResultMap">
+        SELECT * FROM RESUME.EDUCATION WHERE UID = #{uid};
+    </select>
+    
+    <!-- 新增資料 -->
+    <select id="insertEducation" resultMap="EducationResultMap">
+        INSERT INTO RESUME.Education (ID,UID,SCHOOL_NAME,LEVEL,MAJOR,SECOND_MAJOR,STATUS,START_DATE,END_DATE,COUNTRY,GPA,CR_DATETIME,UP_DATETIME,CR_USER,UP_USER) VALUES 
+        (#{id},#{uid},#{schoolName},#{level},#{major},#{secondMajor},#{status},#{startDate},#{endDate},#{country},#{GPA},#{createDate},#{updateDate},#{createUser},#{updateUser});
+    </select>
+    
+    <!-- 更新資料 -->
+	<!-- 0428SN跟UID的判定結構要在哪邊回傳 -->
+    <select id="updateEducation" resultMap="EducationResultMap">
+        UPDATE RESUME.Education SET (ID,UID,SCHOOL_NAME,LEVEL,MAJOR,SECOND_MAJOR,STATUS,START_DATE,END_DATE,COUNTRY,GPA,CR_DATETIME,UP_DATETIME,CR_USER,UP_USER) VALUES 
+        (#{id},#{uid},#{schoolName},#{level},#{major},#{secondMajor},#{status},#{startDate},#{endDate},#{country},#{GPA},#{createDate},#{updateDate},#{createUser},#{updateUser});
+        
+    </select>
+    
+	<!-- 刪除資料 -->
+    <select id="deleteEducation" resultMap="EducationResultMap">
+        DELETE FROM RESUME.EDUCATION WHERE UID = #{uid};
+    </select>
+    
+    <!-- 確認資料是否存在 -->
+    <!-- 0428如何讓mysql回傳boolean -->
+    <select id="isExistEducation" resultMap="EducationResultMap">
+        SELECT * FROM RESUME.EDUCATION WHERE UID = #{uid};
+    </select>
+    
+</mapper>

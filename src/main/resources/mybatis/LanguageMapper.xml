@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sedia.resume.repository.LanguageMapper">
+
+    <resultMap id="LanguageResultMap" type="com.sedia.resume.entity.LanguageEntity">
+    	<!-- //property指的是在Entity裡的屬性，而column就是在資料表的欄名 -->
+    	
+    	<!-- mybatis常用的型別
+    	<result property="FLD_NUMBER" column="FLD_NUMBER" javaType="double" jdbcType="NUMERIC"/>
+  		<result property="FLD_VARCHAR" column="FLD_VARCHAR" javaType="string" jdbcType="VARCHAR"/>
+  		<result property="FLD_DATE" column="FLD_DATE" javaType="java.sql.Date" jdbcType="DATE"/>
+  		<result property="FLD_INTEGER" column="FLD_INTEGER"  javaType="int" jdbcType="INTEGER"/>
+  		<result property="FLD_DOUBLE" column="FLD_DOUBLE"  javaType="double" jdbcType="DOUBLE"/>
+  		<result property="FLD_LONG" column="FLD_LONG"  javaType="long" jdbcType="INTEGER"/>
+  		<result property="FLD_CHAR" column="FLD_CHAR"  javaType="string" jdbcType="CHAR"/>
+  		<result property="FLD_BLOB" column="FLD_BLOB"  javaType="[B" jdbcType="BLOB" />
+  		<result property="FLD_CLOB" column="FLD_CLOB"  javaType="string" jdbcType="CLOB"/>
+  		<result property="FLD_FLOAT" column="FLD_FLOAT"  javaType="float" jdbcType="FLOAT"/>
+  		<result property="FLD_TIMESTAMP" column="FLD_TIMESTAMP"  javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/> -->
+  		
+  		
+     	<result column="ID" property="id" jdbcType="INTEGER" />
+        <result column="UID" property="uid" jdbcType="INTEGER" />
+        <result column="LANGUAGE" property="langauge" jdbcType="CHAR" />
+        <result column="SPEAKING" property="speaking" jdbcType="CHAR" />
+        <result column="READING" property="reading" jdbcType="CHAR" />
+        <result column="WRITING" property="writing" jdbcType="CHAR" />
+        <result column="CR_USER" property="createUser" jdbcType="CHAR" />
+        <result column="CR_DATETIME" property="createDate" jdbcType="CHAR" />
+        <result column="UP_USER" property="updateUser" jdbcType="CHAR" />
+        <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP" />
+    
+
+    </resultMap>
+    <!-- 查詢符合查詢條件的資料 -->
+	<select id="findByLanguageID" resultMap="LanguageResultMap">
+        SELECT * FROM RESUME.LANGUAGE WHERE UID = #{uid};
+    </select>
+    
+    
+    <!-- 查詢所有資料 -->
+    <select id="findAll" resultMap="LanguageResultMap">
+        SELECT * FROM LANGUAGE ;
+    </select>
+    
+    <!-- 新增資料 -->
+    <select id="insertLanguage" resultMap="LanguageResultMap">
+        INSERT INTO RESUME.LANGUAGE (ID,UID,LANGUAGE,LISTENING,SPEAKING,READING,WRITING,CR_USER,CR_DATETIME,UP_USER,UP_DATETIME) VALUES 
+         (#{id},#{uid},#{language},#{listening},#{spreaking},#{reading},#{writing},#{createUser},#{createDate},#{updateUser},#{updateDate});
+    </select>
+    
+    <!-- 更新資料 -->
+	<!-- 0428SN跟UID的判定結構要在哪邊回傳 -->
+    <select id="updateLanguage" resultMap="LanguageResultMap">
+        UPDATE RESUME.LANGUAGE SET (ID,UID,LANGUAGE,LISTENING,SPEAKING,READING,WRITING,CR_USER,CR_DATETIME,UP_USER,UP_DATETIME) VALUES 
+         (#{id},#{uid},#{language},#{listening},#{spreaking},#{reading},#{writing},#{createUser},#{createDate},#{updateUser},#{updateDate});
+    </select>
+    
+	<!-- 刪除資料 -->
+    <select id="deleteLanguage" resultMap="LanguageResultMap">
+        DELETE FROM RESUME.LANGUAGE WHERE UID = #{uid};
+    </select>
+    
+    <!-- 確認資料是否存在 -->
+    <!-- 0428如何讓mysql回傳boolean -->
+    <select id="isExistLanguage" resultMap="LanguageResultMap">
+        SELECT * FROM LANGUAGE WHERE UID = #{uid};
+    </select>
+    
+</mapper>

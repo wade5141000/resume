@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sedia.resume.repository.SkillMapper">
+
+    <resultMap id="SkillResultMap" type="com.sedia.resume.entity.SkillEntity">
+    	<!-- //property指的是在Entity裡的屬性，而column就是在資料表的欄名 -->
+    	
+    	<!-- mybatis常用的型別
+    	<result property="FLD_NUMBER" column="FLD_NUMBER" javaType="double" jdbcType="NUMERIC"/>
+  		<result property="FLD_VARCHAR" column="FLD_VARCHAR" javaType="string" jdbcType="VARCHAR"/>
+  		<result property="FLD_DATE" column="FLD_DATE" javaType="java.sql.Date" jdbcType="DATE"/>
+  		<result property="FLD_INTEGER" column="FLD_INTEGER"  javaType="int" jdbcType="INTEGER"/>
+  		<result property="FLD_DOUBLE" column="FLD_DOUBLE"  javaType="double" jdbcType="DOUBLE"/>
+  		<result property="FLD_LONG" column="FLD_LONG"  javaType="long" jdbcType="INTEGER"/>
+  		<result property="FLD_CHAR" column="FLD_CHAR"  javaType="string" jdbcType="CHAR"/>
+  		<result property="FLD_BLOB" column="FLD_BLOB"  javaType="[B" jdbcType="BLOB" />
+  		<result property="FLD_CLOB" column="FLD_CLOB"  javaType="string" jdbcType="CLOB"/>
+  		<result property="FLD_FLOAT" column="FLD_FLOAT"  javaType="float" jdbcType="FLOAT"/>
+  		<result property="FLD_TIMESTAMP" column="FLD_TIMESTAMP"  javaType="java.sql.Timestamp" jdbcType="TIMESTAMP"/> -->
+  		
+  		
+     	<result column="ID" property="id" jdbcType="INTEGER" />
+        <result column="UID" property="uid" jdbcType="INTEGER" />
+        <result column="SKILL_NAME" property="skillName" jdbcType="CHAR" />
+        <result column="SKILL_DESC" property="skillDesc" jdbcType="CHAR" />
+        <result column="cr_user" property="createUser" jdbcType="CHAR" />
+        <result column="cr_datetime" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="up_user" property="updateUser" jdbcType="CHAR" />
+        <result column="up_datetime" property="updateDate" jdbcType="TIMESTAMP" />
+
+    </resultMap>
+    
+ 	 <!-- 查詢符合查詢條件的資料 -->
+	<select id="findBySkillID" resultMap="SkillResultMap">
+        SELECT * FROM RESUME.SKILL WHERE UID = #{uid};
+    </select>
+      
+    <!-- 查詢所有資料 -->
+    <select id="findAll" resultMap="SkillResultMap">
+        SELECT * FROM SKILL ;
+    </select>
+    
+    <!-- 新增資料 -->
+    <select id="insertSkill" resultMap="SkillResultMap">
+	        INSERT INTO RESUME.SKILL (ID,UID,SKILL_NAME,SKILL_DESC,CR_USER,CR_DATETIME,UP_USER,UP_DATETIME) VALUES 
+	        (#{id},#{uid},#{skillName},#{skillDesc},#{createUser},#{createDate},#{updateUser},#{updateDate});
+    </select>
+    
+    <!-- 更新資料 -->
+	<!-- 0428SN跟UID的判定結構要在哪邊回傳 -->
+    <select id="updateSkill" resultMap="SkillResultMap">
+        UPDATE RESUME.SKILL (ID,UID,SKILL_NAME,SKILL_DESC,CR_USER,CR_DATETIME,UP_USER,UP_DATETIME) VALUES 
+	        (#{id},#{uid},#{skillName},#{skillDesc},#{createUser},#{createDate},#{updateUser},#{updateDate});
+    </select>
+    
+	<!-- 刪除資料 -->
+    <select id="deleteSkill" resultMap="SkillResultMap">
+        DELETE FROM RESUME.SKILL WHERE UID = #{uid};
+    </select>
+    
+    <!-- 確認資料是否存在 -->
+    <!-- 0428如何讓mysql回傳boolean -->
+    <select id="isExistSkill" resultMap="SkillResultMap">
+        SELECT * FROM SKILL WHERE UID = #{uid};
+    </select>
+    
+</mapper>
