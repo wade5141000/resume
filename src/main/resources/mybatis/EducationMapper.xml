@@ -23,19 +23,19 @@
   		
      	<result column="ID" property="id" jdbcType="INTEGER" />
         <result column="UID" property="uid" jdbcType="INTEGER" />
-        <result column="SCHOOL_NAME" property="schoolName" jdbcType="CHAR" />
-        <result column="LEVEL" property="level" jdbcType="CHAR" />
-        <result column="MAJOR" property="major" jdbcType="CHAR" />
-        <result column="SECOND_MAJOR" property="secondMajor" jdbcType="CHAR" />
-        <result column="STATUS" property="status" jdbcType="CHAR" />
+        <result column="SCHOOL_NAME" property="schoolName" jdbcType="VARCHAR" />
+        <result column="LEVEL" property="level" jdbcType="VARCHAR" />
+        <result column="MAJOR" property="major" jdbcType="VARCHAR" />
+        <result column="SECOND_MAJOR" property="secondMajor" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
         <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
         <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
-        <result column="COUNTRY" property="country" jdbcType="CHAR" />
+        <result column="COUNTRY" property="country" jdbcType="VARCHAR" />
         <result column="GPA" property="GPA" jdbcType="FLOAT" />
         <result column="CR_DATETIME" property="createDate" jdbcType="TIMESTAMP" />
         <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP" />
-        <result column="CR_USER" property="createUser" jdbcType="CHAR" />
-         <result column="UP_USER" property="updateUser" jdbcType="CHAR" />
+        <result column="CR_USER" property="createUser" jdbcType="VARCHAR" />
+         <result column="UP_USER" property="updateUser" jdbcType="VARCHAR" />
 
     </resultMap>
     
