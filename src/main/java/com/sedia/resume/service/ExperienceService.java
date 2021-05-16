@@ -24,8 +24,8 @@ public class ExperienceService {
     }
 
     // 取得經歷
-    public Optional<ExperienceEntity> getExperience(int sn, int uid) {
-        return experienceMapper.firstExperience(sn, uid);
+    public Optional<ExperienceEntity> getExperience(int sn,int uid) {
+        return experienceMapper.firstExperience(sn,uid);
     }
 
     // 取得經歷清單
@@ -40,15 +40,14 @@ public class ExperienceService {
     }
 
     // 新增經歷
-    public ExperienceEntity insertExperience(ExperienceEntity experience) {
+    public void insertExperience(ExperienceEntity experience) {
         experienceMapper.insertExperience(experience);
-        return experience;
 
     }
 
     // 刪除經歷
-    public boolean deleteExperience(int sn, int uid) {
-        return experienceMapper.deleteExperience(sn, uid);
+    public void deleteExperience(int sn) {
+        experienceMapper.deleteExperience(sn);
 
     }
 

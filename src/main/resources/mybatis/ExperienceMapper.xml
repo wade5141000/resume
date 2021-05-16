@@ -5,7 +5,7 @@
 <mapper namespace="com.sedia.resume.repository.ExperienceMapper">
 
     <resultMap id="ExperienceResultMap" type="com.sedia.resume.entity.ExperienceEntity">
-    	<!-- //property指的是在Entity裡的屬性，而column就是在資料表的欄名 -->
+    	<!-- //property指的是在Entity裡的類別變數，而column就是在資料表的欄名 -->
     	
     	<!-- mybatis常用的型別
     	<result property="FLD_NUMBER" column="FLD_NUMBER" javaType="double" jdbcType="NUMERIC"/>
@@ -27,47 +27,47 @@
         <result column="position" property="position" jdbcType="CHAR" />
         <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
         <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
-        <result column="experience_desc" property="experienceDescription" jdbcType="CHAR" />
+        <result column="experience_desc" property="experienceDesc" jdbcType="CHAR" />
         <result column="ability" property="ability" jdbcType="CHAR" />
         <result column="cr_user" property="crUser" jdbcType="CHAR" />
-        <result column="crdate_time" property="crDatetime" jdbcType="TIMESTAMP" />
+        <result column="cr_datetime" property="crDatetime" jdbcType="TIMESTAMP" />
         <result column="up_user" property="upUser" jdbcType="CHAR" />
-        <result column="update_time" property="upDatetime" jdbcType="TIMESTAMP" />
+        <result column="up_datetime" property="upDatetime" jdbcType="TIMESTAMP" />
 
     </resultMap>
     
 	<!-- 查詢使用者第一筆資料 -->
 	<select id="firstExperience" resultMap="ExperienceResultMap">
-        select * from experience where sn = #{sn};
+        select * from experience where id = #{sn} and uid = #{uid};
     </select>
     
     <!-- 查詢所有資料 -->
     <select id="listExperience" resultMap="ExperienceResultMap">
-        select * from experience
+        select * from experience;
     </select>
     
     <!-- 新增資料 -->
     <select id="insertExperience" resultMap="ExperienceResultMap">
-        insert into experience (uid,company_name,position,start_date,end_date,experience_description,ability,cr_datetime,up_datetime) values 
-        (#{uid},#{company_name},#{position},#{start_date},#{end_date},#{experience_description},#{ability},#{cr_datetime},#{up_datetime});
+        insert into experience (uid,company_name,position,start_date,end_date,experience_desc,ability,cr_user,cr_datetime) values 
+        (#{uid},#{companyName},#{position},#{startDate},#{endDate},#{experienceDesc},#{ability},#{crUser},#{crDatetime});
     </select>
     
     <!-- 更新資料 -->
-	<!-- 0428SN跟UID的判定結構要在哪邊回傳 -->
     <select id="updateExperience" resultMap="ExperienceResultMap">
-        update experience set (sn,user_id,company_name,position,start_date,end_date,experience_description,abilite,up_datetime) values 
-        (#{sn},#{uid},#{company_name},#{position},#{start_date},#{end_date},#{experience_description},#{ability},#{cr_datetime},#{up_datetime});
+        update experience set id=#{sn},uid=#{uid},company_name=#{companyName},position = #{position},start_date = #{startDate},
+        end_date = #{endDate},experience_desc = #{experienceDesc},ability = #{ability},up_user = #{upUser},up_datetime = #{upDatetime}
+        where id = #{sn} and uid = #{uid};
     </select>
     
 	<!-- 刪除資料 -->
     <select id="deleteExperience" resultMap="ExperienceResultMap">
-        delete from experience where sn = #{sn};
+        delete from experience where id = #{sn};
     </select>
     
     <!-- 確認資料是否存在 -->
     <!-- 0428如何讓mysql回傳boolean -->
     <select id="isExistExperience" resultMap="ExperienceResultMap">
-        select * from experience where sn = #{sn};
+        select * from experience where id = #{sn} and uid = #{uid};
     </select>
     
 </mapper>

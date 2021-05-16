@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,22 +16,22 @@ public class ExperienceController {
 
     final ExperienceService service;
 
-    // 取得所有經歷列表
-    @GetMapping("/experience/{id}")
+    // 取得使用者所有經歷列表
+    @GetMapping("/experience/{uid}")
     public List<ExperienceEntity> getExperienceList(int uid) {
         return service.getExperienceList(uid);
     }
 
-    // 取得經歷列表
-    @GetMapping("/experience/{SN}&{id}")
-    public Optional<ExperienceEntity> getExperience(@PathVariable int sn, int uid) {
-        return service.getExperience(sn, uid);
+    // 取得使用者一筆經歷
+    @GetMapping("/experience/{sn}/{uid}")//不能兩個sn&uid,或者用{sn}/{uid}要跟伯寬跟vicky講一下改sn
+    public Optional<ExperienceEntity> getExperience(@PathVariable int sn,int uid) {
+        return service.getExperience(sn,uid);
     }
 
-    // 新增經歷列表
+    // 新增經歷列表 
     @PostMapping("/experience")
-    public ExperienceEntity intserExperience(@RequestBody ExperienceEntity experience) {
-        return service.insertExperience(experience);
+    public void intserExperience(@RequestBody ExperienceEntity experience) {
+        service.insertExperience(experience);
 
     }
 
@@ -43,9 +42,10 @@ public class ExperienceController {
     }
 
     // 刪除經歷列表
-    @DeleteMapping("/experience/{SN}&{id}")
-    public boolean deleteExperience(@PathVariable int sn, int uid) {
-        return service.deleteExperience(sn, uid);
+    //要跟柏寬他們討論是否直接void就好
+    @DeleteMapping("/experience/{sn}")
+    public void deleteExperience(@PathVariable int sn) {
+        service.deleteExperience(sn);
     }
 
 }
