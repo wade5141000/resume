@@ -7,7 +7,9 @@ import Privacy from "../views/Privacy.vue";
 import Terms from "../views/Terms.vue";
 import Forgetpw from "../views/Forgetpw.vue";
 import Resetpw from "../views/Resetpw.vue";
-import BasicInfo from "../views/basic-info/BasicInfo";
+import BasicInfo from "../views/user-info/BasicInfo";
+import EducationInfo from "../views/user-info/EducationInfo";
+import ExperienceInfo from "../views/user-info/ExperienceInfo";
 
 Vue.use(VueRouter);
 
@@ -69,9 +71,25 @@ const routes = [
     }
   },
   {
-    path: "/basic",
+    path: "/user-info",
     name: "BasicInfo",
     component: BasicInfo,
+    meta: {
+      title: "基本資料"
+    }
+  },
+  {
+    path: "/education",
+    name: "EducationInfo",
+    component: EducationInfo,
+    meta: {
+      title: "基本資料"
+    }
+  },
+  {
+    path: "/experience",
+    name: "ExperienceInfo",
+    component: ExperienceInfo,
     meta: {
       title: "基本資料"
     }

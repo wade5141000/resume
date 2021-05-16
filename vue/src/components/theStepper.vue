@@ -1,30 +1,63 @@
 <template>
-  <v-stepper alt-labels>
-    <v-stepper-header>
-      <v-stepper-step step="1">
-        Ad unit details
-      </v-stepper-step>
+    <v-stepper alt-labels v-model="step">
+        <v-stepper-header>
+            <v-stepper-step
+                step="1"
+                editable
+                @click="routerTo('/user-info')"
+            >
+              基本資料
+            </v-stepper-step>
 
-      <v-divider></v-divider>
+            <v-divider/>
+          <v-stepper-step
+              step="2"
+              editable
+              @click="routerTo('/education')"
+          >
+            學歷
+          </v-stepper-step>
 
-      <v-stepper-step step="2">
-        Ad sizes
-      </v-stepper-step>
+          <v-divider/>
+          <v-stepper-step
+              step="3"
+              editable
+              @click="routerTo('/experience')"
+          >
+            工作經歷
+          </v-stepper-step>
 
-      <v-divider></v-divider>
+          <v-divider/>
+          <v-stepper-step
+              step="4"
+              editable
+          >
+            專業技能
+          </v-stepper-step>
 
-      <v-stepper-step step="3">
-        Ad templates
-      </v-stepper-step>
-    </v-stepper-header>
-    <v-stepper-content>
-      <h1>123456</h1>
-    </v-stepper-content>
-  </v-stepper>
+          <v-divider/>
+          <v-stepper-step
+              step="5"
+              editable
+          >
+            自傳
+          </v-stepper-step>
+
+        </v-stepper-header>
+    </v-stepper>
 </template>
 
 <script>
 export default {
-  data: () => ({})
+  props:['step'],
+  data: () => ({}),
+  methods:{
+    routerTo(path){
+      if(this.$router.currentRoute.path !== path){
+        this.$router.push({path})
+      }
+
+    }
+  }
 };
 </script>

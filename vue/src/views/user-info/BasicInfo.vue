@@ -1,10 +1,11 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" sm="12" md="8" lg="6">
-      <v-expansion-panels v-model="panel" multiple>
-        <v-expansion-panel disabled>
+    <v-col cols="12" md="8" lg="6" class="mt-6">
+      <theStepper step="1"></theStepper>
+      <v-expansion-panels v-model="panel" multiple class="mt-8">
+        <v-expansion-panel>
           <v-expansion-panel-header color="blue">
-            <span class="white--text">基本資料</span>
+            <span class="white--text text-h6">基本資料</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="mt-6" no-gutters justify="center">
@@ -14,7 +15,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>生日</span>
                 <v-menu
                   ref="menu"
@@ -46,7 +47,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>性別</span>
                 <v-radio-group v-model="user.sex" row class="mt-0">
                   <v-radio label="男" value="0"></v-radio>
@@ -55,17 +56,18 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>兵役狀況</span>
                 <v-select
                   :items="militaryItems"
                   outlined
+                  dense
                   v-model="user.militaryService"
                 ></v-select>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>通訊地址</span>
                 <v-text-field
                   outlined
@@ -75,7 +77,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>email</span>
                 <v-text-field
                   outlined
@@ -85,7 +87,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>聯絡電話</span>
                 <v-text-field
                   outlined
@@ -95,33 +97,33 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>駕駛執照</span>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="3" sm="3" md="2" lg="2">
+              <v-col cols="3" md="3" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="輕型機車50CC"
                   value="a"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" sm="3" md="3" lg="3">
+              <v-col cols="3" md="3" lg="3">
                 <v-checkbox
                   v-model="driverLicense"
                   label="重型機車50~250CC"
                   value="b"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" sm="3" md="2" lg="2">
+              <v-col cols="3" md="3" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="汽車駕駛執照"
                   value="c"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" sm="3" md="1" lg="1">
+              <v-col cols="3" md="1" lg="1">
                 <v-checkbox
                   v-model="driverLicense"
                   label="無"
@@ -130,33 +132,26 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>特殊身份</span>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="3" sm="3" md="2" lg="2">
+              <v-col cols="3" md="3" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="外籍人士"
                   value="a"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" sm="3" md="2" lg="2">
+              <v-col cols="3" md="3" lg="3">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="原住民"
                   value="b"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" sm="3" md="2" lg="2">
-                <v-checkbox
-                  v-model="specialIdentity"
-                  label="二度就業"
-                  value="c"
-                ></v-checkbox>
-              </v-col>
-              <v-col cols="3" sm="3" md="2" lg="2">
+              <v-col cols="6" md="4" lg="3">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="身心障礙"
@@ -165,20 +160,20 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="6" sm="6" md="4" lg="4">
+              <v-col cols="6" md="5" lg="4">
                 <span>自我簡介</span>
               </v-col>
-              <v-col cols="6" sm="6" md="4" lg="4" class="d-flex justify-end">
+              <v-col cols="6" md="5" lg="4" class="d-flex justify-end">
                 <span
                   ><v-icon color="blue">mdi-chat-question</v-icon>看看範例</span
                 ></v-col
               >
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <v-textarea
                   outlined
-                  label="簡單描述特長、成就，讓企業快速瞭解你"
+                  placeholder="簡單描述特長、成就，讓企業快速瞭解你"
                   v-model="user.introduction"
                   rows="3"
                   auto-grow
@@ -189,15 +184,15 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>個人特色</span>
                 <v-text-field
                   outlined
                   dense
                   v-model="feature"
                   v-on:keyup.enter="onFeatureEnter()"
-                  maxLength="10"
-                  counter="10"
+                  maxLength="20"
+                  counter="20"
                 ></v-text-field>
                 <v-chip
                   v-for="(item, index) in features"
@@ -213,7 +208,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" sm="12" md="8" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <span>個人連結</span>
                 <v-text-field outlined dense></v-text-field>
               </v-col>
@@ -228,7 +223,6 @@
 
 <script>
 import theStepper from "../../components/theStepper";
-
 export default {
   components: {
     theStepper
