@@ -10,6 +10,7 @@ import Resetpw from "../views/Resetpw.vue";
 import BasicInfo from "../views/user-info/BasicInfo";
 import EducationInfo from "../views/user-info/EducationInfo";
 import ExperienceInfo from "../views/user-info/ExperienceInfo";
+import SkillInfo from "../views/user-info/SkillInfo";
 
 Vue.use(VueRouter);
 
@@ -83,7 +84,7 @@ const routes = [
     name: "EducationInfo",
     component: EducationInfo,
     meta: {
-      title: "基本資料"
+      title: "學歷"
     }
   },
   {
@@ -91,7 +92,15 @@ const routes = [
     name: "ExperienceInfo",
     component: ExperienceInfo,
     meta: {
-      title: "基本資料"
+      title: "工作經歷"
+    }
+  },
+  {
+    path: "/skill",
+    name: "SkillInfo",
+    component: SkillInfo,
+    meta: {
+      title: "專業技能"
     }
   },
   {

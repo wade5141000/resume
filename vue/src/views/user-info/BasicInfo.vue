@@ -41,7 +41,7 @@
                     v-model="user.birthday"
                     :max="new Date().toISOString().substr(0, 10)"
                     min="1950-01-01"
-                    @change="pickDate"
+                    @change="pickBirthDay"
                   ></v-date-picker>
                 </v-menu>
               </v-col>
@@ -55,8 +55,8 @@
                 </v-radio-group>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
+            <v-row justify="center">
+              <v-col cols="5" md="4" lg="3">
                 <span>兵役狀況</span>
                 <v-select
                   :items="militaryItems"
@@ -64,6 +64,36 @@
                   dense
                   v-model="user.militaryService"
                 ></v-select>
+              </v-col>
+              <v-col cols="7" md="6" lg="5">
+                <span>役畢日期</span>
+                <v-menu
+                  ref="menu2"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="user.militaryServiceDate"
+                      outlined
+                      dense
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    ref="picker2"
+                    v-model="user.militaryServiceDate"
+                    :max="new Date().toISOString().substr(0, 10)"
+                    min="1950-01-01"
+                    @change="pickMilitaryServiceDate"
+                  ></v-date-picker>
+                </v-menu>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
@@ -213,7 +243,13 @@
                 <v-text-field outlined dense></v-text-field>
               </v-col>
             </v-row>
-            <v-btn @click="test">test</v-btn>
+            <v-row no-gutters justify="center">
+              <v-col cols="5" md="4" lg="4">
+                <v-btn depressed large block color="primary" @click="nextStep"
+                  >下一步</v-btn
+                >
+              </v-col>
+            </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -227,9 +263,18 @@ export default {
   components: {
     theStepper
   },
+  watch: {
+    menu(val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
+    },
+    menu2(val) {
+      val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
+    }
+  },
   data: () => ({
     panel: [0],
     menu: false,
+    menu2: false,
     militaryItems: [
       { text: "已服役", value: 1 },
       { text: "未服役", value: 0 }
@@ -242,19 +287,18 @@ export default {
     feature: "",
     features: []
   }),
-  watch: {
-    menu(val) {
-      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
-  },
   methods: {
-    pickDate(date) {
+    pickBirthDay(date) {
       this.$refs.menu.save(date);
     },
-    test() {
+    pickMilitaryServiceDate(date) {
+      this.$refs.menu2.save(date);
+    },
+    nextStep() {
       console.log(this.user);
       console.log(this.driverLicense);
       console.log(this.features);
+      this.$router.push("/education");
     },
     onFeatureEnter() {
       if (this.feature.length > 0) {
