@@ -11,13 +11,21 @@
             <v-row class="mt-6" no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
                 <span>公司名稱</span>
-                <v-text-field outlined dense v-model="user.name"></v-text-field>
+                <v-text-field
+                  outlined
+                  dense
+                  v-model="experience.companyName"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
                 <span>職務名稱</span>
-                <v-text-field outlined dense v-model="user.name"></v-text-field>
+                <v-text-field
+                  outlined
+                  dense
+                  v-model="experience.position"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
@@ -28,61 +36,59 @@
             <v-row no-gutters justify="center">
               <v-col cols="6" md="5" lg="4">
                 <v-menu
-                    ref="menu1"
-                    v-model="menu1"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                        v-model="user.birthday1"
-                        outlined
-                        dense
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
+                      v-model="experience.startDate"
+                      outlined
+                      dense
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
                     ></v-text-field>
                   </template>
                   <v-date-picker
-                      ref="picker"
-                      type="month"
-                      v-model="user.birthday1"
-                      :max="new Date().toISOString().substr(0, 10)"
-                      min="1950-01-01"
-                      @change="pickStartDate"
+                    ref="picker"
+                    v-model="experience.startDate"
+                    :max="new Date().toISOString().substr(0, 10)"
+                    min="1950-01-01"
+                    @change="pickStartDate"
                   ></v-date-picker>
                 </v-menu>
               </v-col>
               <v-col cols="6" md="5" lg="4">
                 <v-menu
-                    ref="menu2"
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
+                  ref="menu2"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                        v-model="user.birthday2"
-                        outlined
-                        dense
-                        prepend-icon="mdi-calendar"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
+                      v-model="experience.endDate"
+                      outlined
+                      dense
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
                     ></v-text-field>
                   </template>
                   <v-date-picker
-                      ref="picker"
-                      type="month"
-                      v-model="user.birthday2"
-                      :max="new Date().toISOString().substr(0, 10)"
-                      min="1950-01-01"
-                      @change="pickEndDate"
+                    ref="picker2"
+                    v-model="experience.endDate"
+                    :max="new Date().toISOString().substr(0, 10)"
+                    min="1950-01-01"
+                    @change="pickEndDate"
                   ></v-date-picker>
                 </v-menu>
               </v-col>
@@ -102,7 +108,7 @@
                 <v-textarea
                   outlined
                   placeholder="假如你應徵的職位很看重某項工作技能，而你在某間公司得到的經驗，剛好可以佐證你具有相關能力，足以應付未來的挑戰。這時你必須把它放進工作經歷內並詳細描述說明。"
-                  v-model="user.introduction"
+                  v-model="experience.experienceDesc"
                   rows="5"
                   auto-grow
                   no-resize
@@ -117,13 +123,13 @@
                 <v-text-field
                   outlined
                   dense
-                  v-model="feature"
-                  v-on:keyup.enter="onFeatureEnter()"
+                  v-model="ability"
+                  v-on:keyup.enter="onAbilityEnter()"
                   maxLength="20"
                   counter="20"
                 ></v-text-field>
                 <v-chip
-                  v-for="(item, index) in features"
+                  v-for="(item, index) in abilities"
                   v-bind:key="index"
                   close
                   color="blue"
@@ -135,7 +141,13 @@
                 </v-chip>
               </v-col>
             </v-row>
-            <v-btn @click="test">test</v-btn>
+            <v-row no-gutters justify="center">
+              <v-col cols="5" md="4" lg="4">
+                <v-btn depressed large block color="primary" @click="nextStep"
+                  >下一步</v-btn
+                >
+              </v-col>
+            </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
@@ -149,34 +161,42 @@ export default {
   components: {
     theStepper
   },
+  watch: {
+    menu(val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
+    },
+    menu2(val) {
+      val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
+    }
+  },
   data: () => ({
     panel: [0],
-    menu1: false,
+    menu: false,
     menu2: false,
-    user: {
-      militaryService: 0
-    },
-    feature: "",
-    features: []
+    experience: {},
+    ability: "",
+    abilities: []
   }),
-
   methods: {
     pickStartDate(date) {
-      this.$refs.menu1.save(date);
+      this.$refs.menu.save(date);
     },
     pickEndDate(date) {
       this.$refs.menu2.save(date);
     },
-    test() {
+    nextStep() {
+      this.experience.ability = this.abilities.join(",");
+      console.log(this.experience);
+      this.$router.push("/skill");
     },
-    onFeatureEnter() {
-      if (this.feature.length > 0) {
-        this.features.push(this.feature);
-        this.feature = "";
+    onAbilityEnter() {
+      if (this.ability.length > 0) {
+        this.abilities.push(this.ability);
+        this.ability = "";
       }
     },
     close(str) {
-      this.features = this.features.filter(item => item !== str);
+      this.abilities = this.abilities.filter(item => item !== str);
     }
   }
 };
