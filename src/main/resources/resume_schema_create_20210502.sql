@@ -213,7 +213,7 @@ CREATE TABLE `resume`.`user` (
   `EMAIL` varchar(30) NOT NULL COMMENT '信箱',
   `PHONE` varchar(20) DEFAULT NULL COMMENT '電話',
   `BIRTHDAY` timestamp NULL DEFAULT NULL COMMENT '生日',
-  `SEX` tinyint DEFAULT NULL COMMENT '性別',
+  `SEX` char(1) DEFAULT NULL COMMENT '性別',
   `MILITARY_SERVICE` tinyint DEFAULT NULL COMMENT '已服役',
   `MILITARY_DATE` timestamp NULL DEFAULT NULL COMMENT '退伍日期',
   `ADDRESS` varchar(255) DEFAULT NULL COMMENT '通訊地址',

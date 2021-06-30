@@ -13,4 +13,6 @@ class GenericEntity {
 
     private LocalDateTime createDate;
 
+    private LocalDateTime updateDate;
+
 }

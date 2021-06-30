@@ -1,6 +1,5 @@
-package com.sedia.resume.controller;
+package com.sedia.resume.exception;
 
-import com.sedia.resume.exception.ApplicationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,9 +13,9 @@ import static org.springframework.http.HttpStatus.OK;
 public class RestExceptionHandler {
 
     /** 攔截自定義的 exception，轉換成指定的 response 格式 */
-    @ExceptionHandler(ApplicationException.class)
+    @ExceptionHandler(ApiException.class)
     @ResponseStatus(OK)
-    public void applicationExceptionHandle(ApplicationException e) {
+    public void applicationExceptionHandle(ApiException e) {
 
         // TODO 接到自定義的 exception 後如何處理
 
