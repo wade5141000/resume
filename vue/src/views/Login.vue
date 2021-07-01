@@ -20,7 +20,7 @@
               <v-sheet max-width="500">
                 <form>
                   <v-text-field
-                    v-model="username"
+                    v-model="account"
                     :counter="10"
                     outlined
                     required
@@ -28,9 +28,9 @@
                     prepend-inner-icon="mdi-account-outline"
                     hide-details="auto"
                     placeholder="請輸入帳號"
-                    :error-messages="usernameErrors"
-                    @input="$v.username.$touch()"
-                    @blur="$v.username.$touch()"
+                    :error-messages="accountErrors"
+                    @input="$v.account.$touch()"
+                    @blur="$v.account.$touch()"
                   ></v-text-field>
                   <v-text-field
                     v-model="password"
@@ -96,22 +96,22 @@ import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
   mixins: [validationMixin],
   validations: {
-    username: { required, maxLength: maxLength(10) },
+    account: { required, maxLength: maxLength(10) },
     password: { required, maxLength: maxLength(10) },
     minLength: minLength(4)
   },
   data() {
     return {
-      username: "",
+      account: "",
       password: ""
     };
   },
   computed: {
-    usernameErrors() {
+    accountErrors() {
       const errors = [];
-      if (!this.$v.username.$dirty) return errors;
-      !this.$v.username.maxLength && errors.push("帳號為4-10個英文或數字");
-      !this.$v.username.required && errors.push("請輸入帳號.");
+      if (!this.$v.account.$dirty) return errors;
+      !this.$v.account.maxLength && errors.push("帳號為4-10個英文或數字");
+      !this.$v.account.required && errors.push("請輸入帳號.");
       return errors;
     },
     passwordErrors() {
@@ -130,7 +130,7 @@ export default {
     },
     login() {
       const data = {
-        username: this.username,
+        account: this.account,
         password: this.password
       };
       const formData = new FormData();
@@ -170,8 +170,8 @@ export default {
 
 <!-- 自訂 css with vuetify sass -->
 <style lang="sass" scoped>
-	@import '~vuetify/src/styles/styles.sass'
+@import '~vuetify/src/styles/styles.sass'
 
-	.my-green
-		color: map-get($green, 'base')
+.my-green
+	color: map-get($green, 'base')
 </style>

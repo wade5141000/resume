@@ -7,6 +7,11 @@ import Privacy from "../views/Privacy.vue";
 import Terms from "../views/Terms.vue";
 import Forgetpw from "../views/Forgetpw.vue";
 import Resetpw from "../views/Resetpw.vue";
+import BasicInfo from "../views/user-info/BasicInfo";
+import EducationInfo from "../views/user-info/EducationInfo";
+import ExperienceInfo from "../views/user-info/ExperienceInfo";
+import SkillInfo from "../views/user-info/SkillInfo";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -64,6 +69,38 @@ const routes = [
     component: Privacy,
     meta: {
       title: "隱私權政策"
+    }
+  },
+  {
+    path: "/user-info",
+    name: "BasicInfo",
+    component: BasicInfo,
+    meta: {
+      title: "基本資料"
+    }
+  },
+  {
+    path: "/education",
+    name: "EducationInfo",
+    component: EducationInfo,
+    meta: {
+      title: "學歷"
+    }
+  },
+  {
+    path: "/experience",
+    name: "ExperienceInfo",
+    component: ExperienceInfo,
+    meta: {
+      title: "工作經歷"
+    }
+  },
+  {
+    path: "/skill",
+    name: "SkillInfo",
+    component: SkillInfo,
+    meta: {
+      title: "專業技能"
     }
   },
   {

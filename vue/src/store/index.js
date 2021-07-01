@@ -11,7 +11,7 @@ const store = new Vuex.Store({
     user: {
       jwt: "",
       id: "",
-      username: ""
+      account: ""
     }
   },
   mutations: {

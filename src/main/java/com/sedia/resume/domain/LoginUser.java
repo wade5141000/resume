@@ -9,7 +9,7 @@ public class LoginUser {
 
     private Integer id;
 
-    private String username;
+    private String account;
 
     private String jwt;
 
