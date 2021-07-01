@@ -21,7 +21,7 @@
       </v-stepper-step>
 
       <v-divider />
-      <v-stepper-step step="5" editable>
+      <v-stepper-step step="5" editable @click="routerTo('/autobiography')">
         自傳
       </v-stepper-step>
     </v-stepper-header>

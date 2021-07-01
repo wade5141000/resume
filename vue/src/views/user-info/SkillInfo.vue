@@ -11,11 +11,7 @@
             <v-row class="mt-6" no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
                 <span>專長名稱</span>
-                <v-text-field
-                  outlined
-                  dense
-                  v-model="experience.companyName"
-                ></v-text-field>
+                <v-text-field outlined dense></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
@@ -32,7 +28,6 @@
               <v-col cols="12" md="10" lg="8">
                 <v-textarea
                   outlined
-                  v-model="experience.experienceDesc"
                   rows="3"
                   auto-grow
                   no-resize
@@ -55,56 +50,48 @@
             <!--              </v-col>-->
             <!--            </v-row>-->
             <v-row class="mt-2" justify="center">
-              <v-col cols="4" md="4" lg="4">
+              <v-col cols="4" md="2" lg="2">
                 <span>語言類型</span>
-                <v-text-field
-                  outlined
-                  dense
-                  hide-details
-                  v-model="experience.companyName"
-                ></v-text-field>
+                <v-text-field outlined dense hide-details></v-text-field>
               </v-col>
-              <v-col cols="4" md="4" lg="1">
+              <v-col cols="2" md="2" lg="2">
                 <span>聽</span>
-                <v-select dense outlined></v-select>
+                <v-select dense outlined :items="languageLevels"></v-select>
               </v-col>
-              <v-col cols="4" md="4" lg="1">
+              <v-col cols="2" md="2" lg="2">
                 <span>說</span>
-                <v-select dense outlined></v-select>
+                <v-select dense outlined :items="languageLevels"></v-select>
               </v-col>
-              <v-col cols="4" md="4" lg="1">
+              <v-col cols="2" md="2" lg="2">
                 <span>讀</span>
-                <v-select dense outlined></v-select>
+                <v-select dense outlined :items="languageLevels"></v-select>
               </v-col>
-              <v-col cols="4" md="4" lg="1">
+              <v-col cols="2" md="2" lg="2">
                 <span>寫</span>
-                <v-select dense outlined></v-select>
+                <v-select dense outlined :items="languageLevels"></v-select>
               </v-col>
-
-              <!--              <v-col cols="1" md="1" lg="1">-->
-              <!--                <span>說</span>-->
-              <!--                <v-text-field-->
-              <!--                    outlined-->
-              <!--                    dense-->
-              <!--                    v-model="experience.companyName"-->
-              <!--                ></v-text-field>-->
-              <!--              </v-col>-->
-              <!--              <v-col cols="1" md="1" lg="1">-->
-              <!--                <span>讀</span>-->
-              <!--                <v-text-field-->
-              <!--                    outlined-->
-              <!--                    dense-->
-              <!--                    v-model="experience.companyName"-->
-              <!--                ></v-text-field>-->
-              <!--              </v-col>-->
-              <!--              <v-col cols="1" md="1" lg="1">-->
-              <!--                <span>寫</span>-->
-              <!--                <v-text-field-->
-              <!--                    outlined-->
-              <!--                    dense-->
-              <!--                    v-model="experience.companyName"-->
-              <!--                ></v-text-field>-->
-              <!--              </v-col>-->
+            </v-row>
+            <v-row justify="center" class="mt-0">
+              <v-col cols="4" md="2" lg="2">
+                <span>語言類型2</span>
+                <v-text-field outlined dense hide-details></v-text-field>
+              </v-col>
+              <v-col cols="2" md="2" lg="2">
+                <span>聽</span>
+                <v-select dense outlined :items="languageLevels"></v-select>
+              </v-col>
+              <v-col cols="2" md="2" lg="2">
+                <span>說</span>
+                <v-select dense outlined :items="languageLevels"></v-select>
+              </v-col>
+              <v-col cols="2" md="2" lg="2">
+                <span>讀</span>
+                <v-select dense outlined :items="languageLevels"></v-select>
+              </v-col>
+              <v-col cols="2" md="2" lg="2">
+                <span>寫</span>
+                <v-select dense outlined :items="languageLevels"></v-select>
+              </v-col>
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -124,6 +111,7 @@
                   v-on:keyup.enter="onLicenseEnter()"
                   maxLength="20"
                   counter="20"
+                  placeholder="輸入完畢按下【Enter】鍵完成新增"
                 ></v-text-field>
                 <v-chip
                   v-for="(item, index) in licenses"
@@ -158,34 +146,22 @@ export default {
   components: {
     theStepper
   },
-  watch: {
-    menu(val) {
-      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    },
-    menu2(val) {
-      val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
-    }
-  },
   data: () => ({
     panel: [0, 1, 2],
-    menu: false,
-    menu2: false,
-    experience: {},
+    skill: {},
+    languages: [],
     license: "",
     licenses: [],
-    items: []
+    languageLevels: [
+      { text: "精通", value: "精通" },
+      { text: "中等", value: "中等" },
+      { text: "略懂", value: "略懂" },
+      { text: "不會", value: "不會" }
+    ]
   }),
   methods: {
-    pickStartDate(date) {
-      this.$refs.menu.save(date);
-    },
-    pickEndDate(date) {
-      this.$refs.menu2.save(date);
-    },
     nextStep() {
-      this.experience.license = this.licenses.join(",");
-      console.log(this.experience);
-      //this.$router.push("/experience");
+      this.$router.push("/autobiography");
     },
     onLicenseEnter() {
       if (this.license.length > 0) {
@@ -201,12 +177,7 @@ export default {
 </script>
 
 <style>
-span {
-  color: dodgerblue;
-}
-
-.v-select {
-  display: inline-block;
-  width: auto;
-}
+/*span {*/
+/*  color: dodgerblue;*/
+/*}*/
 </style>
