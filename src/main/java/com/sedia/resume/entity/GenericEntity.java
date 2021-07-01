@@ -11,7 +11,11 @@ class GenericEntity {
 
     private Integer id;
 
+    private String createUser;
+
     private LocalDateTime createDate;
+
+    private String updateUser;
 
     private LocalDateTime updateDate;
 

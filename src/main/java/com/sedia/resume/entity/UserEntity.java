@@ -1,7 +1,7 @@
 package com.sedia.resume.entity;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,11 +12,11 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@Builder
+@NoArgsConstructor
 public class UserEntity extends GenericEntity implements UserDetails {
 
     /** 帳號 */
-    private String username;
+    private String account;
 
     private String password;
 
@@ -36,7 +36,7 @@ public class UserEntity extends GenericEntity implements UserDetails {
 
     private String address;
 
-    private String identity;
+    private String specialIdentity;
 
     private String introduction;
 
@@ -49,6 +49,11 @@ public class UserEntity extends GenericEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.account;
     }
 
     @Override

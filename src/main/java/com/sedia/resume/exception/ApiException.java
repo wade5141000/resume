@@ -17,4 +17,8 @@ public class ApiException extends RuntimeException {
 
     private List<ApiError> errors;
 
+    public ApiException(String message) {
+        this.message = message;
+    }
+
 }

@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping
     public List<UserEntity> getUser() {
-        // String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserEntity currentUser = service.getCurrentUser(); // 取得當前登入的使用者
         return service.getUsers();
     }
 
