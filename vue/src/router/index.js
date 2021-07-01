@@ -11,6 +11,7 @@ import BasicInfo from "../views/user-info/BasicInfo";
 import EducationInfo from "../views/user-info/EducationInfo";
 import ExperienceInfo from "../views/user-info/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
+import Autobiography from "../views/user-info/Autobiography";
 
 Vue.use(VueRouter);
 
@@ -101,6 +102,14 @@ const routes = [
     component: SkillInfo,
     meta: {
       title: "專業技能"
+    }
+  },
+  {
+    path: "/autobiography",
+    name: "Autobiography",
+    component: Autobiography,
+    meta: {
+      title: "自傳"
     }
   },
   {

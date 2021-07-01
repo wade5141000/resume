@@ -86,6 +86,7 @@
                       readonly
                       v-bind="attrs"
                       v-on="on"
+                      placeholder="請選擇日期"
                     ></v-text-field>
                   </template>
                   <v-date-picker
@@ -115,6 +116,8 @@
                       readonly
                       v-bind="attrs"
                       v-on="on"
+                      class="ml-6"
+                      placeholder="請選擇日期"
                     ></v-text-field>
                   </template>
                   <v-date-picker
@@ -152,7 +155,7 @@
                 <v-text-field outlined dense v-model="edu.GPA"></v-text-field>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center">
+            <v-row no-gutters justify="center" class="my-6">
               <v-col cols="5" md="4" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
                   >下一步</v-btn
@@ -214,7 +217,7 @@ export default {
 </script>
 
 <style scoped>
-span {
-  color: dodgerblue;
-}
+/*span {*/
+/*  color: dodgerblue;*/
+/*}*/
 </style>
