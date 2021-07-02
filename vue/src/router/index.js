@@ -1,23 +1,32 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import About from "../views/About.vue";
-import Login from "../views/Login.vue";
-import Signup from "../views/Signup.vue";
+import About from "../views/Index.vue";
+import Login from "../views/account/Login.vue";
+import Signup from "../views/account/Signup.vue";
 import Privacy from "../views/Privacy.vue";
 import Terms from "../views/Terms.vue";
-import Forgetpw from "../views/Forgetpw.vue";
-import Resetpw from "../views/Resetpw.vue";
+import Forgetpw from "../views/account/Forgetpw";
+import Resetpw from "../views/account/Resetpw.vue";
 import BasicInfo from "../views/user-info/BasicInfo";
 import EducationInfo from "../views/user-info/EducationInfo";
 import ExperienceInfo from "../views/user-info/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import Autobiography from "../views/user-info/Autobiography";
+import Index from "../views/Index";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
+    name: "Index",
+    component: Index,
+    meta: {
+      title: "首頁"
+    }
+  },
+  {
+    path: "/login",
     name: "Login",
     component: Login,
     meta: {
