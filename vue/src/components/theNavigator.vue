@@ -12,16 +12,6 @@
           content-class
         ></v-img>
       </router-link>
-      <!--      <a href="/">-->
-      <!--        <v-img-->
-      <!--          src="../assets/logo_white.svg"-->
-      <!--          height="40"-->
-      <!--          max-width="100"-->
-      <!--          color="white"-->
-      <!--          contain-->
-      <!--          content-class-->
-      <!--        ></v-img-->
-      <!--      ></a>-->
     </div>
     <v-btn
       class="mr-2"
