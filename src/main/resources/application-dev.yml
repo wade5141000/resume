@@ -2,4 +2,4 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/resume?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
     username: root
-    password: fjusc0918
+    password: Gn01460072

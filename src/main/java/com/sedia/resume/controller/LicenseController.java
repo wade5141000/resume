@@ -12,16 +12,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LicenseController {
 
-    final LicenseService service; // 服務者的請求.sn,uid
+    final LicenseService service;
 
-    // 取得全部證照列表
+    // 取得資料庫全部證照列表  
     @GetMapping("/license/{id}") // http標籤
-    public List<LicenseEntity> getLicenseList(int uid) {
+    public List<LicenseEntity> getLicenseList(@PathVariable("id") int uid) {
         return service.getLicenseList(uid);
     }
 
-    // 取得證照
-    @GetMapping("/license/{SN}&{id}")
+    // 使用者取得證照
+    //這邊有問題
+    @GetMapping("/license/{SN}/{id}")
     public LicenseEntity getLicense(@PathVariable int sn, int uid) {
         return service.getLicense(sn, uid);
     }
@@ -29,8 +30,8 @@ public class LicenseController {
     // 以下是4/17確認將功能拆分。額外的method,新增()、編輯()、更新()、boolean刪除()
     // 新增證照資料
     @PostMapping("/license")
-    public LicenseEntity insertLicense(@RequestBody LicenseEntity license) {
-        return service.insertLicense(license);
+    public void insertLicense(@RequestBody LicenseEntity license) {
+        service.insertLicense(license);
 
     }
 
@@ -41,7 +42,7 @@ public class LicenseController {
     }
 
     // 刪除證照資料
-    @DeleteMapping("/license/{SN}&{id}")
+    @DeleteMapping("/license/{SN}/{id}")
     public boolean deleteLicense(@PathVariable int sn, int uid) {
         return service.deleteLicense(sn, uid);
     }

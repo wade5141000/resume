@@ -2,40 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.sedia.resume.repository.LicenseMapper">
-
+	
     <resultMap id="LicenseResultMap" type="com.sedia.resume.entity.LicenseEntity">
     
-        <result column="sn" property="sn" jdbcType="INTEGER" />
-        <result column="user_id" property="uid" jdbcType="INTEGER" />
-        <result column="license_name" property="lsName" jdbcType="CHAR" />
-        <result column="cr_datetime" property="crDatetime" jdbcType="TIMESTAMP" />
+        <result column="id" property="sn" jdbcType="INTEGER" />
+        <result column="uid" property="uid" jdbcType="INTEGER" />
+        <result column="name" property="lsName" jdbcType="CHAR" />
+        <result column="cr_user" property="crUser" jdbcType="CHAR" />
+        <result column="cr_datetime" property="crDatetime" jdbcType="CHAR" />
+        <result column="up_user" property="upUser" jdbcType="TIMESTAMP" />
         <result column="up_datetime" property="upDatetime" jdbcType="TIMESTAMP" />
     </resultMap>
+    
 	<!-- 查詢第一筆資料 -->
 	<select id="findFirstLicense" resultMap="LicenseResultMap">
-        SELECT * FROM LICENSE OREDR BY SN LIMIT 1;
+        select * from license order by sn = # {sn} limit 1;
     </select>
+    
     <!-- 查詢所有資料 -->
     <select id="findAll" resultMap="LicenseResultMap">
-        SELECT * FROM LICENSE ;
+        select * from license ;
     </select>
+    
     <!-- 新增資料 -->
     <select id="insertLicense" resultMap="LicenseResultMap">
-        INSERT INTO RESUME.LICENSE (SN,USER_ID,LICENSE_NAME,CR_DATETIME,UP_DATETIME) VALUES (#{SN},#{USER_ID},#{LICENSE_NAME},#{CR_DATETIME},#{UP_DATETIME});
+        insert into license (uid,name,cr_datetime,up_user) values 
+        (#{uid},#{name},#{cr_user},#{cr_datetime},#{up_user});
     </select>
+    
     <!-- 更新資料 -->
-	<!-- 0428SN跟UID的判定結構要在哪邊回傳 -->
     <select id="updateLicense" resultMap="LicenseResultMap">
-        UPDATE RESUME.LICENSE SET (SN,USER_ID,LICENSE_NAME,UP_DATETIME) VALUES (#{SN},#{USER_ID},#{LICENSE_NAME},#{UP_DATETIME});
+        update license set (uid,name,up_user,up_datetime) values (#{uid},#{name},{up_user},#{up_datetime});
     </select>
+    
 	<!-- 刪除資料 -->
     <select id="deleteLicense" resultMap="LicenseResultMap">
-        DELETE FROM RESUME.LICENSE WHERE ID = #{SN};
+        delete from license where id = #{id};
     </select>
+    
     <!-- 確認資料是否存在 -->
     <!-- 0428如何讓mysql回傳boolean -->
-    <select id="isExistExperience" resultMap="LicenseResultMap">
-        SELECT * FROM LICENSE WHERE ID = #{id};
+    <select id="isExistLicense" resultMap="LicenseResultMap">
+        select * from license where = #{id};
     </select>
 
 

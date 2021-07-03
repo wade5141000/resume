@@ -17,7 +17,7 @@ public interface LicenseMapper {
     List<LicenseEntity> findAll(int uid);
 
     // 證照資料表 新增資料
-    LicenseEntity insertLicense(LicenseEntity license);
+    void insertLicense(LicenseEntity license);
 
     // 證照資料表 修改資料
     LicenseEntity updateLicense(LicenseEntity license);

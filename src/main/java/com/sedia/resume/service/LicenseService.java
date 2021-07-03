@@ -43,9 +43,8 @@ public class LicenseService {
     }
 
     // 新增證照
-    public LicenseEntity insertLicense(LicenseEntity license) {
+    public void insertLicense(LicenseEntity license) {
         licenseMapper.insertLicense(license);
-        return license;
     }
 
     // 刪除證照

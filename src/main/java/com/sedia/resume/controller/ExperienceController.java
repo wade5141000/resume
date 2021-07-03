@@ -2,6 +2,7 @@ package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.ExperienceEntity;
 import com.sedia.resume.service.ExperienceService;
+import com.sedia.resume.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExperienceController {
 
     final ExperienceService service;
+    final UserService userService;
 
     // 取得使用者所有經歷列表
     @GetMapping("/experience/{uid}")
@@ -23,8 +25,10 @@ public class ExperienceController {
     }
 
     // 取得使用者一筆經歷
-    @GetMapping("/experience/{sn}/{uid}")//不能兩個sn&uid,或者用{sn}/{uid}要跟伯寬跟vicky講一下改sn
-    public Optional<ExperienceEntity> getExperience(@PathVariable int sn,int uid) {
+    @GetMapping("/experience/{sn}")//不能兩個sn&uid,或者用{sn}/{uid}要跟伯寬跟vicky講一下改sn
+    public Optional<ExperienceEntity> getExperience(@PathVariable int sn) {
+    	
+    	
         return service.getExperience(sn,uid);
     }
 
