@@ -9,7 +9,7 @@ public interface UserMapper {
 
     List<UserEntity> findAll();
 
-    Optional<UserEntity> findByUsername(String username);
+    Optional<UserEntity> findByAccount(String account);
 
     Optional<UserEntity> findById(int id);
 

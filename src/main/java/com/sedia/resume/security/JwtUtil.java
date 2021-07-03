@@ -38,7 +38,7 @@ public class JwtUtil {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
             UserEntity user = (UserEntity) auth.getPrincipal();
-            LoginUser loginUser = LoginUser.builder().id(user.getId()).username(user.getUsername()).jwt(jwt).build();
+            LoginUser loginUser = LoginUser.builder().id(user.getId()).account(user.getAccount()).jwt(jwt).build();
             response.getOutputStream().println(MAPPER.writeValueAsString(loginUser));
             log.info("登入成功");
         } catch (Exception e) {
@@ -60,16 +60,15 @@ public class JwtUtil {
                         .parseClaimsJws(token.replace(TOKEN_PREFIX, "")).getBody();
 
                 // 拿用户名
-                String username = claims.getSubject();
+                String account = claims.getSubject();
                 // 得到權限
                 List<GrantedAuthority> authorities = AuthorityUtils
                         .commaSeparatedStringToAuthorityList((String) claims.get("authorize"));
-                return StringUtils.hasText(username)
-                        ? new UsernamePasswordAuthenticationToken(username, null, authorities) : null;
+                return StringUtils.hasText(account)
+                        ? new UsernamePasswordAuthenticationToken(account, null, authorities) : null;
             } catch (JwtException e) {
                 log.error("JWT 驗證發生錯誤", e);
             }
-
         }
         return null;
     }

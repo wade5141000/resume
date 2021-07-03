@@ -38,20 +38,11 @@ spring:
     port: 5671
     username: root
     password: ENC(Kd3Mg7odDUXoLoRpfUp0kLpadOlmLT8ueGJtskcLAwb2JjywsOGqn2uyalzIdqhX)
-  mail:
-    default-encoding: UTF-8
-    host: smtp.gmail.com
-    port: 587
-    username: # fixme
-    password: # fixme
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enabled: true
-            required: true
 
 jasypt:
   encryptor:
     password: resume
+
+sendgrid:
+  api-key: ENC(RL/YEV8X22wtYMGEktgFxVo34nUEmzyavLYPE772zjRRdEHjQmUU2sM/Q0Plm0u5jp1KlU3iIyDuuDmpOhzzCuYl5gfTy66pQRTg8MaNyeHWbnB1du5xZd9D7eZkYMwhsVOLImQ6H7HMT0s3enF/XQ==)
+
