@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sedia.resume.repository.LanguageMapper">
+
+    <resultMap id="LanguageResultMap" type="com.sedia.resume.entity.LanguageEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="UID" property="uid" jdbcType="INTEGER"/>
+        <result column="LANGUAGE" property="language" jdbcType="VARCHAR"/>
+        <result column="LISTENING" property="listening" jdbcType="VARCHAR"/>
+        <result column="SPEAKING" property="speaking" jdbcType="VARCHAR"/>
+        <result column="READING" property="reading" jdbcType="VARCHAR"/>
+        <result column="WRITING" property="writing" jdbcType="VARCHAR"/>
+        <result column="CR_USER" property="createUser" jdbcType="VARCHAR"/>
+        <result column="CR_DATETIME" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="UP_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="LanguageResultMap">
+        SELECT * FROM LANGUAGE;
+    </select>
+    
+    <select id="findByLanguageId" resultMap="LanguageResultMap">
+        SELECT * FROM LANGUAGE WHERE ID = #{id};
+    </select>
+
+    <insert id="insertLanguage" parameterType="com.sedia.resume.entity.LanguageEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO LANGUAGE (UID, LANGUAGE, LISTENING, SPEAKING, READING, WRITING, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
+   VALUES (#{UID}, #{LANGUAGE}, #{LISTENING}, #{SPEAKING}, #{READING}, #{WRITING}, #{CR_USER}, #{CR_DATETIME}, #{UP_USER}, #{UP_DATETIME});
+    </insert>
+    
+    <update id="updateLanguage" parameterType="com.sedia.resume.entity.LanguageEntity" useGeneratedKeys="true" keyProperty="id">
+        UPDATE LANGUAGE SET 
+        UID = #{UID}, LANGUAGE = #{LANGUAGE}, LISTENING = #{LISTENING}, SPEAKING = #{SPEAKING}, READING = #{READING}, WRITING = #{WRITING}, CR_USER = #{CR_USER}, CR_DATETIME = #{CR_DATETIME}, UP_USER = #{UP_USER}, UP_DATETIME= #{UP_DATETIME}
+        where id = #{id};
+	</update>
+	
+	<delete id="deleteLanguage">
+  		delete from Language where id = #{id};
+	</delete>
+  
+</mapper>

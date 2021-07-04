@@ -3,7 +3,7 @@ package com.sedia.resume.controller;
 import com.sedia.resume.entity.EducationEntity;
 import com.sedia.resume.service.EducationService;
 import com.sedia.resume.service.UserService;
-
+import com.sedia.resume.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,35 +16,43 @@ public class EducationController {
     final EducationService service;
     final UserService userService;
     
-    // 取得所有學歷列表
-    @GetMapping("/education/")
+    // 取得使用者所有學歷列表
+    @GetMapping("/education")
     public List<EducationEntity> getEducationList() {
     	int uid = userService.getCurrentUser().getId();
         return service.getEducationList(uid);
     }
     
-    // 取得學歷資料 ??
-    @GetMapping("/education/{uid}")
-    public EducationEntity getEducation(@PathVariable int uid) {
-        return service.getEducation(uid);
+    // 取得使用者一筆學歷資料 
+    @GetMapping("/education/{id}")
+    public EducationEntity getEducation(int id) {
+    	int uid = userService.getCurrentUser().getId();
+        return service.getEducation(id,uid);
     }
 
     // 新增學歷資料
     @PostMapping("/education")
     public void createEducation(@RequestBody EducationEntity education) {
+    	int uid = userService.getCurrentUser().getId();
+    	education.setUid(uid);
         service.insertEducation(education);
     }
 
     // 修改學歷資料
-    @PutMapping("/education/")
+    @PutMapping("/education")
     public EducationEntity updateEducation(@RequestBody EducationEntity education) {
+    	int uid = userService.getCurrentUser().getId();
+    	education.setUid(uid);
+    	education.setUpdateUser(userService.getCurrentUser().getUsername());
+    	education.setUpdateDate(userService.getCurrentUser().getUpdateDate());
         return service.updateEducation(education);
     }
     
     // 刪除學歷資料
-    @DeleteMapping("/education/{uid}")
-    public boolean deleteEducation(@PathVariable int uid) {
-        return service.deleteEducation(uid);
+    @DeleteMapping("/education/{id}")
+    public void deleteEducation(@PathVariable int id) {
+    	int uid = userService.getCurrentUser().getId();
+        service.deleteEducation(id, uid);
     }
     
  /* //確認資料是否存在 ??

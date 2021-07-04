@@ -11,7 +11,7 @@ public interface LanguageMapper {
 	List<LanguageEntity> findAll(int uid);
 	
 	// 查詢資料：回傳符合查詢條件的資料
-	Optional<LanguageEntity> findByLanguageID(int uid);
+	Optional<LanguageEntity> findByLanguageId(int id, int uid);
 	
 	// 新增資料
 	void insertLanguage(LanguageEntity language);
@@ -20,9 +20,8 @@ public interface LanguageMapper {
 	LanguageEntity updateLanguage(LanguageEntity language);
 	
 	// 刪除資料
-	boolean deleteLanguage(int uid);
+	boolean deleteLanguage(int id, int uid);
 	
-	//確認資料是否存在
-	boolean isExistLanguage(int uid);
+	
 
 }

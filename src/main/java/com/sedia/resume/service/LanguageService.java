@@ -34,36 +34,36 @@ public class LanguageService {
 //    }
     
     // 檢查語言是否存在
-    public boolean checkLanguage(int uid) {
-    	languageMapper.findByLanguageID(uid).orElseThrow(() -> new RuntimeException("找不到 Language"));
+    public boolean checkLanguage(int id, int uid) {
+    	languageMapper.findByLanguageId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Language"));
 		return true;
     }
 
     // 取得語言
-    public LanguageEntity getLanguage(int uid) {
-		return languageMapper.findByLanguageID(uid).orElseThrow(() -> new RuntimeException("找不到 Language"));
+    public LanguageEntity getLanguage(int id, int uid) {
+		return languageMapper.findByLanguageId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Language"));
     }
     
     // 取得語言清單技能
-    public List<LanguageEntity> getLanguageList(int id) {
-        return languageMapper.findAll(id);
+    public List<LanguageEntity> getLanguageList(int uid) {
+        return languageMapper.findAll(uid);
     }
     
     // 編輯語言
-    public LanguageEntity updateLanguage(LanguageEntity talent) {    
-    	languageMapper.updateLanguage(talent);
-		return talent;
+    public LanguageEntity updateLanguage(LanguageEntity language) {    
+    	languageMapper.updateLanguage(language);
+		return language;
     }
     
     // 新增語言
-    public LanguageEntity insertLanguage(LanguageEntity talent) { 
-    	languageMapper.insertLanguage(talent);
-		return talent;
+    public LanguageEntity insertLanguage(LanguageEntity language) { 
+    	languageMapper.insertLanguage(language);
+		return language;
     }
     
     // 刪除語言
-    public boolean deleteLanguage(int uid) { 
-    	languageMapper.deleteLanguage(uid);
+    public boolean deleteLanguage(int id, int uid) { 
+    	languageMapper.deleteLanguage(id, uid);
 		return true;
     }
    

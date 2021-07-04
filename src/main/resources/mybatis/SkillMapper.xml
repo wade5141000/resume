@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sedia.resume.repository.SkillMapper">
+
+    <resultMap id="SkillResultMap" type="com.sedia.resume.entity.SkillEntity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="UID" property="uid" jdbcType="INTEGER"/>
+        <result column="SKILL_NAME" property="skillName" jdbcType="VARCHAR"/>
+        <result column="SKILL_DESC" property="skillDesc" jdbcType="VARCHAR"/>
+        <result column="CR_USER" property="createUser" jdbcType="VARCHAR"/>
+        <result column="CR_DATETIME" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="UP_USER" property="updateUser" jdbcType="VARCHAR"/>
+        <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="SkillResultMap">
+        SELECT * FROM SKILL;
+    </select>
+    
+    <select id="findBySkillId" resultMap="SkillResultMap">
+        SELECT * FROM SKILL WHERE ID = #{id};
+    </select>
+
+    <insert id="insertSkill" parameterType="com.sedia.resume.entity.SkillEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO LANGUAGE (UID, SKILL_NAME, SKILL_DESC, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
+   VALUES (#{UID}, #{SKILL_NAME}, #{SKILL_DESC}, #{CR_USER}, #{CR_DATETIME}, #{UP_USER}, #{UP_DATETIME});
+    </insert>
+    
+    <update id="updateSkill" parameterType="com.sedia.resume.entity.SkillEntity" useGeneratedKeys="true" keyProperty="id">
+        UPDATE SKILL SET 
+        UID = #{UID}, SKILL_NAME = #{SKILL_NAME}, SKILL_DESC = #{SKILL_DESC}, CR_USER = #{CR_USER}, CR_DATETIME = #{CR_DATETIME}, UP_USER = #{UP_USER}, UP_DATETIME= #{UP_DATETIME}
+        where id = #{id};
+	</update>
+	
+	<delete id="deleteSkill">
+  		delete from Skill where id = #{id};
+	</delete>
+  
+</mapper>

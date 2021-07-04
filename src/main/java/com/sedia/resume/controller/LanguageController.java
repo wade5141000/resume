@@ -5,7 +5,6 @@ import com.sedia.resume.service.LanguageService;
 import com.sedia.resume.service.UserService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,33 +17,42 @@ public class LanguageController {
     final UserService userService;
 
     // 取得所有語言列表
-    @GetMapping("/language/{id}")
-    public List<LanguageEntity> getLanguageList(@PathVariable int id) {
-        return service.getLanguageList(id);
+    @GetMapping("/language/")
+    public List<LanguageEntity> getLanguageList() {
+    	int uid = userService.getCurrentUser().getId();
+        return service.getLanguageList(uid);
     }
     
     // 取得語言資料
-    @GetMapping("/language/{uid}/{id}")
-    public LanguageEntity getLanguage(@PathVariable int uid) {
-        return service.getLanguage(uid);
+    @GetMapping("/language/{id}")
+    public LanguageEntity getLanguage(int id) {
+    	int uid = userService.getCurrentUser().getId();
+        return service.getLanguage(id,uid);
     }
 
     // 新增語言資料
     @PostMapping("/language")
     public LanguageEntity createSkill(@RequestBody LanguageEntity language) {
+    	int uid = userService.getCurrentUser().getId();
+    	language.setUid(uid);
         return (LanguageEntity) service.insertLanguage(language);
     }
 
     // 修改語言資料
     @PutMapping("/language")
     public LanguageEntity updateLanguage(@RequestBody LanguageEntity language) {
+    	int uid = userService.getCurrentUser().getId();
+    	language.setUid(uid);
+    	language.setUpdateUser(userService.getCurrentUser().getUsername());
+    	language.setUpdateDate(userService.getCurrentUser().getUpdateDate());
         return service.updateLanguage(language);
     }
     
     // 刪除語言資料
-    @DeleteMapping("/language/{UID}/{id}") 
-    public boolean deleteLanguage(@PathVariable int uid) {
-        return service.deleteLanguage(uid);
+    @DeleteMapping("/language/{id}") 
+    public boolean deleteLanguage(@PathVariable int id) {
+    	int uid = userService.getCurrentUser().getId();
+        return service.deleteLanguage(id,uid);
     }
    
 

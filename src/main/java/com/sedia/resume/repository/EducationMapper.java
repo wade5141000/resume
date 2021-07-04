@@ -13,7 +13,7 @@ public interface EducationMapper {
 	List<EducationEntity> findAll(int uid);
 	
 	// 查詢資料：回傳符合查詢條件的資料
-	Optional<EducationEntity> findByEducationID(int uid);
+	Optional<EducationEntity> findByEducationId(int id, int uid);
 	
 	// 新增資料
 	void insertEducation(EducationEntity education);
@@ -22,9 +22,7 @@ public interface EducationMapper {
 	EducationEntity updateEducation(EducationEntity education);
 	
 	// 刪除資料
-	boolean deleteEducation(int uid);
+	boolean deleteEducation(int id, int uid);
 	
-	//確認資料是否存在
-	boolean isExistEducation(int uid);
-
+	
 }

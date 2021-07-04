@@ -16,9 +16,9 @@ public class EducationService {
     final EducationMapper educationMapper;
     
     // 檢查學歷是否存在
-    public boolean checkEducation(int uid) {
+    public boolean checkEducation(int id, int uid) {
     	try {
-    		educationMapper.findByEducationID(uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
+    		educationMapper.findByEducationId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
     	}
     	catch(RuntimeException ex) {
     		return false;
@@ -27,9 +27,9 @@ public class EducationService {
     	return true;
     }
  
-    // 取得學歷
-    public EducationEntity getEducation(int uid) {
-		return educationMapper.findByEducationID(uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
+    // 取得一筆學歷
+    public EducationEntity getEducation(int id, int uid) {
+		return educationMapper.findByEducationId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
     }
     // 取得學歷清單
     public List<EducationEntity> getEducationList(int uid) {
@@ -48,16 +48,12 @@ public class EducationService {
     }
     
     // 刪除學歷
-    public boolean deleteEducation(int uid) { 
-    	educationMapper.deleteEducation(uid);
+    public boolean deleteEducation(int id, int uid) { 
+    	educationMapper.deleteEducation(id, uid);
 		return true;
     }
     
- // 確認資料是否存在
-    public boolean isExistEducation(int uid) { 
-    	educationMapper.isExistEducation(uid);
-		return true;
-    }
+ 
     
 }
 

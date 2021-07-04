@@ -18,20 +18,24 @@ public class SkillController {
     final UserService userService;
 
     // 取得所有技能列表
-    @GetMapping("/skill/{id}") 
-    public List<SkillEntity> getSkillList(@PathVariable int id) {
-        return service.getSkillList(id);
+    @GetMapping("/skill/") 
+    public List<SkillEntity> getSkillList() {
+    	int uid = userService.getCurrentUser().getId();
+        return service.getSkillList(uid);
     }
     
     // 取得技能資料
-    @GetMapping("/skill/{uid}/{id}") 
-    public SkillEntity getSkill(@PathVariable int uid) {
-        return service.getSkill(uid);
+    @GetMapping("/skill/{id}") 
+    public SkillEntity getSkill(int id) {
+    	int uid = userService.getCurrentUser().getId();
+        return service.getSkill(id,uid);
     }
 
     // 新增技能資料
     @PostMapping("/skill")
     public SkillEntity createSkill(@RequestBody SkillEntity skill) {
+    	int uid = userService.getCurrentUser().getId();
+    	skill.setUid(uid);
         return (SkillEntity) service.insertSkill(skill);
     }
     
@@ -39,13 +43,18 @@ public class SkillController {
     // 修改技能資料
     @PutMapping("/skill")
     public SkillEntity updateEducation(@RequestBody SkillEntity skill) {
+    	int uid = userService.getCurrentUser().getId();
+    	skill.setUid(uid);
+    	skill.setUpdateUser(userService.getCurrentUser().getUsername());
+    	skill.setUpdateDate(userService.getCurrentUser().getUpdateDate());
         return service.updateSkill(skill);
     }
 
     // 刪除技能資料
-    @DeleteMapping("/skill/{uid}/{id}")
-    public boolean deleteSkill(@PathVariable int uid) {
-        return service.deleteSkill(uid);
+    @DeleteMapping("/skill/{id}")
+    public boolean deleteSkill(@PathVariable int id) {
+    	int uid = userService.getCurrentUser().getId();
+        return service.deleteSkill(id,uid);
     }
 
 
