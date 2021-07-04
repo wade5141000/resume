@@ -7,6 +7,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.sedia.resume.queue.MessageSender;
 import com.sedia.resume.security.JwtUtil;
+import com.sedia.resume.service.UserService;
 import com.sedia.resume.utils.AwsUtils;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -50,6 +51,8 @@ public class TestController {
 
     @Value("${sendgrid.api-key}")
     private String sendGridKey;
+    
+    final UserService userService;
 
     @GetMapping("/upload")
     public String testUpload() throws IOException {
