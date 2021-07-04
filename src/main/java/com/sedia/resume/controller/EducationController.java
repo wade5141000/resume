@@ -17,13 +17,14 @@ public class EducationController {
     final UserService userService;
     
     // 取得所有學歷列表
-    @GetMapping("/education/{id}")
-    public List<EducationEntity> getEducationList(@PathVariable("id") int uid) {
+    @GetMapping("/education/")
+    public List<EducationEntity> getEducationList() {
+    	int uid = userService.getCurrentUser().getId();
         return service.getEducationList(uid);
     }
     
     // 取得學歷資料 ??
-    @GetMapping("education/{uid}")
+    @GetMapping("/education/{uid}")
     public EducationEntity getEducation(@PathVariable int uid) {
         return service.getEducation(uid);
     }
@@ -46,12 +47,12 @@ public class EducationController {
         return service.deleteEducation(uid);
     }
     
-  //確認資料是否存在 ??
+ /* //確認資料是否存在 ??
     @GetMapping("/education/{uid}")
   	boolean isExistEducation(int uid) {
     	return service.isExistEducation(uid);
   	}
     
- 
+ */
 
 }
