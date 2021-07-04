@@ -2,7 +2,11 @@ package com.sedia.resume.service;
 
 import com.sedia.resume.repository.ExperienceMapper;
 import com.sedia.resume.entity.ExperienceEntity;
+import com.sedia.resume.exception.ApiException;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -16,7 +20,7 @@ public class ExperienceService {
     final ExperienceMapper experienceMapper;
 
     // 檢查經歷ID是否存在
-    boolean checkExperienceID(int sn, int uid) {
+    public boolean checkExperienceID(int sn, int uid) {
         if (experienceMapper.isExistExperience(sn, uid))
             return true;
         else
@@ -24,9 +28,9 @@ public class ExperienceService {
     }
 
     // 取得經歷
-    public Optional<ExperienceEntity> getExperience(int sn,int uid) {
-        return experienceMapper.firstExperience(sn,uid);
-    }
+    public ExperienceEntity getExperience(int sn,int uid) {
+    	return experienceMapper.firstExperience(sn, uid).orElseThrow(() -> new RuntimeException("找不到 證照"));
+        }
 
     // 取得經歷清單
     public List<ExperienceEntity> getExperienceList(int uid) {
@@ -46,9 +50,9 @@ public class ExperienceService {
     }
 
     // 刪除經歷
-    public void deleteExperience(int sn) {
-        experienceMapper.deleteExperience(sn);
-
+    public void deleteExperience(int uid,int sn) {
+        experienceMapper.deleteExperience(uid,sn);
+        
     }
 
     // //controller的儲存方法

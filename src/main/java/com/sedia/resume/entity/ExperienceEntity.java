@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ExperienceEntity {
-	/*統一駝峰式命名*/
+	/*統一小駝峰式命名*/
 	
     // 流水號
     private int sn;

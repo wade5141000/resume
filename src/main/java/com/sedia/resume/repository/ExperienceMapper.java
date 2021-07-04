@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.sedia.resume.entity.ExperienceEntity;
+import com.sedia.resume.entity.UserEntity;
 
 public interface ExperienceMapper {
 
@@ -20,9 +21,11 @@ public interface ExperienceMapper {
     ExperienceEntity updateExperience(ExperienceEntity user);
 
     // 經歷資料表 刪除資料
-    void deleteExperience(int sn);
+    void deleteExperience(int sn,int uid);
 
     // 經歷資料表 是否已存在
     boolean isExistExperience(int sn, int uid);
+    
+    
 
 }
