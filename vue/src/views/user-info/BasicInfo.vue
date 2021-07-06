@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="8" lg="6" class="mt-6">
+    <v-col cols="12" md="10" lg="10" class="mt-6">
       <theStepper step="1"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-8">
         <v-expansion-panel>
@@ -10,8 +10,13 @@
           <v-expansion-panel-content>
             <v-row class="mt-6" no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
-                <span>姓名</span>
-                <v-text-field outlined dense v-model="user.name"></v-text-field>
+                <!--                <span>姓名</span>-->
+                <v-text-field
+                  label="姓名"
+                  outlined
+                  dense
+                  v-model="user.name"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
