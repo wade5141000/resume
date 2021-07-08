@@ -31,7 +31,7 @@ public class UserEntity extends GenericEntity implements UserDetails {
 
     private String sex;
 
-    private boolean militaryService;
+    private String militaryService;
 
     private LocalDate militaryDate;
 
