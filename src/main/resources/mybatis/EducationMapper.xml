@@ -22,26 +22,26 @@
     </resultMap>
 
     <select id="findAll" resultMap="EducationResultMap">
-        SELECT * FROM Education;
+        SELECT * FROM Education WHERE UID = #{uid};
     </select>
     
     <select id="findByEducationId" resultMap="EducationResultMap">
-        SELECT * FROM EDUCATION  WHERE ID = #{id};
+        SELECT * FROM EDUCATION  WHERE ID = #{id} and uid = #{uid};
     </select>
 
     <insert id="insertEducation" parameterType="com.sedia.resume.entity.EducationEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO EDUCATION (UID, SCHOOL_NAME, LEVEL, MAJOR, SECOND_MAJOR, STATUS, START_DATE, END_DATE, COUNTRY, GPA, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
-   VALUES (#{UID}, #{SCHOOL_NAME}, #{LEVEL}, #{MAJOR}, #{SECOND_MAJOR}, #{STATUS}, #{START_DATE}, #{END_DATE}, #{COUNTRY}, #{GPA}, #{CR_USER}, #{CR_DATETIME}, #{UP_USER}, #{UP_DATETIME});
+   VALUES (#{uid}, #{schoolName}, #{level}, #{major}, #{secondMajor}, #{status}, #{startDate}, #{endDate}, #{country}, #{gpa}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
     
     <update id="updateEducation" parameterType="com.sedia.resume.entity.EducationEntity" useGeneratedKeys="true" keyProperty="id">
         UPDATE EDUCATION SET 
-        UID = #{UID}, SCHOOL_NAME = #{SCHOOL_NAME}, LEVEL = #{LEVEL}, MAJOR = #{MAJOR}, SECOND_MAJOR = #{SECOND_MAJOR}, STATUS = #{STATUS}, START_DATE = #{START_DATE}, END_DATE = #{END_DATE}, COUNTRY = #{COUNTRY}, GPA = #{GPA}, CR_USER = #{CR_USER}, CR_DATETIME = #{CR_DATETIME}, UP_USER = #{UP_USER}, UP_DATETIME= #{UP_DATETIME}
-        where id = #{id};
+        UID = #{uid}, SCHOOL_NAME = #{schoolName}, LEVEL = #{level}, MAJOR = #{major}, SECOND_MAJOR = #{secondMajor}, STATUS = #{status}, START_DATE = #{startDate}, END_DATE = #{endDate}, COUNTRY = #{country}, GPA = #{gpa}, CR_USER = #{createUser}, CR_DATETIME = #{createDate}, UP_USER = #{updateUser}, UP_DATETIME= #{updateDate}
+        where id = #{id} and uid = #{uid};
 	</update>
 	
 	<delete id="deleteEducation">
-  		delete from EDUCATION where id = #{id};
+  		delete from EDUCATION where id = #{id} and uid = #{uid};
 	</delete>
   
 </mapper>

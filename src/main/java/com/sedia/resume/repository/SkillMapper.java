@@ -17,7 +17,7 @@ public interface SkillMapper {
 	void insertSkill(SkillEntity skill);
 	
 	// 修改資料
-	SkillEntity updateSkill(SkillEntity skill);
+	void updateSkill(SkillEntity skill);
 	
 	// 刪除資料
 	boolean deleteSkill(int id, int uid);

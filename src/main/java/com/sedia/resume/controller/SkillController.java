@@ -42,12 +42,12 @@ public class SkillController {
 
     // 修改技能資料
     @PutMapping("/skill")
-    public SkillEntity updateEducation(@RequestBody SkillEntity skill) {
+    public void updateSkill(@RequestBody SkillEntity skill) {
     	int uid = userService.getCurrentUser().getId();
     	skill.setUid(uid);
     	skill.setUpdateUser(userService.getCurrentUser().getUsername());
     	skill.setUpdateDate(userService.getCurrentUser().getUpdateDate());
-        return service.updateSkill(skill);
+       service.updateSkill(skill);
     }
 
     // 刪除技能資料

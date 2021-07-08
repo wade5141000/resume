@@ -60,9 +60,8 @@ public class SkillService {
     }
     
     // 編輯技能
-    public SkillEntity updateSkill(SkillEntity skill) {    
+    public void updateSkill(SkillEntity skill) {    
     	skillMapper.updateSkill(skill);
-		return skill;
     }
     
     // 新增技能

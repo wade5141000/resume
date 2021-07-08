@@ -18,26 +18,26 @@
     </resultMap>
 
     <select id="findAll" resultMap="LanguageResultMap">
-        SELECT * FROM LANGUAGE;
+        SELECT * FROM LANGUAGE WHERE UID = #{uid};
     </select>
     
     <select id="findByLanguageId" resultMap="LanguageResultMap">
-        SELECT * FROM LANGUAGE WHERE ID = #{id};
+        SELECT * FROM LANGUAGE WHERE ID = #{id} and uid = #{uid};
     </select>
 
     <insert id="insertLanguage" parameterType="com.sedia.resume.entity.LanguageEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO LANGUAGE (UID, LANGUAGE, LISTENING, SPEAKING, READING, WRITING, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
-   VALUES (#{UID}, #{LANGUAGE}, #{LISTENING}, #{SPEAKING}, #{READING}, #{WRITING}, #{CR_USER}, #{CR_DATETIME}, #{UP_USER}, #{UP_DATETIME});
+   VALUES (#{uid}, #{language}, #{listening}, #{speaking}, #{reading}, #{writing}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
     
     <update id="updateLanguage" parameterType="com.sedia.resume.entity.LanguageEntity" useGeneratedKeys="true" keyProperty="id">
         UPDATE LANGUAGE SET 
-        UID = #{UID}, LANGUAGE = #{LANGUAGE}, LISTENING = #{LISTENING}, SPEAKING = #{SPEAKING}, READING = #{READING}, WRITING = #{WRITING}, CR_USER = #{CR_USER}, CR_DATETIME = #{CR_DATETIME}, UP_USER = #{UP_USER}, UP_DATETIME= #{UP_DATETIME}
-        where id = #{id};
+        UID = #{uid}, LANGUAGE = #{language}, LISTENING = #{listening}, SPEAKING = #{speaking}, READING = #{reading}, WRITING = #{writing}, CR_USER = #{createUser}, CR_DATETIME = #{createDate}, UP_USER = #{updateUser}, UP_DATETIME= #{updateDate}
+        where id = #{id} and uid = #{uid};
 	</update>
 	
 	<delete id="deleteLanguage">
-  		delete from Language where id = #{id};
+  		delete from Language where id = #{id} and uid = #{uid};
 	</delete>
   
 </mapper>

@@ -37,14 +37,14 @@ public class EducationService {
     }
     
     // 編輯學歷
-    public EducationEntity updateEducation(EducationEntity school) {    
+    public void updateEducation(EducationEntity school) {    
     	educationMapper.updateEducation(school);
-		return school;
     }
     
     // 新增學歷
-    public void insertEducation(EducationEntity school) { 
+    public EducationEntity insertEducation(EducationEntity school) { 
     	educationMapper.insertEducation(school);
+    	return school;
     }
     
     // 刪除學歷

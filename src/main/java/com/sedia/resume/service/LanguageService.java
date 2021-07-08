@@ -50,9 +50,8 @@ public class LanguageService {
     }
     
     // 編輯語言
-    public LanguageEntity updateLanguage(LanguageEntity language) {    
+    public void updateLanguage(LanguageEntity language) {    
     	languageMapper.updateLanguage(language);
-		return language;
     }
     
     // 新增語言

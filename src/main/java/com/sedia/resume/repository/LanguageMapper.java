@@ -17,7 +17,7 @@ public interface LanguageMapper {
 	void insertLanguage(LanguageEntity language);
 	
 	// 修改資料
-	LanguageEntity updateLanguage(LanguageEntity language);
+	void updateLanguage(LanguageEntity language);
 	
 	// 刪除資料
 	boolean deleteLanguage(int id, int uid);

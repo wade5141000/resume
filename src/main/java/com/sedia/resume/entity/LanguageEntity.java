@@ -3,6 +3,7 @@ package com.sedia.resume.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LanguageEntity {
+@AllArgsConstructor
+public class LanguageEntity extends GenericEntity  {
 	
-	// Primary key
-	private int id;
 	
 	//user ID
 	private int uid;
@@ -28,7 +28,7 @@ public class LanguageEntity {
 	private int listening;
 	
 	// 口說 - 3:精通、2:中等、1:略懂
-	private int spreaking;
+	private int speaking;
 	
 	// 閱讀 - 3:精通、2:中等、1:略懂
 	private int reading;
@@ -36,17 +36,7 @@ public class LanguageEntity {
 	// 寫作 - 3:精通、2:中等、1:略懂
 	private int writing;
 	
-	//建立時間
-	private LocalDateTime createDate;
 	
-	//建立者
-	private String createUser;
-	
-	//更新時間
-	private LocalDateTime updateDate;
-	
-	//更新者
-	private String updateUser;
 
    
 }

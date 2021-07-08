@@ -40,12 +40,12 @@ public class LanguageController {
 
     // 修改語言資料
     @PutMapping("/language")
-    public LanguageEntity updateLanguage(@RequestBody LanguageEntity language) {
+    public void updateLanguage(@RequestBody LanguageEntity language) {
     	int uid = userService.getCurrentUser().getId();
     	language.setUid(uid);
     	language.setUpdateUser(userService.getCurrentUser().getUsername());
     	language.setUpdateDate(userService.getCurrentUser().getUpdateDate());
-        return service.updateLanguage(language);
+        service.updateLanguage(language);
     }
     
     // 刪除語言資料

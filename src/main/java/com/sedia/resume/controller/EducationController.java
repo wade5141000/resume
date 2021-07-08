@@ -1,6 +1,7 @@
 package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.EducationEntity;
+import com.sedia.resume.entity.LanguageEntity;
 import com.sedia.resume.service.EducationService;
 import com.sedia.resume.service.UserService;
 import com.sedia.resume.entity.UserEntity;
@@ -32,20 +33,21 @@ public class EducationController {
 
     // 新增學歷資料
     @PostMapping("/education")
-    public void createEducation(@RequestBody EducationEntity education) {
+    public EducationEntity createEducation(@RequestBody EducationEntity education) {
     	int uid = userService.getCurrentUser().getId();
     	education.setUid(uid);
-        service.insertEducation(education);
+    	return (EducationEntity) service.insertEducation(education);
+        
     }
 
     // 修改學歷資料
     @PutMapping("/education")
-    public EducationEntity updateEducation(@RequestBody EducationEntity education) {
+    public void updateEducation(@RequestBody EducationEntity education) {
     	int uid = userService.getCurrentUser().getId();
     	education.setUid(uid);
     	education.setUpdateUser(userService.getCurrentUser().getUsername());
     	education.setUpdateDate(userService.getCurrentUser().getUpdateDate());
-        return service.updateEducation(education);
+        service.updateEducation(education);
     }
     
     // 刪除學歷資料

@@ -19,7 +19,7 @@ public interface EducationMapper {
 	void insertEducation(EducationEntity education);
 	
 	// 更新資料
-	EducationEntity updateEducation(EducationEntity education);
+	void updateEducation(EducationEntity education);
 	
 	// 刪除資料
 	boolean deleteEducation(int id, int uid);
