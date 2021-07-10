@@ -23,57 +23,51 @@ import java.util.List;
 public class SkillService {
 
     final SkillMapper skillMapper;
-    
-   // final BCryptPasswordEncoder passwordEncoder;
-    
 
+    // final BCryptPasswordEncoder passwordEncoder;
 
+    // //??
+    // public EducationEntity save(EducationEntity school) {
+    // if (education.findByEducationname(school.name()).isEmpty()) {
+    // // education.setSchool(passwordEncoder.encode(education.getPassword()));
+    // school.setCreateDate(LocalDateTime.now());
+    // education.save(school);
+    // return school;
+    // }
+    // throw new RuntimeException("account already exists");
+    // }
 
-//    //??
-//    public EducationEntity save(EducationEntity school) {
-//        if (education.findByEducationname(school.name()).isEmpty()) {
-//        //	education.setSchool(passwordEncoder.encode(education.getPassword()));
-//        	school.setCreateDate(LocalDateTime.now());
-//        	education.save(school);
-//            return school;
-//        }
-//        throw new RuntimeException("account already exists");
-//    }
-    
-    
-  
-    
     // 檢查技能是否存在
     public boolean checkSkill(int id, int uid) {
-		skillMapper.findBySkillId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Skill"));
-		return true;
+        skillMapper.findBySkillId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Skill"));
+        return true;
     }
 
     // 取得技能
     public SkillEntity getSkill(int id, int uid) {
-		return skillMapper.findBySkillId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Skill"));
+        return skillMapper.findBySkillId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Skill"));
     }
-    
+
     // 取得技能清單技能
     public List<SkillEntity> getSkillList(int uid) {
         return skillMapper.findAll(uid);
     }
-    
+
     // 編輯技能
-    public void updateSkill(SkillEntity skill) {    
-    	skillMapper.updateSkill(skill);
+    public void updateSkill(SkillEntity skill) {
+        skillMapper.updateSkill(skill);
     }
-    
+
     // 新增技能
-    public SkillEntity insertSkill(SkillEntity skill) { 
-    	skillMapper.insertSkill(skill);
-		return skill;
+    public SkillEntity insertSkill(SkillEntity skill) {
+        skillMapper.insertSkill(skill);
+        return skill;
     }
-    
+
     // 刪除技能
-    public boolean deleteSkill(int id, int uid) { 
-    	skillMapper.deleteSkill(id, uid);
-		return true;
+    public boolean deleteSkill(int id, int uid) {
+        skillMapper.deleteSkill(id, uid);
+        return true;
     }
-    
+
 }

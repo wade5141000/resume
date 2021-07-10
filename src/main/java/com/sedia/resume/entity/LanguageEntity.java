@@ -13,30 +13,26 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LanguageEntity extends GenericEntity  {
-	
-	
-	//user ID
-	private int uid;
-	
-	/* Language info */
-	
-	// 語言
-	private String language;
-	
-	// 聽力 - 3:精通、2:中等、1:略懂
-	private int listening;
-	
-	// 口說 - 3:精通、2:中等、1:略懂
-	private int speaking;
-	
-	// 閱讀 - 3:精通、2:中等、1:略懂
-	private int reading;
-		
-	// 寫作 - 3:精通、2:中等、1:略懂
-	private int writing;
-	
-	
+public class LanguageEntity extends GenericEntity {
 
-   
+    // user ID
+    private int uid;
+
+    /* Language info */
+
+    // 語言
+    private String language;
+
+    // 聽力 - 3:精通、2:中等、1:略懂
+    private int listening;
+
+    // 口說 - 3:精通、2:中等、1:略懂
+    private int speaking;
+
+    // 閱讀 - 3:精通、2:中等、1:略懂
+    private int reading;
+
+    // 寫作 - 3:精通、2:中等、1:略懂
+    private int writing;
+
 }

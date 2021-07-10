@@ -1,4 +1,5 @@
 package com.sedia.resume.entity;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -13,21 +14,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SkillEntity extends GenericEntity {
-	
-	
-	
-	//user ID
-	private int uid;
-	
-	/* skill info */
-	
-	// 技能
-	private String skillName;
-	
-	// 技能描述
-	private String skillDesc;
-	
-	
 
-   
+    // user ID
+    private int uid;
+
+    /* skill info */
+
+    // 技能
+    private String skillName;
+
+    // 技能描述
+    private String skillDesc;
+
 }

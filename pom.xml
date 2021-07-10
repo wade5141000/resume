@@ -22,6 +22,12 @@
     </properties>
 
     <dependencies>
+    <dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>1.18.20</version>
+		<scope>provided</scope>
+	</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -153,6 +159,13 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
+                 <annotationProcessorPaths>
+      <annotationProcessorPath>
+        <groupId>com.google.auto.value</groupId>
+        <artifactId>auto-value</artifactId>
+        <version>1.6.2</version>
+      </annotationProcessorPath>
+    </annotationProcessorPaths>
                     <release>11</release>
                 </configuration>
             </plugin>

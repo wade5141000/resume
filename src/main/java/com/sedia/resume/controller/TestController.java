@@ -51,7 +51,7 @@ public class TestController {
 
     @Value("${sendgrid.api-key}")
     private String sendGridKey;
-    
+
     final UserService userService;
 
     @GetMapping("/upload")

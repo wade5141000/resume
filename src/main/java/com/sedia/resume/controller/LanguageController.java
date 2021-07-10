@@ -19,42 +19,40 @@ public class LanguageController {
     // 取得所有語言列表
     @GetMapping("/language/")
     public List<LanguageEntity> getLanguageList() {
-    	int uid = userService.getCurrentUser().getId();
+        int uid = userService.getCurrentUser().getId();
         return service.getLanguageList(uid);
     }
-    
+
     // 取得語言資料
     @GetMapping("/language/{id}")
     public LanguageEntity getLanguage(int id) {
-    	int uid = userService.getCurrentUser().getId();
-        return service.getLanguage(id,uid);
+        int uid = userService.getCurrentUser().getId();
+        return service.getLanguage(id, uid);
     }
 
     // 新增語言資料
     @PostMapping("/language")
     public LanguageEntity createSkill(@RequestBody LanguageEntity language) {
-    	int uid = userService.getCurrentUser().getId();
-    	language.setUid(uid);
+        int uid = userService.getCurrentUser().getId();
+        language.setUid(uid);
         return (LanguageEntity) service.insertLanguage(language);
     }
 
     // 修改語言資料
     @PutMapping("/language")
     public void updateLanguage(@RequestBody LanguageEntity language) {
-    	int uid = userService.getCurrentUser().getId();
-    	language.setUid(uid);
-    	language.setUpdateUser(userService.getCurrentUser().getUsername());
-    	language.setUpdateDate(userService.getCurrentUser().getUpdateDate());
+        int uid = userService.getCurrentUser().getId();
+        language.setUid(uid);
+        language.setUpdateUser(userService.getCurrentUser().getUsername());
+        language.setUpdateDate(userService.getCurrentUser().getUpdateDate());
         service.updateLanguage(language);
     }
-    
-    // 刪除語言資料
-    @DeleteMapping("/language/{id}") 
-    public boolean deleteLanguage(@PathVariable int id) {
-    	int uid = userService.getCurrentUser().getId();
-        return service.deleteLanguage(id,uid);
-    }
-   
 
+    // 刪除語言資料
+    @DeleteMapping("/language/{id}")
+    public boolean deleteLanguage(@PathVariable int id) {
+        int uid = userService.getCurrentUser().getId();
+        return service.deleteLanguage(id, uid);
+    }
 
 }

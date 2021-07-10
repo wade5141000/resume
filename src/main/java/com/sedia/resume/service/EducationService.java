@@ -14,48 +14,43 @@ import java.util.List;
 public class EducationService {
 
     final EducationMapper educationMapper;
-    
+
     // 檢查學歷是否存在
     public boolean checkEducation(int id, int uid) {
-    	try {
-    		educationMapper.findByEducationId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
-    	}
-    	catch(RuntimeException ex) {
-    		return false;
-    	}
-    	
-    	return true;
+        try {
+            educationMapper.findByEducationId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
+        } catch (RuntimeException ex) {
+            return false;
+        }
+
+        return true;
     }
- 
+
     // 取得一筆學歷
     public EducationEntity getEducation(int id, int uid) {
-		return educationMapper.findByEducationId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
+        return educationMapper.findByEducationId(id, uid).orElseThrow(() -> new RuntimeException("找不到 Education"));
     }
+
     // 取得學歷清單
     public List<EducationEntity> getEducationList(int uid) {
         return educationMapper.findAll(uid);
     }
-    
+
     // 編輯學歷
-    public void updateEducation(EducationEntity school) {    
-    	educationMapper.updateEducation(school);
+    public void updateEducation(EducationEntity school) {
+        educationMapper.updateEducation(school);
     }
-    
+
     // 新增學歷
-    public EducationEntity insertEducation(EducationEntity school) { 
-    	educationMapper.insertEducation(school);
-    	return school;
+    public EducationEntity insertEducation(EducationEntity school) {
+        educationMapper.insertEducation(school);
+        return school;
     }
-    
+
     // 刪除學歷
-    public boolean deleteEducation(int id, int uid) { 
-    	educationMapper.deleteEducation(id, uid);
-		return true;
+    public boolean deleteEducation(int id, int uid) {
+        educationMapper.deleteEducation(id, uid);
+        return true;
     }
-    
- 
-    
+
 }
-
-
-
