@@ -16,34 +16,36 @@
     
 	<!-- 查詢第一筆資料 -->
 	<select id="findFirstLicense" resultMap="LicenseResultMap">
-        select * from license order by sn = # {sn} limit 1;
+        select * from license where id = #{sn} and uid = #{uid};
     </select>
     
     <!-- 查詢所有資料 -->
-    <select id="findAll" resultMap="LicenseResultMap">
-        select * from license ;
+    <select id="listLicense" resultMap="LicenseResultMap">
+        select * from license where uid = #{uid};
     </select>
     
     <!-- 新增資料 -->
-    <select id="insertLicense" resultMap="LicenseResultMap">
-        insert into license (uid,name,cr_datetime,up_user) values 
-        (#{uid},#{name},#{cr_user},#{cr_datetime},#{up_user});
-    </select>
+    <insert id="insertLicense" parameterType="com.sedia.resume.entity.LicenseEntity">
+        insert into license (uid,name,cr_user,cr_datetime) values 
+        (#{uid},#{lsName},#{crUser},#{crDatetime});
+    </insert>
     
     <!-- 更新資料 -->
-    <select id="updateLicense" resultMap="LicenseResultMap">
-        update license set (uid,name,up_user,up_datetime) values (#{uid},#{name},{up_user},#{up_datetime});
-    </select>
+    <update id="updateLicense" parameterType="com.sedia.resume.entity.LicenseEntity">
+        update license set name=#{lsName},up_user=#{upUser},up_datetime=#{upDatetime}
+        where id = #{sn} and uid = #{uid};
+    </update>
     
 	<!-- 刪除資料 -->
-    <select id="deleteLicense" resultMap="LicenseResultMap">
-        delete from license where id = #{id};
-    </select>
+    <delete id="deleteLicense" parameterType="com.sedia.resume.entity.LicenseEntity">
+        delete from license where id = #{sn} and uid = #{uid};
+        
+    </delete>
     
     <!-- 確認資料是否存在 -->
     <!-- 0428如何讓mysql回傳boolean -->
     <select id="isExistLicense" resultMap="LicenseResultMap">
-        select * from license where = #{id};
+        select * from license where id = #{sn} and uid = #{uid};
     </select>
 
 

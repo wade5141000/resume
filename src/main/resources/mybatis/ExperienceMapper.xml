@@ -37,32 +37,34 @@
     </resultMap>
     
 	<!-- 查詢使用者第一筆資料 -->
+	<!-- 7/3可能用不到 -->
 	<select id="firstExperience" resultMap="ExperienceResultMap">
         select * from experience where id = #{sn} and uid = #{uid};
     </select>
     
     <!-- 查詢所有資料 -->
     <select id="listExperience" resultMap="ExperienceResultMap">
-        select * from experience;
+        select * from experience where uid = #{uid};
     </select>
     
     <!-- 新增資料 -->
-    <select id="insertExperience" resultMap="ExperienceResultMap">
+    <insert id="insertExperience" parameterType="com.sedia.resume.entity.ExperienceEntity">
         insert into experience (uid,company_name,position,start_date,end_date,experience_desc,ability,cr_user,cr_datetime) values 
         (#{uid},#{companyName},#{position},#{startDate},#{endDate},#{experienceDesc},#{ability},#{crUser},#{crDatetime});
-    </select>
+    </insert>
     
     <!-- 更新資料 -->
-    <select id="updateExperience" resultMap="ExperienceResultMap">
-        update experience set id=#{sn},uid=#{uid},company_name=#{companyName},position = #{position},start_date = #{startDate},
+    <!-- 新增加了useGeneratedKeys="true" keyProperty="id會掛。更新卻不會 -->
+    <update id="updateExperience" parameterType="com.sedia.resume.entity.ExperienceEntity" useGeneratedKeys="true" keyProperty="id">
+        update experience set company_name=#{companyName},position = #{position},start_date = #{startDate},
         end_date = #{endDate},experience_desc = #{experienceDesc},ability = #{ability},up_user = #{upUser},up_datetime = #{upDatetime}
         where id = #{sn} and uid = #{uid};
-    </select>
+    </update>
     
 	<!-- 刪除資料 -->
-    <select id="deleteExperience" resultMap="ExperienceResultMap">
-        delete from experience where id = #{sn};
-    </select>
+    <delete id="deleteExperience" parameterType="com.sedia.resume.entity.ExperienceEntity">
+        delete from experience where id = #{sn} and uid = #{uid};
+    </delete>
     
     <!-- 確認資料是否存在 -->
     <!-- 0428如何讓mysql回傳boolean -->

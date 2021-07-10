@@ -21,14 +21,14 @@ public class LicenseEntity {
 
     // ,號區隔
     private String lsName;
-    
-    //建立人
+
+    // 建立人
     private String crUser;
 
     // 建立日期
     private LocalDateTime crDatetime;
 
-    //更新人
+    // 更新人
     private String upUser;
     // 更新日期
     private LocalDateTime upDatetime;

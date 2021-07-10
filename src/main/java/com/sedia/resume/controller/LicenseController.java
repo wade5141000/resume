@@ -1,11 +1,14 @@
 package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.LicenseEntity;
+import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.LicenseService;
+import com.sedia.resume.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -14,36 +17,34 @@ public class LicenseController {
 
     final LicenseService service;
 
-    // 取得資料庫全部證照列表  
-    @GetMapping("/license/{id}") // http標籤
-    public List<LicenseEntity> getLicenseList(@PathVariable("id") int uid) {
-        return service.getLicenseList(uid);
+    // 取得使用者全部證照列表
+    @GetMapping("/license/")
+    public List<LicenseEntity> getLicenseList() {
+        return service.getLicenseList();
     }
 
     // 使用者取得證照
-    //這邊有問題
-    @GetMapping("/license/{SN}/{id}")
-    public LicenseEntity getLicense(@PathVariable int sn, int uid) {
-        return service.getLicense(sn, uid);
+    @GetMapping("/license/{sn}")
+    public LicenseEntity getLicense(int sn) {
+        return service.getLicense(sn);
     }
 
-    // 以下是4/17確認將功能拆分。額外的method,新增()、編輯()、更新()、boolean刪除()
     // 新增證照資料
-    @PostMapping("/license")
-    public void insertLicense(@RequestBody LicenseEntity license) {
-        service.insertLicense(license);
+    @PostMapping("/license/")
+    public boolean insertLicense(@RequestBody LicenseEntity license) {
+        return service.insertLicense(license);
 
     }
 
     // 更新證照資料
-    @PutMapping("/license")
-    public LicenseEntity updateLicense(@RequestBody LicenseEntity license) {
+    @PutMapping("/license/")
+    public boolean updateLicense(@RequestBody LicenseEntity license) {
         return service.editLicense(license);
     }
 
     // 刪除證照資料
-    @DeleteMapping("/license/{SN}/{id}")
-    public boolean deleteLicense(@PathVariable int sn, int uid) {
-        return service.deleteLicense(sn, uid);
+    @DeleteMapping("/license/{sn}")
+    public boolean deleteLicense(@PathVariable int sn) {
+        return service.deleteLicense(sn);
     }
 }

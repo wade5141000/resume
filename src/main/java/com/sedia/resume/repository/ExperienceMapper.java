@@ -8,8 +8,8 @@ import com.sedia.resume.entity.UserEntity;
 
 public interface ExperienceMapper {
 
-	//查詢第一個符合資料
-    Optional<ExperienceEntity> firstExperience(int sn,int uid);
+    // 查詢第一個符合資料
+    Optional<ExperienceEntity> firstExperience(int sn, int uid);
 
     // 經歷資料表 查詢資料清單
     List<ExperienceEntity> listExperience(int uid);
@@ -18,14 +18,13 @@ public interface ExperienceMapper {
     void insertExperience(ExperienceEntity user);
 
     // 經歷資料表 修改資料
-    ExperienceEntity updateExperience(ExperienceEntity user);
+    // 0705拿掉return的型別
+    void updateExperience(ExperienceEntity user);
 
     // 經歷資料表 刪除資料
-    void deleteExperience(int sn,int uid);
+    void deleteExperience(int sn, int uid);
 
     // 經歷資料表 是否已存在
     boolean isExistExperience(int sn, int uid);
-    
-    
 
 }

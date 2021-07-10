@@ -14,16 +14,16 @@ public interface LicenseMapper {
     Optional<LicenseEntity> findFirstLicense(int sn, int uid);
 
     // 證照資料表 查詢資料
-    List<LicenseEntity> findAll(int uid);
+    List<LicenseEntity> listLicense(int uid);
 
     // 證照資料表 新增資料
     void insertLicense(LicenseEntity license);
 
     // 證照資料表 修改資料
-    LicenseEntity updateLicense(LicenseEntity license);
+    void updateLicense(LicenseEntity license);
 
     // 證照資料表 刪除資料
-    LicenseEntity deleteLicense(int sn, int uid);
+    void deleteLicense(int sn, int uid);
 
     // 證照資料表 是否已存在
     boolean isExistLicense(int sn, int uid);
