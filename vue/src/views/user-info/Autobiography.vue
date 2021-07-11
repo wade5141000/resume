@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="8" lg="6" class="mt-6">
+    <v-col cols="12" md="10" lg="10" class="mt-6">
       <theStepper step="5"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-8">
         <v-expansion-panel>
