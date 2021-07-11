@@ -12,7 +12,7 @@
         <result column="PHONE" property="phone" jdbcType="VARCHAR"/>
         <result column="BIRTHDAY" property="birthday" jdbcType="TIMESTAMP"/>
         <result column="SEX" property="sex" jdbcType="CHAR"/>
-        <result column="MILITARY_SERVICE" property="militaryService" jdbcType="TINYINT"/>
+        <result column="MILITARY_SERVICE" property="militaryService" jdbcType="VARCHAR"/>
         <result column="MILITARY_DATE" property="militaryDate" jdbcType="TIMESTAMP"/>
         <result column="ADDRESS" property="address" jdbcType="VARCHAR"/>
         <result column="SPECIAL_IDENTITY" property="specialIdentity" jdbcType="VARCHAR"/>

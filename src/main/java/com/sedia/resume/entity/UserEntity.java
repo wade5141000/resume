@@ -1,5 +1,6 @@
 package com.sedia.resume.entity;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +31,7 @@ public class UserEntity extends GenericEntity implements UserDetails {
 
     private String sex;
 
-    private boolean militaryService;
+    private String militaryService;
 
     private LocalDate militaryDate;
 
@@ -46,31 +47,37 @@ public class UserEntity extends GenericEntity implements UserDetails {
 
     private String imgPath;
 
+    @Hidden
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
     }
 
+    @Hidden
     @Override
     public String getUsername() {
         return this.account;
     }
 
+    @Hidden
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @Hidden
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @Hidden
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @Hidden
     @Override
     public boolean isEnabled() {
         return true;

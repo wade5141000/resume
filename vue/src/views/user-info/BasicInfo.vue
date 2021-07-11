@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="8" lg="6" class="mt-6">
+    <v-col cols="12" md="10" lg="8" class="mt-6">
       <theStepper step="1"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-8">
         <v-expansion-panel>
@@ -8,15 +8,16 @@
             <span class="white--text text-h6">基本資料</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row class="mt-6" no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <span>姓名</span>
-                <v-text-field outlined dense v-model="user.name"></v-text-field>
+            <v-row class="mt-6" justify="center">
+              <v-col cols="6" md="3" lg="3">
+                <v-text-field
+                  label="姓名"
+                  outlined
+                  dense
+                  v-model="user.name"
+                ></v-text-field>
               </v-col>
-            </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <span>生日</span>
+              <v-col cols="6" md="3" lg="3">
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -27,10 +28,11 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
+                      label="生日"
                       v-model="user.birthday"
                       outlined
                       dense
-                      prepend-icon="mdi-calendar"
+                      prepend-inner-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
                       v-on="on"
@@ -46,28 +48,24 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-            </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <span>性別</span>
-                <v-radio-group v-model="user.sex" row class="mt-0">
+              <v-col cols="12" md="4" lg="2">
+                <v-radio-group label="性別" v-model="user.sex" row class="mt-0">
                   <v-radio label="男" value="0"></v-radio>
                   <v-radio label="女" value="1"></v-radio>
                 </v-radio-group>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="5" md="4" lg="3">
-                <span>兵役狀況</span>
+            <v-row justify="center">
+              <v-col cols="5" md="3" lg="3">
                 <v-select
+                  label="兵役狀況"
                   :items="militaryItems"
                   outlined
                   dense
                   v-model="user.militaryService"
                 ></v-select>
               </v-col>
-              <v-col cols="7" md="6" lg="5">
-                <span class="ml-6">役畢日期</span>
+              <v-col cols="7" md="7" lg="5">
                 <v-menu
                   ref="menu2"
                   v-model="menu2"
@@ -78,19 +76,20 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
+                      label="役畢日期"
                       v-model="user.militaryServiceDate"
                       outlined
                       dense
-                      prepend-icon="mdi-calendar"
+                      prepend-inner-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
                       v-on="on"
-                      class="ml-6"
                       placeholder="請選擇日期"
                     ></v-text-field>
                   </template>
                   <v-date-picker
                     ref="picker2"
+                    type="month"
                     v-model="user.militaryServiceDate"
                     :max="new Date().toISOString().substr(0, 10)"
                     min="1950-01-01"
@@ -99,20 +98,44 @@
                 </v-menu>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <span>通訊地址</span>
+            <v-row justify="center">
+              <v-col cols="6" md="2" lg="2">
+                <v-select
+                  label="縣市"
+                  :items="cities"
+                  outlined
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="6" md="2" lg="2">
+                <v-select
+                  label="鄉鎮市區"
+                  :items="towns"
+                  outlined
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="12" md="6" lg="4">
                 <v-text-field
+                  label="地址"
                   outlined
                   dense
                   v-model="user.address"
                 ></v-text-field>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <span>email</span>
+            <v-row justify="center">
+              <v-col cols="12" md="4" lg="3">
                 <v-text-field
+                  label="聯絡電話"
+                  outlined
+                  dense
+                  v-model="user.phone"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" md="6" lg="5">
+                <v-text-field
+                  label="email"
                   outlined
                   dense
                   v-model="user.email"
@@ -121,92 +144,82 @@
             </v-row>
             <v-row no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
-                <span>聯絡電話</span>
-                <v-text-field
-                  outlined
-                  dense
-                  v-model="user.phone"
-                ></v-text-field>
+                駕駛執照
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <span>駕駛執照</span>
-              </v-col>
-            </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="3" md="3" lg="2">
+              <v-col cols="6" md="3" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="輕型機車50CC"
-                  value="a"
+                  value="輕型機車50CC"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" md="3" lg="3">
+              <v-col cols="6" md="3" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="重型機車50~250CC"
-                  value="b"
+                  value="重型機車50~250CC"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" md="3" lg="2">
+              <v-col cols="6" md="3" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="汽車駕駛執照"
-                  value="c"
+                  value="汽車駕駛執照"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" md="1" lg="1">
+              <v-col cols="6" md="1" lg="2">
                 <v-checkbox
                   v-model="driverLicense"
                   label="無"
-                  value="d"
+                  value="無"
                 ></v-checkbox>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
-                <span>特殊身份</span>
+                特殊身份
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="3" md="3" lg="2">
+              <v-col cols="6" md="3" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="外籍人士"
-                  value="a"
+                  value="外籍人士"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="3" md="3" lg="3">
+              <v-col cols="6" md="3" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="原住民"
-                  value="b"
+                  value="原住民"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="6" md="4" lg="3">
+              <v-col cols="12" md="4" lg="4">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="身心障礙"
-                  value="d"
+                  value="身心障礙"
                 ></v-checkbox>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="6" md="5" lg="4">
-                <span>自我簡介</span>
+              <v-col cols="12" md="10" lg="8" class="d-flex justify-end">
+                <theDialog>
+                  <template v-slot:btn>
+                    <v-icon color="blue">mdi-chat-question</v-icon>看看範例
+                  </template>
+                </theDialog>
               </v-col>
-              <v-col cols="6" md="5" lg="4" class="d-flex justify-end">
-                <span
-                  ><v-icon color="blue">mdi-chat-question</v-icon>看看範例</span
-                ></v-col
-              >
             </v-row>
             <v-row no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
                 <v-textarea
+                  label="自我簡介"
+                  hint="簡單描述特長、成就，讓企業快速瞭解你"
                   outlined
-                  placeholder="簡單描述特長、成就，讓企業快速瞭解你"
                   v-model="user.introduction"
                   rows="3"
                   auto-grow
@@ -216,17 +229,18 @@
                 ></v-textarea>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center">
+            <v-row justify="center">
               <v-col cols="12" md="10" lg="8">
-                <span>個人特色</span>
                 <v-text-field
+                  label="個人特色"
                   outlined
                   dense
                   v-model="feature"
                   v-on:keyup.enter="onFeatureEnter()"
                   maxLength="20"
                   counter="20"
-                  placeholder="輸入完畢按下【Enter】鍵完成新增"
+                  hint="輸入完畢按下【Enter】鍵完成新增"
+                  persistent-hint
                 ></v-text-field>
                 <v-chip
                   v-for="(item, index) in features"
@@ -241,13 +255,12 @@
                 </v-chip>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center">
+            <v-row justify="center">
               <v-col cols="12" md="10" lg="8">
-                <span>個人連結</span>
-                <v-text-field outlined dense></v-text-field>
+                <v-text-field label="個人連結" outlined dense></v-text-field>
               </v-col>
             </v-row>
-            <v-row no-gutters justify="center" class="my-6">
+            <v-row justify="center" class="my-4">
               <v-col cols="5" md="4" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
                   >下一步</v-btn
@@ -263,9 +276,11 @@
 
 <script>
 import theStepper from "../../components/theStepper";
+import theDialog from "../../components/theDialog";
 export default {
   components: {
-    theStepper
+    theStepper,
+    theDialog
   },
   watch: {
     menu(val) {
@@ -280,14 +295,23 @@ export default {
     menu: false,
     menu2: false,
     militaryItems: [
-      { text: "已服役", value: 1 },
-      { text: "未服役", value: 0 }
+      { text: "已服役", value: "已服役" },
+      { text: "未服役", value: "未服役" },
+      { text: "免役", value: "免役" }
+    ],
+    cities: [
+      { text: "台北市", value: "台北市" },
+      { text: "新北市", value: "新北市" },
+      { text: "高雄市", value: "高雄市" }
+    ],
+    towns: [
+      { text: "中正區", value: "中正區" },
+      { text: "信義區", value: "信義區" },
+      { text: "松山區", value: "松山區" }
     ],
     driverLicense: [],
     specialIdentity: [],
-    user: {
-      militaryService: 0
-    },
+    user: {},
     feature: "",
     features: []
   }),
