@@ -7,19 +7,23 @@ import java.util.Optional;
 
 public interface EducationMapper {
 
-    // 查詢資料：回傳所有符合查詢條件的資料
-    List<EducationEntity> findAll(int uid);
+    // 查詢第一個符合資料
+    Optional<EducationEntity> firstEducation(int id, int uid);
 
-    // 查詢資料：回傳符合查詢條件的資料
-    Optional<EducationEntity> findByEducationId(int id, int uid);
+    // 學歷資料表 查詢資料清單
+    List<EducationEntity> listEducation(int uid);
 
-    // 新增資料
-    void insertEducation(EducationEntity education);
+    // 學歷資料表 新增資料
+    void insertEducation(EducationEntity user);
 
-    // 更新資料
-    void updateEducation(EducationEntity education);
+    // 學歷資料表 修改資料
+    void updateEducation(EducationEntity user);
 
-    // 刪除資料
-    boolean deleteEducation(int id, int uid);
+    // 學歷資料表 刪除資料
+    void deleteEducation(int id, int uid);
+
+    // 學歷資料表 是否已存在
+    boolean isExistEducation(int id, int uid);
+
 
 }

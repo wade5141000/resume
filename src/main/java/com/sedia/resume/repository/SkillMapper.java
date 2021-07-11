@@ -7,19 +7,21 @@ import java.util.Optional;
 
 public interface SkillMapper {
 
-    // 查詢資料：回傳所有符合查詢條件的資料
-    List<SkillEntity> findAll(int uid);
+	// 查詢第一個符合資料
+    Optional<SkillEntity> firstSkill(int id, int uid);
 
-    // 查詢資料：回傳符合查詢條件的資料
-    Optional<SkillEntity> findBySkillId(int id, int uid);
+    // 技能資料表 查詢資料清單
+    List<SkillEntity> listSkill(int uid);
 
-    // 新增資料
-    void insertSkill(SkillEntity skill);
+    // 技能資料表 新增資料
+    void insertSkill(SkillEntity user);
 
-    // 修改資料
-    void updateSkill(SkillEntity skill);
+    // 技能資料表 修改資料
+    void updateSkill(SkillEntity user);
 
-    // 刪除資料
-    boolean deleteSkill(int id, int uid);
+    // 技能資料表 刪除資料
+    void deleteSkill(int id, int uid);
 
+    // 技能資料表 是否已存在
+    boolean isExistSkill(int id, int uid);
 }

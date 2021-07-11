@@ -21,11 +21,11 @@
         <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <select id="findAll" resultMap="EducationResultMap">
+    <select id="listEducation" resultMap="EducationResultMap">
         SELECT * FROM Education WHERE UID = #{uid};
     </select>
     
-    <select id="findByEducationId" resultMap="EducationResultMap">
+    <select id="firstEducation" resultMap="EducationResultMap">
         SELECT * FROM EDUCATION  WHERE ID = #{id} and uid = #{uid};
     </select>
 
@@ -43,5 +43,10 @@
 	<delete id="deleteEducation">
   		delete from EDUCATION where id = #{id} and uid = #{uid};
 	</delete>
+	
+	 <select id="isExistEducation" resultMap="EducationResultMap">
+        select * from Education where id = #{id} and uid = #{uid};
+    </select>
+	
   
 </mapper>

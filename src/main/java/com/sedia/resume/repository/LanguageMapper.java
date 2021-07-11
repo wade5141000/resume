@@ -7,19 +7,22 @@ import java.util.Optional;
 
 public interface LanguageMapper {
 
-    // 查詢資料：回傳所有符合查詢條件的資料
-    List<LanguageEntity> findAll(int uid);
+	// 查詢第一個符合資料
+    Optional<LanguageEntity> firstLanguage(int id, int uid);
 
-    // 查詢資料：回傳符合查詢條件的資料
-    Optional<LanguageEntity> findByLanguageId(int id, int uid);
+    // 語言資料表 查詢資料清單
+    List<LanguageEntity> listLanguage(int uid);
 
-    // 新增資料
-    void insertLanguage(LanguageEntity language);
+    // 語言資料表 新增資料
+    void insertLanguage(LanguageEntity user);
 
-    // 修改資料
-    void updateLanguage(LanguageEntity language);
+    // 語言資料表 修改資料
+    void updateLanguage(LanguageEntity user);
 
-    // 刪除資料
-    boolean deleteLanguage(int id, int uid);
+    // 語言資料表 刪除資料
+    void deleteLanguage(int id, int uid);
+
+    // 語言資料表 是否已存在
+    boolean isExistLanguage(int id, int uid);
 
 }

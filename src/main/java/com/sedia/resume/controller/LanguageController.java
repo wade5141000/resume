@@ -14,45 +14,36 @@ import java.util.List;
 public class LanguageController {
 
     final LanguageService service;
-    final UserService userService;
 
     // 取得所有語言列表
-    @GetMapping("/language/")
+    @GetMapping("/language")
     public List<LanguageEntity> getLanguageList() {
-        int uid = userService.getCurrentUser().getId();
-        return service.getLanguageList(uid);
+        return service.getLanguageList();
     }
 
     // 取得語言資料
     @GetMapping("/language/{id}")
     public LanguageEntity getLanguage(int id) {
-        int uid = userService.getCurrentUser().getId();
-        return service.getLanguage(id, uid);
+        return service.getLanguage(id);
     }
 
     // 新增語言資料
     @PostMapping("/language")
-    public LanguageEntity createSkill(@RequestBody LanguageEntity language) {
-        int uid = userService.getCurrentUser().getId();
-        language.setUid(uid);
-        return (LanguageEntity) service.insertLanguage(language);
+    public boolean createSkill(@RequestBody LanguageEntity language) {
+        return service.insertLanguage(language);
     }
 
     // 修改語言資料
     @PutMapping("/language")
-    public void updateLanguage(@RequestBody LanguageEntity language) {
-        int uid = userService.getCurrentUser().getId();
-        language.setUid(uid);
-        language.setUpdateUser(userService.getCurrentUser().getUsername());
-        language.setUpdateDate(userService.getCurrentUser().getUpdateDate());
-        service.updateLanguage(language);
+    public boolean updateLanguage(@RequestBody LanguageEntity language) {
+        return service.updateLanguage(language);
     }
 
     // 刪除語言資料
     @DeleteMapping("/language/{id}")
     public boolean deleteLanguage(@PathVariable int id) {
-        int uid = userService.getCurrentUser().getId();
-        return service.deleteLanguage(id, uid);
+        
+        return service.deleteLanguage(id);
     }
 
 }

@@ -15,45 +15,35 @@ import java.util.List;
 public class SkillController {
 
     final SkillService service;
-    final UserService userService;
-
+    
     // 取得所有技能列表
-    @GetMapping("/skill/")
+    @GetMapping("/skill")
     public List<SkillEntity> getSkillList() {
-        int uid = userService.getCurrentUser().getId();
-        return service.getSkillList(uid);
+        return service.getSkillList();
     }
 
-    // 取得技能資料
+    // 取得一筆技能資料
     @GetMapping("/skill/{id}")
     public SkillEntity getSkill(int id) {
-        int uid = userService.getCurrentUser().getId();
-        return service.getSkill(id, uid);
+        return service.getSkill(id);
     }
 
     // 新增技能資料
     @PostMapping("/skill")
-    public SkillEntity createSkill(@RequestBody SkillEntity skill) {
-        int uid = userService.getCurrentUser().getId();
-        skill.setUid(uid);
-        return (SkillEntity) service.insertSkill(skill);
+    public boolean createSkill(@RequestBody SkillEntity skill) {
+        return service.insertSkill(skill);
     }
 
     // 修改技能資料
     @PutMapping("/skill")
-    public void updateSkill(@RequestBody SkillEntity skill) {
-        int uid = userService.getCurrentUser().getId();
-        skill.setUid(uid);
-        skill.setUpdateUser(userService.getCurrentUser().getUsername());
-        skill.setUpdateDate(userService.getCurrentUser().getUpdateDate());
-        service.updateSkill(skill);
+    public boolean updateSkill(@RequestBody SkillEntity skill) {
+        return service.updateSkill(skill);
     }
 
     // 刪除技能資料
     @DeleteMapping("/skill/{id}")
     public boolean deleteSkill(@PathVariable int id) {
-        int uid = userService.getCurrentUser().getId();
-        return service.deleteSkill(id, uid);
+        return service.deleteSkill(id);
     }
 
 }

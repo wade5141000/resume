@@ -17,11 +17,11 @@
         <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <select id="findAll" resultMap="LanguageResultMap">
+    <select id="listLanguage" resultMap="LanguageResultMap">
         SELECT * FROM LANGUAGE WHERE UID = #{uid};
     </select>
     
-    <select id="findByLanguageId" resultMap="LanguageResultMap">
+    <select id="firstLanguage" resultMap="LanguageResultMap">
         SELECT * FROM LANGUAGE WHERE ID = #{id} and uid = #{uid};
     </select>
 
@@ -39,5 +39,10 @@
 	<delete id="deleteLanguage">
   		delete from Language where id = #{id} and uid = #{uid};
 	</delete>
+	
+	 <select id="isExistLanguage" resultMap="LanguageResultMap">
+        select * from LANGUAGE where id = #{id} and uid = #{uid};
+    </select>
+	
   
 </mapper>
