@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ResumeEntity extends GenericEntity {
+public class TemplateEntity extends GenericEntity {
 
 }

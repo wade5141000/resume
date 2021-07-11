@@ -1,13 +1,11 @@
 package com.sedia.resume.entity;
 
 import io.swagger.v3.oas.annotations.Hidden;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 class GenericEntity {
 
     @Hidden
