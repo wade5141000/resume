@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import com.sedia.resume.exception.ApiException;
 
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -26,7 +25,6 @@ public class LanguageService {
 
     final LanguageMapper languageMapper;
     final UserService userService;
-
 
     // 檢查語言ID是否存在
     public boolean checkLanguage(int id, int uid) {
@@ -60,7 +58,7 @@ public class LanguageService {
             UserEntity currentUser = userService.getCurrentUser();
             // 讓取得使用者的uid
             language.setUid(currentUser.getId());
-         // 取得更新技能的updateUser
+            // 取得更新技能的updateUser
             language.setUpdateUser(currentUser.getAccount());
             // 取得更新技能的updateDateTime(時分秒)
             language.setUpdateDate(LocalDateTime.now());
@@ -95,7 +93,7 @@ public class LanguageService {
         try {
             UserEntity currentUser = userService.getCurrentUser();
             int uid = currentUser.getId();
-            languageMapper.deleteLanguage(id,uid);
+            languageMapper.deleteLanguage(id, uid);
             return true;
         } catch (Exception e) {
             log.error("刪除失敗", e);

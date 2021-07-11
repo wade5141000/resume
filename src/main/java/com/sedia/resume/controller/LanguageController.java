@@ -42,7 +42,7 @@ public class LanguageController {
     // 刪除語言資料
     @DeleteMapping("/language/{id}")
     public boolean deleteLanguage(@PathVariable int id) {
-        
+
         return service.deleteLanguage(id);
     }
 

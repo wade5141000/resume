@@ -18,7 +18,7 @@ public class EducationController {
 
     // 取得使用者所有學歷列表
     @GetMapping("/education")
-    public List<EducationEntity> getEducationList() {     
+    public List<EducationEntity> getEducationList() {
         return service.getEducationList();
     }
 

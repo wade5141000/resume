@@ -15,7 +15,7 @@ import java.util.List;
 public class SkillController {
 
     final SkillService service;
-    
+
     // 取得所有技能列表
     @GetMapping("/skill")
     public List<SkillEntity> getSkillList() {

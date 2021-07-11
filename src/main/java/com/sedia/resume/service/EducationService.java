@@ -7,14 +7,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.sedia.resume.entity.UserEntity;
 
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import com.sedia.resume.exception.ApiException;
-
 
 @Service
 @Transactional
@@ -32,7 +30,6 @@ public class EducationService {
         else
             return false;
     }
-
 
     // 取得學歷
     public EducationEntity getEducation(int id) {
@@ -57,7 +54,7 @@ public class EducationService {
             UserEntity currentUser = userService.getCurrentUser();
             // 讓取得使用者的uid
             school.setUid(currentUser.getId());
-         // 取得更新技能的updateUser
+            // 取得更新技能的updateUser
             school.setUpdateUser(currentUser.getAccount());
             // 取得更新技能的updateDateTime(時分秒)
             school.setUpdateDate(LocalDateTime.now());

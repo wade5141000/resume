@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface LanguageMapper {
 
-	// 查詢第一個符合資料
+    // 查詢第一個符合資料
     Optional<LanguageEntity> firstLanguage(int id, int uid);
 
     // 語言資料表 查詢資料清單

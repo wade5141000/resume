@@ -25,5 +25,4 @@ public interface EducationMapper {
     // 學歷資料表 是否已存在
     boolean isExistEducation(int id, int uid);
 
-
 }

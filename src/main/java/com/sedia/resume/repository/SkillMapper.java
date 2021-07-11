@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface SkillMapper {
 
-	// 查詢第一個符合資料
+    // 查詢第一個符合資料
     Optional<SkillEntity> firstSkill(int id, int uid);
 
     // 技能資料表 查詢資料清單
