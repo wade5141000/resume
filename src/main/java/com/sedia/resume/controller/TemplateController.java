@@ -14,15 +14,14 @@ import java.util.List;
 @RequestMapping("/template")
 public class TemplateController {
 
-  @GetMapping
-  public List<TemplateEntity> getTemplates(){
-    return null;
-  }
+    @GetMapping
+    public List<TemplateEntity> getTemplates() {
+        return null;
+    }
 
-  @GetMapping("/{id}")
-  public TemplateEntity getTemplate(@PathVariable int id){
-    return null;
-  }
-
+    @GetMapping("/{id}")
+    public TemplateEntity getTemplate(@PathVariable int id) {
+        return null;
+    }
 
 }

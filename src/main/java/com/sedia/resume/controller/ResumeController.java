@@ -13,9 +13,9 @@ import java.util.List;
 @RequestMapping("/resume")
 public class ResumeController {
 
-  @GetMapping
-  public List<ResumeEntity> getResumes(){
-    return null;
-  }
+    @GetMapping
+    public List<ResumeEntity> getResumes() {
+        return null;
+    }
 
 }
