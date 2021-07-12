@@ -135,7 +135,7 @@ public class TestController {
         a4.applyMargins(0, 0, 0, 0, false);
         pdf.setDefaultPageSize(a4);
         ConverterProperties prop = new ConverterProperties();
-
+//        prop.setBaseUri("resources/");
         HtmlConverter.convertToPdf(new FileInputStream(template), pdf, prop);
     }
 
