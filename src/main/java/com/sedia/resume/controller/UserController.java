@@ -31,4 +31,14 @@ public class UserController {
         return service.getUserById(id);
     }
 
+    @GetMapping("/image") // 圖片上傳
+    public void image() {
+
+    }
+
+    @GetMapping("/image") // 圖片下載
+    public void image2() {
+
+    }
+
 }
