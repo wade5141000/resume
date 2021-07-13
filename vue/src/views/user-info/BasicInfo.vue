@@ -259,11 +259,12 @@
               <v-col cols="6" md="5" lg="4">
                 個人連結
               </v-col>
-              <v-col cols="6" md="5" lg="4" class="d-flex justify-end" >
-                <v-btn v-if="links.length < 5"
-                    text
-                    color="primary"
-                    @click="addWebsite"
+              <v-col cols="6" md="5" lg="4" class="d-flex justify-end">
+                <v-btn
+                  v-if="links.length < 5"
+                  text
+                  color="primary"
+                  @click="addWebsite"
                 >
                   <v-icon left>
                     mdi-plus-circle
@@ -272,21 +273,28 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <v-row justify="center" class="my-0 py-0" v-for="(link, index) in links" :key="index">
-
+            <v-row
+              justify="center"
+              class="my-0 py-0"
+              v-for="(link, index) in links"
+              :key="index"
+            >
               <v-col cols="6" md="2" lg="2" class="my-0 py-0">
                 <v-select
-                    label="網站"
-                    :items="websites"
-                    outlined
-                    dense
+                  label="網站"
+                  :items="websites"
+                  outlined
+                  dense
                 ></v-select>
               </v-col>
               <v-col cols="6" md="8" lg="6" :key="index" class="my-0 py-0">
-                <v-text-field label="URL" outlined dense
-                              :append-outer-icon="'mdi-close'"
-                              @click:append-outer="removeWebsite">
-
+                <v-text-field
+                  label="URL"
+                  outlined
+                  dense
+                  :append-outer-icon="'mdi-close'"
+                  @click:append-outer="removeWebsite"
+                >
                 </v-text-field>
               </v-col>
             </v-row>
@@ -303,7 +311,6 @@
     </v-col>
   </v-row>
 </template>
-
 
 <script>
 import theStepper from "../../components/theStepper";
@@ -352,7 +359,7 @@ export default {
       { text: "Linkedin", value: "Linkedin" },
       { text: "Github", value: "Github" }
     ],
-    links: [{website:"",url:""}]
+    links: [{ website: "", url: "" }]
   }),
   methods: {
     pickBirthDay(date) {
@@ -376,12 +383,10 @@ export default {
     close(str) {
       this.features = this.features.filter(item => item !== str);
     },
-    addWebsite(){
-      this.links.push({website:"",url:""})
+    addWebsite() {
+      this.links.push({ website: "", url: "" });
     },
-    removeWebsite(){
-
-    }
+    removeWebsite() {}
   }
 };
 </script>
