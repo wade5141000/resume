@@ -13,7 +13,7 @@ CREATE TABLE `resume`.`user` (
   `PHONE` varchar(20) DEFAULT NULL COMMENT '電話',
   `BIRTHDAY` timestamp NULL DEFAULT NULL COMMENT '生日',
   `SEX` char(1) DEFAULT NULL COMMENT '性別',
-  `MILITARY_SERVICE` tinyint DEFAULT NULL COMMENT '已服役',
+  `MILITARY_SERVICE` varchar(10) DEFAULT NULL COMMENT '服役情況',
   `MILITARY_DATE` timestamp NULL DEFAULT NULL COMMENT '退伍日期',
   `ADDRESS` varchar(255) DEFAULT NULL COMMENT '通訊地址',
   `SPECIAL_IDENTITY` varchar(50) DEFAULT NULL COMMENT '特殊身分',
@@ -182,10 +182,6 @@ DROP TABLE IF EXISTS `resume`.`rel_resume_edu`;
 CREATE TABLE `resume`.`rel_resume_edu` (
   `RID` int NOT NULL COMMENT '履歷編號',
   `EDU_ID` int NOT NULL COMMENT '學歷編號',
-  `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
-  `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
-  `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`RID`,`EDU_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='履歷_學歷_關聯表' AUTO_INCREMENT=1;
 
@@ -193,10 +189,6 @@ DROP TABLE IF EXISTS `resume`.`rel_resume_exp`;
 CREATE TABLE `resume`.`rel_resume_exp` (
   `RID` int NOT NULL COMMENT '履歷編號',
   `EXP_ID` int NOT NULL COMMENT '工作經驗編號',
-  `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
-  `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
-  `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`RID`,`EXP_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='履歷_工作經驗_關聯表' AUTO_INCREMENT=1;
 
@@ -204,10 +196,6 @@ DROP TABLE IF EXISTS `resume`.`rel_resume_lang`;
 CREATE TABLE `resume`.`rel_resume_lang` (
   `RID` int NOT NULL COMMENT '履歷編號',
   `LANGUAGE_ID` int NOT NULL COMMENT '語言能力編號',
-  `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
-  `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
-  `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`RID`,`LANGUAGE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='履歷_語言能力_關聯表' AUTO_INCREMENT=1;
 
@@ -215,10 +203,6 @@ DROP TABLE IF EXISTS `resume`.`rel_resume_license`;
 CREATE TABLE `resume`.`rel_resume_license` (
   `RID` int NOT NULL COMMENT '履歷編號',
   `LICENSE_ID` int NOT NULL COMMENT '證照編號',
-  `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
-  `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
-  `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`RID`,`LICENSE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='履歷_證照_關聯表' AUTO_INCREMENT=1;
 
@@ -226,9 +210,12 @@ DROP TABLE IF EXISTS `resume`.`rel_resume_skill`;
 CREATE TABLE `resume`.`rel_resume_skill` (
   `RID` int NOT NULL COMMENT '履歷編號',
   `SKILL_ID` int NOT NULL COMMENT '專業技能編號',
-  `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
-  `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
-  `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
   PRIMARY KEY (`RID`,`SKILL_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='履歷_專業技能_關聯表' AUTO_INCREMENT=1;
+
+DROP TABLE IF EXISTS `resume`.`address`;
+CREATE TABLE `resume`.`address` (
+ `ID` int primary key,
+ `CITY` varchar(10) NOT NULL,
+ `TOWN` varchar(10) NOT NULL
+)
