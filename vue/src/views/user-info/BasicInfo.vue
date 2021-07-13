@@ -255,9 +255,47 @@
                 </v-chip>
               </v-col>
             </v-row>
-            <v-row justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <v-text-field label="個人連結" outlined dense></v-text-field>
+            <v-row no-gutters justify="center" align="center" class="pt-4 mb-2">
+              <v-col cols="6" md="5" lg="4">
+                個人連結
+              </v-col>
+              <v-col cols="6" md="5" lg="4" class="d-flex justify-end">
+                <v-btn
+                  v-if="links.length < 5"
+                  text
+                  color="primary"
+                  @click="addWebsite"
+                >
+                  <v-icon left>
+                    mdi-plus-circle
+                  </v-icon>
+                  新增個人連結
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row
+              justify="center"
+              class="my-0 py-0"
+              v-for="(link, index) in links"
+              :key="index"
+            >
+              <v-col cols="6" md="2" lg="2" class="my-0 py-0">
+                <v-select
+                  label="網站"
+                  :items="websites"
+                  outlined
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col cols="6" md="8" lg="6" :key="index" class="my-0 py-0">
+                <v-text-field
+                  label="URL"
+                  outlined
+                  dense
+                  :append-outer-icon="'mdi-close'"
+                  @click:append-outer="removeWebsite"
+                >
+                </v-text-field>
               </v-col>
             </v-row>
             <v-row justify="center" class="my-4">
@@ -313,7 +351,15 @@ export default {
     specialIdentity: [],
     user: {},
     feature: "",
-    features: []
+    features: [],
+    websites: [
+      { text: "個人網站", value: "個人網站" },
+      { text: "Facebook", value: "Facebook" },
+      { text: "Instagram", value: "Instagram" },
+      { text: "Linkedin", value: "Linkedin" },
+      { text: "Github", value: "Github" }
+    ],
+    links: [{ website: "", url: "" }]
   }),
   methods: {
     pickBirthDay(date) {
@@ -336,7 +382,11 @@ export default {
     },
     close(str) {
       this.features = this.features.filter(item => item !== str);
-    }
+    },
+    addWebsite() {
+      this.links.push({ website: "", url: "" });
+    },
+    removeWebsite() {}
   }
 };
 </script>

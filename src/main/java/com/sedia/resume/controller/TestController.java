@@ -2,9 +2,11 @@ package com.sedia.resume.controller;
 
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.font.FontProvider;
 import com.sedia.resume.queue.MessageSender;
 import com.sedia.resume.security.JwtUtil;
 import com.sedia.resume.service.UserService;
@@ -18,21 +20,22 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.*;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
@@ -43,6 +46,7 @@ import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/test")
+@Slf4j
 public class TestController {
 
     final AwsUtils awsUtils;
@@ -65,7 +69,7 @@ public class TestController {
         return "上傳失敗";
     }
 
-    @GetMapping("/download")
+    @GetMapping("/download-s3")
     public ResponseEntity<InputStreamResource> testDownload() {
 
         String fileName = "test.txt";
@@ -125,18 +129,63 @@ public class TestController {
 
     @GetMapping("/cv")
     @ResponseBody
-    public void htmlToPdf(String html) throws IOException {
+    public void htmlToPdf(String html) {
+        try {
+            File template = new ClassPathResource("templates/" + html + ".html").getFile();
 
-        File template = new ClassPathResource("templates/" + html + ".html").getFile();
+            // String htmlString = IOUtils.toString(new FileInputStream(template), UTF_8);
+            // System.out.println(htmlString);
 
-        PdfWriter writer = new PdfWriter("test.pdf");
-        PdfDocument pdf = new PdfDocument(writer);
-        PageSize a4 = PageSize.A4;
-        a4.applyMargins(0, 0, 0, 0, false);
-        pdf.setDefaultPageSize(a4);
-        ConverterProperties prop = new ConverterProperties();
+            File outFile = new File("src/main/resources/temp/test.pdf");
+            FileUtils.touch(outFile);
+            // File outFile = new ClassPathResource("temp/test.pdf").getFile();
 
-        HtmlConverter.convertToPdf(new FileInputStream(template), pdf, prop);
+            PdfWriter writer = new PdfWriter(outFile);
+            // PdfWriter writer = new PdfWriter("test.pdf");
+            PdfDocument pdf = new PdfDocument(writer);
+            PageSize a4 = PageSize.A4;
+            a4.applyMargins(0, 0, 0, 0, false);
+            pdf.setDefaultPageSize(a4);
+            ConverterProperties prop = new ConverterProperties();
+
+            // PdfFont font = PdfFontFactory.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
+            // FontProvider fontProvider = new FontProvider();
+            // fontProvider.addFont(font.getFontProgram(), "UniGB-UCS2-H");
+            // prop.setFontProvider(fontProvider);
+            FontProvider provider = new DefaultFontProvider(true, true, true);
+            prop.setFontProvider(provider);
+            // prop.setBaseUri("resources/");
+            HtmlConverter.convertToPdf(new FileInputStream(template), pdf, prop);
+            // HtmlConverter.convertToPdf(htmlString, pdf, prop);
+
+        } catch (Exception e) {
+            log.error("產生PDF失敗", e);
+        }
+    }
+
+    @GetMapping("/download-cv")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadPdf() throws IOException {
+        File file = new ClassPathResource("temp/test.pdf").getFile();
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", "test.pdf");
+        return ResponseEntity.ok().headers(headers).contentLength(file.length())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
+    }
+
+    @GetMapping("/image")
+    public void getImage(HttpServletResponse response) throws IOException {
+        File file = new ClassPathResource("templates/images/pic.jpg").getFile();
+        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+        IOUtils.copy(new FileInputStream(file), response.getOutputStream());
+    }
+
+    @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
+    public boolean uploadImage(@RequestParam("image") MultipartFile image) {
+        return false;
     }
 
 }

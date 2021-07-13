@@ -5,6 +5,8 @@
     <v-btn @click="login">登入</v-btn>
     <v-btn @click="logout">登出</v-btn>
     <v-btn @click="print">print state</v-btn>
+    <v-btn @click="getImage">取得圖片</v-btn>
+    <img :src="src" width="150" height="150" alt="test" />
     <v-container>
       <v-row>
         <v-col cols="12" md="2">
@@ -34,7 +36,8 @@ import axios from "axios";
 export default {
   data: () => ({
     username: "",
-    password: ""
+    password: "",
+    src: ""
   }),
   methods: {
     getUser() {
@@ -76,6 +79,23 @@ export default {
       console.log("local storage");
       const userData = JSON.parse(localStorage.getItem("user"));
       console.log(userData);
+    },
+    getImage() {
+      axios
+        .get(process.env.VUE_APP_BACKEND_URL + "/test/image", {
+          responseType: "arraybuffer"
+        })
+        .then(response => {
+          // console.log(response);
+          this.src =
+            "data:image/jpeg;base64," +
+            btoa(
+              new Uint8Array(response.data).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ""
+              )
+            );
+        });
     }
   }
 };
