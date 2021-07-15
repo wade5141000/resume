@@ -142,7 +142,7 @@ public class TestController {
 
             File outFile = new File("src/main/resources/temp/test.pdf");
             if (!outFile.exists()) {
-	            FileUtils.touch(outFile);
+                FileUtils.touch(outFile);
             }
 
             // File outFile = new ClassPathResource("temp/test.pdf").getFile();
@@ -155,12 +155,12 @@ public class TestController {
             pdf.setDefaultPageSize(a4);
             ConverterProperties prop = new ConverterProperties();
 
-		        FontProvider fontProvider = new DefaultFontProvider();
-		        String font = "src/main/resources/templates/font/TaipeiSansTCBeta-Regular.ttf";
-		        FontProgram fontProgram = FontProgramFactory.createFont(font);
-		        fontProvider.addFont(fontProgram);
-		        prop.setFontProvider(fontProvider);
-		        prop.setBaseUri("src/main/resources/templates/");
+            FontProvider fontProvider = new DefaultFontProvider();
+            String font = "src/main/resources/templates/font/TaipeiSansTCBeta-Regular.ttf";
+            FontProgram fontProgram = FontProgramFactory.createFont(font);
+            fontProvider.addFont(fontProgram);
+            prop.setFontProvider(fontProvider);
+            prop.setBaseUri("src/main/resources/templates/");
             HtmlConverter.convertToPdf(new FileInputStream(template), pdf, prop);
             // HtmlConverter.convertToPdf(htmlString, pdf, prop);
 
