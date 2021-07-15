@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="10" lg="8" class="mt-6">
+    <v-col cols="12" md="10" lg="8">
       <theStepper step="1"></theStepper>
-      <v-expansion-panels v-model="panel" multiple class="mt-8">
+      <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
             <span class="white--text text-h6">基本資料</span>
@@ -84,7 +84,6 @@
                       readonly
                       v-bind="attrs"
                       v-on="on"
-                      placeholder="請選擇日期"
                     ></v-text-field>
                   </template>
                   <v-date-picker
@@ -288,17 +287,16 @@
                 ></v-select>
               </v-col>
               <v-col cols="6" md="8" lg="6" :key="index" class="my-0 py-0">
-                <v-text-field
-                  label="URL"
-                  outlined
-                  dense
-                  :append-outer-icon="'mdi-close'"
-                  @click:append-outer="removeWebsite"
-                >
+                <v-text-field label="URL" outlined dense>
+                  <template v-slot:append-outer>
+                    <v-icon @click="removeWebsite" color="red">
+                      mdi-close
+                    </v-icon>
+                  </template>
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row justify="center" class="my-4">
+            <v-row justify="center" class="mb-2">
               <v-col cols="5" md="4" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
                   >下一步</v-btn
@@ -386,7 +384,9 @@ export default {
     addWebsite() {
       this.links.push({ website: "", url: "" });
     },
-    removeWebsite() {}
+    removeWebsite() {
+      console.log("remove");
+    }
   }
 };
 </script>
