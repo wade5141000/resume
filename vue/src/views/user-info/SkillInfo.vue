@@ -5,6 +5,9 @@
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
+            <template v-slot:actions>
+              <v-icon color="white">$expand</v-icon>
+            </template>
             <span class="white--text text-h6">專業技能</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
