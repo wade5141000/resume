@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Index from "../views/Index";
 import About from "../views/Index.vue";
 import Login from "../views/account/Login.vue";
 import Signup from "../views/account/Signup.vue";
@@ -11,8 +12,8 @@ import BasicInfo from "../views/user-info/BasicInfo";
 import EducationInfo from "../views/user-info/EducationInfo";
 import ExperienceInfo from "../views/user-info/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
+import LanguageLicense from "../views/user-info/LanguageLicense";
 import Autobiography from "../views/user-info/Autobiography";
-import Index from "../views/Index";
 
 Vue.use(VueRouter);
 
@@ -119,6 +120,14 @@ const routes = [
     component: Autobiography,
     meta: {
       title: "自傳"
+    }
+  },
+  {
+    path: "/language-license",
+    name: "LanguageLicense",
+    component: LanguageLicense,
+    meta: {
+      title: "語言能力與證書"
     }
   },
   {

@@ -36,11 +36,8 @@ public class UserController {
     }
 
     /**
-     * TODO
-     * 1. 將圖片存到 resources/user/{account}/profile/{檔案名稱} (以後要換到 AWS S3 上)
-     * 2. 檔案名稱要替換，上傳新的圖片，舊的要刪掉
-     * 3. 儲存路徑寫入 user imgPath 欄位
-     * 4. 回傳成功 or 失敗
+     * TODO 1. 將圖片存到 resources/user/{account}/profile/{檔案名稱} (以後要換到 AWS S3 上) 2. 檔案名稱要替換，上傳新的圖片，舊的要刪掉 3. 儲存路徑寫入 user
+     * imgPath 欄位 4. 回傳成功 or 失敗
      */
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
     public boolean uploadImage(@RequestParam("image") MultipartFile image) {
@@ -48,9 +45,7 @@ public class UserController {
     }
 
     /**
-     * TODO
-     * 1. 根據登入使用者的 img_path 欄位資訊，從 resource 取得圖片 (以後要換到 AWS S3 上)
-     * 2. 使用 response 把檔案回傳至 consumer
+     * TODO 1. 根據登入使用者的 img_path 欄位資訊，從 resource 取得圖片 (以後要換到 AWS S3 上) 2. 使用 response 把檔案回傳至 consumer
      */
     @GetMapping("/image")
     public void getImage(HttpServletResponse response) {
