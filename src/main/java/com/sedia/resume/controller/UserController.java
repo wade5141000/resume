@@ -2,13 +2,14 @@ package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -41,10 +42,11 @@ public class UserController {
      * 2. 檔案名稱要替換，上傳新的圖片，舊的要刪掉
      * 3. 儲存路徑寫入 user imgPath 欄位
      * 4. 回傳成功 or 失敗
+     * @throws IOException 
      */
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
-    public boolean uploadImage(@RequestParam("image") MultipartFile image) {
-        return false;
+    public boolean uploadImage(@RequestParam("image") MultipartFile image) throws IOException {	
+    	return service.uptoS3(image);
     }
 
     /**
