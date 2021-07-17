@@ -50,9 +50,7 @@ public class UserController {
     }
 
     /**
-     * TODO
-     * 1. 根據登入使用者的 img_path 欄位資訊，從 resource 取得圖片 (以後要換到 AWS S3 上)
-     * 2. 使用 response 把檔案回傳至 consumer
+     * TODO 1. 根據登入使用者的 img_path 欄位資訊，從 resource 取得圖片 (以後要換到 AWS S3 上) 2. 使用 response 把檔案回傳至 consumer
      */
     @GetMapping("/image")
     public void getImage(HttpServletResponse response) {
