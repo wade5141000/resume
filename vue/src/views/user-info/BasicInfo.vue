@@ -53,8 +53,8 @@
               </v-col>
               <v-col cols="12" md="4" lg="2">
                 <v-radio-group label="性別" v-model="user.sex" row class="mt-0">
-                  <v-radio label="男" value="0"></v-radio>
-                  <v-radio label="女" value="1"></v-radio>
+                  <v-radio label="男" value="男"></v-radio>
+                  <v-radio label="女" value="女"></v-radio>
                 </v-radio-group>
               </v-col>
             </v-row>
@@ -80,7 +80,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       label="役畢日期"
-                      v-model="user.militaryServiceDate"
+                      v-model="user.militaryDate"
                       outlined
                       dense
                       prepend-inner-icon="mdi-calendar"
@@ -92,7 +92,7 @@
                   <v-date-picker
                     ref="picker2"
                     type="month"
-                    v-model="user.militaryServiceDate"
+                    v-model="user.militaryDate"
                     :max="new Date().toISOString().substr(0, 10)"
                     min="1950-01-01"
                     @change="pickMilitaryServiceDate"
@@ -107,6 +107,7 @@
                   :items="cities"
                   outlined
                   dense
+                  v-model="city"
                 ></v-select>
               </v-col>
               <v-col cols="6" md="2" lg="2">
@@ -115,6 +116,7 @@
                   :items="towns"
                   outlined
                   dense
+                  v-model="town"
                 ></v-select>
               </v-col>
               <v-col cols="12" md="6" lg="4">
@@ -123,6 +125,7 @@
                   outlined
                   dense
                   v-model="user.address"
+                  :rules="[v => !!v || '請輸入地址']"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -316,6 +319,7 @@
 <script>
 import theStepper from "../../components/theStepper";
 import theDialog from "../../components/theDialog";
+import http from "../../utils/http";
 export default {
   components: {
     theStepper,
@@ -328,6 +332,11 @@ export default {
     menu2(val) {
       val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
     }
+  },
+  created: () => {
+    http.get("/user").then(response => {
+      console.log(response);
+    });
   },
   data: () => ({
     panel: [0],
@@ -348,9 +357,13 @@ export default {
       { text: "信義區", value: "信義區" },
       { text: "松山區", value: "松山區" }
     ],
+    city: "",
+    town: "",
     driverLicense: [],
     specialIdentity: [],
-    user: {},
+    user: {
+      address: ""
+    },
     feature: "",
     features: [],
     websites: [
@@ -370,10 +383,15 @@ export default {
       this.$refs.menu2.save(date);
     },
     nextStep() {
+      this.user.address = this.city + this.town + this.user.address;
+      this.user.driverLicense = this.driverLicense.join(",");
+      this.user.specialIdentity = this.specialIdentity.join(",");
+      this.user.feature = this.features.join(",");
       console.log(this.user);
-      console.log(this.driverLicense);
-      console.log(this.features);
-      this.$router.push("/education");
+      http.put("/user", this.user).then(response => {
+        console.log(response);
+      });
+      //this.$router.push("/education");
     },
     onFeatureEnter() {
       if (this.feature.length > 0) {

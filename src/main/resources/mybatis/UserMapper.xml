@@ -15,7 +15,9 @@
         <result column="MILITARY_SERVICE" property="militaryService" jdbcType="VARCHAR"/>
         <result column="MILITARY_DATE" property="militaryDate" jdbcType="TIMESTAMP"/>
         <result column="ADDRESS" property="address" jdbcType="VARCHAR"/>
+        <result column="DRIVER_LICENSE" property="driverLicense" jdbcType="VARCHAR"/>
         <result column="SPECIAL_IDENTITY" property="specialIdentity" jdbcType="VARCHAR"/>
+        <result column="FEATURE" property="feature" jdbcType="VARCHAR"/>
         <result column="INTRODUCTION" property="introduction" jdbcType="VARCHAR"/>
         <result column="BIO_CHN" property="bioChn" jdbcType="VARCHAR"/>
         <result column="BIO_ENG" property="bioEng" jdbcType="VARCHAR"/>
@@ -40,8 +42,16 @@
 
     <insert id="save" parameterType="com.sedia.resume.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO USER (ACCOUNT, USER_NAME, PASSWORD, EMAIL, PHONE, BIRTHDAY, SEX, MILITARY_SERVICE, MILITARY_DATE,
-        ADDRESS, SPECIAL_IDENTITY, INTRODUCTION, BIO_CHN, BIO_ENG, PROFILE_IMG_PATH, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME) VALUES
+        ADDRESS, DRIVER_LICENSE, SPECIAL_IDENTITY, FEATURE, INTRODUCTION, BIO_CHN, BIO_ENG, PROFILE_IMG_PATH, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME) VALUES
         (#{account}, #{name}, #{password}, #{email}, #{phone}, #{birthday}, #{sex}, #{militaryService}, #{militaryDate}
-        , #{address}, #{specialIdentity}, #{introduction}, #{bioChn}, #{bioEng}, #{imgPath}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
+        , #{address}, #{driverLicense}, #{specialIdentity}, #{feature}, #{introduction}, #{bioChn}, #{bioEng}, #{imgPath}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
+
+    <update id="update" parameterType="com.sedia.resume.entity.UserEntity">
+        UPDATE USER SET USER_NAME = #{name}, EMAIL = #{email}, PHONE = #{phone}, BIRTHDAY = #{birthday}, SEX = #{sex},
+                        MILITARY_SERVICE = #{militaryService}, MILITARY_DATE = #{militaryDate}, ADDRESS = #{address},
+                        DRIVER_LICENSE = #{driverLicense}, SPECIAL_IDENTITY = #{specialIdentity}, FEATURE = #{feature},
+                        INTRODUCTION = #{introduction}, UP_USER = #{updateUser}, UP_DATETIME = #{updateDate}
+        WHERE ID = #{id}
+    </update>
 </mapper>

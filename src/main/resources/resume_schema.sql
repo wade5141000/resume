@@ -14,9 +14,11 @@ CREATE TABLE `resume`.`user` (
   `BIRTHDAY` timestamp NULL DEFAULT NULL COMMENT '生日',
   `SEX` char(1) DEFAULT NULL COMMENT '性別',
   `MILITARY_SERVICE` varchar(10) DEFAULT NULL COMMENT '服役情況',
-  `MILITARY_DATE` timestamp NULL DEFAULT NULL COMMENT '退伍日期',
+  `MILITARY_DATE` varchar(10) NULL DEFAULT NULL COMMENT '退伍日期',
   `ADDRESS` varchar(255) DEFAULT NULL COMMENT '通訊地址',
+  `DRIVER_LICENSE` varchar(50) DEFAULT NULL COMMENT '駕照',
   `SPECIAL_IDENTITY` varchar(50) DEFAULT NULL COMMENT '特殊身分',
+  `FEATURE` varchar(500) DEFAULT NULL COMMENT '個人特色',
   `INTRODUCTION` varchar(200) DEFAULT NULL COMMENT '自我介紹',
   `BIO_ENG` varchar(4000) DEFAULT NULL COMMENT '英文自傳',
   `BIO_CHN` varchar(4000) DEFAULT NULL COMMENT '中文自傳',
@@ -121,18 +123,18 @@ CREATE TABLE `resume`.`experience` (
   UNIQUE KEY `ID_UNIQUE` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='工作經驗' AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS `resume`.`feature`;
-CREATE TABLE `resume`.`feature` (
-  `ID` int NOT NULL AUTO_INCREMENT COMMENT '個人特色編號',
-  `UID` int NOT NULL COMMENT '使用者編號',
-  `CONTENT` varchar(20) DEFAULT NULL COMMENT '內容',
-  `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
-  `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
-  `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
-  PRIMARY KEY (`ID`,`UID`),
-  UNIQUE KEY `ID_UNIQUE` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='個人特色' AUTO_INCREMENT=1;
+# DROP TABLE IF EXISTS `resume`.`feature`;
+# CREATE TABLE `resume`.`feature` (
+#   `ID` int NOT NULL AUTO_INCREMENT COMMENT '個人特色編號',
+#   `UID` int NOT NULL COMMENT '使用者編號',
+#   `CONTENT` varchar(20) DEFAULT NULL COMMENT '內容',
+#   `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
+#   `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
+#   `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
+#   `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
+#   PRIMARY KEY (`ID`,`UID`),
+#   UNIQUE KEY `ID_UNIQUE` (`ID`)
+# ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='個人特色' AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `resume`.`language`;
 CREATE TABLE `resume`.`language` (

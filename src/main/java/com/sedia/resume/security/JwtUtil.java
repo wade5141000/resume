@@ -22,7 +22,7 @@ import java.util.List;
 
 @Slf4j
 public class JwtUtil {
-    public static final long EXPIRATION_TIME = 432_000_000; // 5天
+    public static final long EXPIRATION_TIME = 86_400_000 * 5; // 5天
     public static final String TOKEN_PREFIX = "Bearer"; // Token前缀
     public static final String HEADER_STRING = "Authorization";// 存放Token的Header Key
     public static final Key key = MacProvider.generateKey(); // 給定一組密鑰，用來解密以及加密使用
@@ -30,15 +30,17 @@ public class JwtUtil {
 
     // JWT產生方法
     public static void addAuthentication(HttpServletResponse response, Authentication auth) {
+        Date expiration = new Date(System.currentTimeMillis() + EXPIRATION_TIME);
+
         // 生成JWT
-        String jwt = Jwts.builder().setSubject(auth.getName())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)).signWith(key).compact();
+        String jwt = Jwts.builder().setSubject(auth.getName()).setExpiration(expiration).signWith(key).compact();
         // 把JWT傳回response
         try {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
             UserEntity user = (UserEntity) auth.getPrincipal();
-            LoginUser loginUser = LoginUser.builder().id(user.getId()).account(user.getAccount()).jwt(jwt).build();
+            LoginUser loginUser = LoginUser.builder().id(user.getId()).account(user.getAccount()).jwt(jwt)
+                    .expiration(expiration).build();
             response.getOutputStream().println(MAPPER.writeValueAsString(loginUser));
             log.info("登入成功");
         } catch (Exception e) {

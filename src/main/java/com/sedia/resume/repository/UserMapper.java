@@ -15,4 +15,6 @@ public interface UserMapper {
 
     void save(UserEntity user);
 
+    void update(UserEntity user);
+
 }

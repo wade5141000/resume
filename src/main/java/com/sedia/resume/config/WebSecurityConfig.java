@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.List;
+
 import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
@@ -27,9 +29,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         String[] allowPass = { "/", "/login", "/actuator/**", "/test/**", "/v3/api-docs/**", "/swagger-ui/**",
                 "/swagger-ui.html" };
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and()
-                .authorizeRequests().antMatchers(POST, "/user").permitAll().and().authorizeRequests()
-                .antMatchers(allowPass).permitAll().and().authorizeRequests().anyRequest().authenticated().and()
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        corsConfiguration.setAllowedMethods(List.of("*"));
+        http.cors().configurationSource(request -> corsConfiguration).and().authorizeRequests()
+                .antMatchers(POST, "/user").permitAll().and().authorizeRequests().antMatchers(allowPass).permitAll()
+                .and().authorizeRequests().anyRequest().authenticated().and()
                 .addFilterBefore(new LoginFilter("/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)// 添加過濾器，針對/login的請求，交給LoginFilter處理
                 // 添加過濾器，針對其他請求進行JWT的驗證

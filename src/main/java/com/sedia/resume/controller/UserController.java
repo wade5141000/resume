@@ -19,8 +19,8 @@ public class UserController {
 
     final UserService service;
 
-    @GetMapping
-    public List<UserEntity> getUser() {
+    @GetMapping("/all")
+    public List<UserEntity> getAllUser() {
         UserEntity currentUser = service.getCurrentUser(); // 取得當前登入的使用者
         return service.getUsers();
     }
@@ -30,9 +30,14 @@ public class UserController {
         return service.save(user);
     }
 
-    @GetMapping("/{id}")
-    public UserEntity getUser(@PathVariable int id) {
-        return service.getUserById(id);
+    @PutMapping
+    public boolean updateUser(@RequestBody UserEntity user) {
+        return service.update(user);
+    }
+
+    @GetMapping
+    public UserEntity getUser() {
+        return service.getCurrentUser();
     }
 
     /**
