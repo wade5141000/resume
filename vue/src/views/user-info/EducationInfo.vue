@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="10" lg="8">
+    <v-col cols="12" md="10" lg="9">
       <theStepper step="2"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
@@ -60,7 +60,7 @@
               </v-col>
             </v-row>
             <v-row justify="center">
-              <v-col cols="12" md="5" lg="4">
+              <v-col cols="12" md="5" lg="5">
                 <v-radio-group
                   label="就學狀態"
                   v-model="edu.status"

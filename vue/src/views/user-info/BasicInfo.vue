@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="10" lg="8">
+    <v-col cols="12" md="10" lg="9">
       <theStepper step="1"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
@@ -51,7 +51,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="12" md="4" lg="2">
+              <v-col cols="12" md="4" lg="3">
                 <v-radio-group label="性別" v-model="user.sex" row class="mt-0">
                   <v-radio label="男" value="男"></v-radio>
                   <v-radio label="女" value="女"></v-radio>
@@ -68,7 +68,7 @@
                   v-model="user.militaryService"
                 ></v-select>
               </v-col>
-              <v-col cols="7" md="7" lg="5">
+              <v-col cols="7" md="7" lg="6">
                 <v-menu
                   ref="menu2"
                   v-model="menu2"
@@ -119,7 +119,7 @@
                   v-model="town"
                 ></v-select>
               </v-col>
-              <v-col cols="12" md="6" lg="4">
+              <v-col cols="12" md="6" lg="5">
                 <v-text-field
                   label="地址"
                   outlined
@@ -138,7 +138,7 @@
                   v-model="user.phone"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" md="6" lg="5">
+              <v-col cols="12" md="6" lg="6">
                 <v-text-field
                   label="email"
                   outlined
@@ -148,7 +148,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
+              <v-col cols="12" md="10" lg="9">
                 駕駛執照
               </v-col>
             </v-row>
@@ -174,7 +174,7 @@
                   value="汽車駕駛執照"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="6" md="1" lg="2">
+              <v-col cols="6" md="1" lg="3">
                 <v-checkbox
                   v-model="driverLicense"
                   label="無"
@@ -183,7 +183,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
+              <v-col cols="12" md="10" lg="9">
                 特殊身份
               </v-col>
             </v-row>
@@ -202,7 +202,7 @@
                   value="原住民"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12" md="4" lg="4">
+              <v-col cols="12" md="4" lg="5">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="身心障礙"
@@ -211,7 +211,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8" class="d-flex justify-end">
+              <v-col cols="12" md="10" lg="9" class="d-flex justify-end">
                 <theDialog>
                   <template v-slot:btn>
                     <v-icon color="blue">mdi-chat-question</v-icon>看看範例
@@ -220,7 +220,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
+              <v-col cols="12" md="10" lg="9">
                 <v-textarea
                   label="自我簡介"
                   hint="簡單描述特長、成就，讓企業快速瞭解你"
@@ -235,7 +235,7 @@
               </v-col>
             </v-row>
             <v-row justify="center">
-              <v-col cols="12" md="10" lg="8">
+              <v-col cols="12" md="10" lg="9">
                 <v-text-field
                   label="個人特色"
                   outlined
@@ -264,7 +264,7 @@
               <v-col cols="6" md="5" lg="4">
                 個人連結
               </v-col>
-              <v-col cols="6" md="5" lg="4" class="d-flex justify-end">
+              <v-col cols="6" md="5" lg="5" class="d-flex justify-end">
                 <v-btn
                   v-if="links.length < 5"
                   text
@@ -284,18 +284,19 @@
               v-for="(link, index) in links"
               :key="index"
             >
-              <v-col cols="6" md="2" lg="2" class="my-0 py-0">
+              <v-col cols="6" md="2" lg="3" class="my-0 py-0">
                 <v-select
                   label="網站"
                   :items="websites"
                   outlined
                   dense
+                  v-model="link.platform"
                 ></v-select>
               </v-col>
               <v-col cols="6" md="8" lg="6" :key="index" class="my-0 py-0">
-                <v-text-field label="URL" outlined dense>
+                <v-text-field label="URL" outlined dense v-model="link.url">
                   <template v-slot:append-outer>
-                    <v-icon @click="removeWebsite" color="red">
+                    <v-icon @click="removeWebsite(index)" color="red">
                       mdi-close
                     </v-icon>
                   </template>
@@ -333,9 +334,15 @@ export default {
       val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
     }
   },
-  created: () => {
+  created: function() {
     http.get("/user").then(response => {
-      console.log(response);
+      console.log(response.data);
+
+      if (response.data.links.length === 0) {
+        this.links.push({ id: null, platform: "", url: "" });
+      } else {
+        this.links = response.data.links;
+      }
     });
   },
   data: () => ({
@@ -373,7 +380,7 @@ export default {
       { text: "Linkedin", value: "Linkedin" },
       { text: "Github", value: "Github" }
     ],
-    links: [{ website: "", url: "" }]
+    links: []
   }),
   methods: {
     pickBirthDay(date) {
@@ -387,8 +394,11 @@ export default {
       this.user.driverLicense = this.driverLicense.join(",");
       this.user.specialIdentity = this.specialIdentity.join(",");
       this.user.feature = this.features.join(",");
+      this.user.links = this.links;
+
       console.log(this.user);
-      http.put("/user", this.user).then(response => {
+
+      http.put("/user/basic-info", this.user).then(response => {
         console.log(response);
       });
       //this.$router.push("/education");
@@ -403,10 +413,10 @@ export default {
       this.features = this.features.filter(item => item !== str);
     },
     addWebsite() {
-      this.links.push({ website: "", url: "" });
+      this.links.push({ id: null, platform: "", url: "" });
     },
-    removeWebsite() {
-      console.log("remove");
+    removeWebsite(index) {
+      this.links.splice(index, 1);
     }
   }
 };
