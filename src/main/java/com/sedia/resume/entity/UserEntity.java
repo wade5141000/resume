@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -49,6 +50,8 @@ public class UserEntity extends GenericEntity implements UserDetails {
     private String bioChn;
 
     private String imgPath;
+
+    private List<LinkEntity> links;
 
     @Hidden
     @Override

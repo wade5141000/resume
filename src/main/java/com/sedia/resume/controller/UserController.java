@@ -3,13 +3,10 @@ package com.sedia.resume.controller;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -30,14 +27,14 @@ public class UserController {
         return service.save(user);
     }
 
-    @PutMapping
-    public boolean updateUser(@RequestBody UserEntity user) {
-        return service.update(user);
+    @PutMapping("/basic-info")
+    public boolean updateBasicInfo(@RequestBody UserEntity user) {
+        return service.updateBasicInfo(user);
     }
 
     @GetMapping
     public UserEntity getUser() {
-        return service.getCurrentUser();
+        return service.getUser();
     }
 
     /**

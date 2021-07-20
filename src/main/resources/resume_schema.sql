@@ -171,7 +171,7 @@ CREATE TABLE `resume`.`link` (
   `ID` int NOT NULL AUTO_INCREMENT COMMENT '個人連結編號',
   `UID` int NOT NULL COMMENT '使用者編號',
   `PLATFORM` varchar(20) DEFAULT NULL COMMENT '平台',
-  `URL` varchar(200) DEFAULT NULL COMMENT '連結網址',
+  `URL` varchar(1000) DEFAULT NULL COMMENT '連結網址',
   `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
   `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
