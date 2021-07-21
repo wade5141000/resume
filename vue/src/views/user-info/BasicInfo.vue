@@ -124,8 +124,7 @@
                   label="地址"
                   outlined
                   dense
-                  v-model="user.address"
-                  :rules="[v => !!v || '請輸入地址']"
+                  v-model="address"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -284,7 +283,7 @@
               v-for="(link, index) in links"
               :key="index"
             >
-              <v-col cols="6" md="2" lg="3" class="my-0 py-0">
+              <v-col cols="6" md="3" lg="3" class="my-0 py-0">
                 <v-select
                   label="網站"
                   :items="websites"
@@ -293,7 +292,7 @@
                   v-model="link.platform"
                 ></v-select>
               </v-col>
-              <v-col cols="6" md="8" lg="6" :key="index" class="my-0 py-0">
+              <v-col cols="6" md="7" lg="6" :key="index" class="my-0 py-0">
                 <v-text-field label="URL" outlined dense v-model="link.url">
                   <template v-slot:append-outer>
                     <v-icon @click="removeWebsite(index)" color="red">
@@ -337,12 +336,40 @@ export default {
   created: function() {
     http.get("/user").then(response => {
       console.log(response.data);
+      let user = response.data;
 
-      if (response.data.links.length === 0) {
+      if (user.address) {
+        this.city = user.address.substring(0, 3);
+        user.address = user.address.substring(3);
+
+        this.towns.forEach(town => {
+          if (user.address.startsWith(town.text)) {
+            this.town = user.address.substring(0, town.text.length);
+            this.address = user.address.substring(town.text.length);
+            return false;
+          }
+        });
+        user.address = "";
+      }
+      if (user.driverLicense) {
+        this.driverLicense = [].concat(user.driverLicense.split(","));
+      }
+      if (user.specialIdentity) {
+        this.specialIdentity = [].concat(user.specialIdentity.split(","));
+      }
+      if (user.feature) {
+        this.features = []
+          .concat(user.feature.split(","))
+          .filter(s => s.length > 0);
+      }
+
+      if (user.links.length === 0) {
         this.links.push({ id: null, platform: "", url: "" });
       } else {
         this.links = response.data.links;
       }
+
+      this.user = user;
     });
   },
   data: () => ({
@@ -362,15 +389,14 @@ export default {
     towns: [
       { text: "中正區", value: "中正區" },
       { text: "信義區", value: "信義區" },
-      { text: "松山區", value: "松山區" }
+      { text: "A區", value: "A區" }
     ],
     city: "",
     town: "",
+    address: "",
     driverLicense: [],
     specialIdentity: [],
-    user: {
-      address: ""
-    },
+    user: {},
     feature: "",
     features: [],
     websites: [
@@ -390,7 +416,7 @@ export default {
       this.$refs.menu2.save(date);
     },
     nextStep() {
-      this.user.address = this.city + this.town + this.user.address;
+      this.user.address = this.city + this.town + this.address;
       this.user.driverLicense = this.driverLicense.join(",");
       this.user.specialIdentity = this.specialIdentity.join(",");
       this.user.feature = this.features.join(",");

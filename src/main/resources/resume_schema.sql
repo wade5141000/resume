@@ -9,7 +9,7 @@ CREATE TABLE `resume`.`user` (
   `ACCOUNT` varchar(30) NOT NULL COMMENT '使用者帳號',
   `USER_NAME` varchar(30) DEFAULT NULL COMMENT '姓名',
   `PASSWORD` varchar(200) DEFAULT NULL COMMENT '密碼',
-  `EMAIL` varchar(30) NOT NULL COMMENT '信箱',
+  `EMAIL` varchar(30) COMMENT '信箱',
   `PHONE` varchar(20) DEFAULT NULL COMMENT '電話',
   `BIRTHDAY` timestamp NULL DEFAULT NULL COMMENT '生日',
   `SEX` char(1) DEFAULT NULL COMMENT '性別',

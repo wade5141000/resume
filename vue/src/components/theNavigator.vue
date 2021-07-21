@@ -40,6 +40,8 @@ export default {
   methods: {
     logout() {
       this.$store.commit("logout");
+      alert("登出成功");
+      this.$router.push("/");
     }
   }
 };

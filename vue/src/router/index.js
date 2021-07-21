@@ -13,6 +13,7 @@ import ExperienceInfo from "../views/user-info/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import LanguageLicense from "../views/user-info/LanguageLicense";
 import Autobiography from "../views/user-info/Autobiography";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -154,8 +155,16 @@ router.beforeEach((to, from, next) => {
     }
   });
 
-  if (allow || localStorage.getItem("user")) {
+  if (allow) {
     next();
+  } else if (localStorage.getItem("user")) {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user.expiration >= Date.now()) {
+      next();
+    } else {
+      store.commit("logout");
+      next({ path: "/login" });
+    }
   } else {
     next({ path: "/login" });
   }

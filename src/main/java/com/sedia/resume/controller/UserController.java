@@ -3,12 +3,14 @@ package com.sedia.resume.controller;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -29,6 +31,7 @@ public class UserController {
 
     @PutMapping("/basic-info")
     public boolean updateBasicInfo(@RequestBody UserEntity user) {
+        log.debug("Update basic info for: {}", user);
         return service.updateBasicInfo(user);
     }
 
