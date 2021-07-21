@@ -44,4 +44,12 @@
         (#{account}, #{name}, #{password}, #{email}, #{phone}, #{birthday}, #{sex}, #{militaryService}, #{militaryDate}
         , #{address}, #{specialIdentity}, #{introduction}, #{bioChn}, #{bioEng}, #{imgPath}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
+    
+    
+    <update id="updateImage" parameterType="com.sedia.resume.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+        UPDATE USER SET 
+        PROFILE_IMG_PATH = #{imgPath}
+        where id = #{id}};
+	</update>
+    
 </mapper>

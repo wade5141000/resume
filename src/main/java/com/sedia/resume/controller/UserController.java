@@ -4,6 +4,7 @@ import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,8 +42,17 @@ public class UserController {
      */
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
     public boolean uploadImage(@RequestParam("image") MultipartFile image) {
-        return false;
+    	String message = "";
+    	try {
+    		service.updateImage(image);
+    		message = "Uploaded the image successfully: " + image.getOriginalFilename();
+    	    } catch (Exception e) {
+    	    	message = "Could not upload the image: " + image.getOriginalFilename() + "!";
+    	      return true;
+    	    }
+    	 return false;
     }
+    
 
     /**
      * TODO 1. 根據登入使用者的 img_path 欄位資訊，從 resource 取得圖片 (以後要換到 AWS S3 上) 2. 使用 response 把檔案回傳至 consumer
