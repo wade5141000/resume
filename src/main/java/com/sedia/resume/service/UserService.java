@@ -1,5 +1,10 @@
 package com.sedia.resume.service;
 
+import com.amazonaws.auth.policy.Resource;
+import com.amazonaws.services.ec2.model.Image;
+import com.amazonaws.util.IOUtils;
+import com.itextpdf.kernel.geom.Path;
+import com.sedia.resume.controller.UserController;
 import com.sedia.resume.entity.SkillEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
@@ -17,6 +22,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.ImageIcon;
+
+import java.io.FileInputStream;
+import java.net.MalformedURLException;
+import java.nio.file.*;
+
+import org.springframework.util.ResourceUtils;
+
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -25,6 +41,7 @@ public class UserService {
 
     final UserMapper userMapper;
     final BCryptPasswordEncoder passwordEncoder;
+    private final Path fileStorageLocation;
 
     public UserEntity getCurrentUser() {
         String account = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -52,16 +69,10 @@ public class UserService {
         return userMapper.findById(id).orElseThrow(() -> new ApiException("找不到 User"));
     }
     
- 
-    public boolean updateImage(MultipartFile file) {
-        try {
-            userMapper.updateImage(file);
-            return true;
-        } catch (Exception e) {
-            log.error("更新失敗");
-            return false;
-        }
-
+    
+	
+    public String getImgById(int id)  {
+    	return userMapper.loadImg(id);
     }
     
     

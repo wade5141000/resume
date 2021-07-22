@@ -1,15 +1,20 @@
 package com.sedia.resume.controller;
 
+import com.amazonaws.util.IOUtils;
+import com.itextpdf.styledxmlparser.css.media.MediaType;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
+
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -42,24 +47,24 @@ public class UserController {
      */
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
     public boolean uploadImage(@RequestParam("image") MultipartFile image) {
-    	String message = "";
-    	try {
-    		service.updateImage(image);
-    		message = "Uploaded the image successfully: " + image.getOriginalFilename();
-    	    } catch (Exception e) {
-    	    	message = "Could not upload the image: " + image.getOriginalFilename() + "!";
-    	      return true;
-    	    }
-    	 return false;
+    	return false;
     }
     
 
     /**
      * TODO 1. 根據登入使用者的 img_path 欄位資訊，從 resource 取得圖片 (以後要換到 AWS S3 上) 2. 使用 response 把檔案回傳至 consumer
      */
-    @GetMapping("/image")
-    public void getImage(HttpServletResponse response) {
-
+    
+    
+    @GetMapping("/{id}/image")
+    public void getImage(@PathVariable int id, HttpServletResponse response) throws IOException {
+    	String imgPath = service.getImgById(id);
+    	final FileInputStream  in = new FileInputStream(new File(imgPath));
+    	response.setContentType("image/png"); // 如果是 jpg 則為 image/jpeg，svg 為 image/svg+xml 等
+        IOUtils.copy(in, response.getOutputStream());
+        in.close();
+        response.getOutputStream().close();
+    	
     }
 
 }

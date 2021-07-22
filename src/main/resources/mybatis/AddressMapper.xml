@@ -4,7 +4,7 @@
 <mapper namespace="com.sedia.resume.repository.AddressMapper">
 
     <resultMap id="AddressResultMap" type="com.sedia.resume.entity.AddressEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="ID" property="id" jdbcType="INTEGER"/>
         <result column="CITY" property="city" jdbcType="VARCHAR"/>
         <result column="TOWN" property="town" jdbcType="VARCHAR"/>
     </resultMap>

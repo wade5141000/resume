@@ -221,7 +221,7 @@ CREATE TABLE `resume`.`address` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='address';
 
 ALTER TABLE resume.address AUTO_INCREMENT=1;
-INSERTresume INTO resume.address (city,town) VALUES
+INSERT INTO resume.address (city,town) VALUES
     ("連江縣","北竿鄉"),
 ("連江縣","南竿鄉"),
 ("連江縣","東引鄉"),
