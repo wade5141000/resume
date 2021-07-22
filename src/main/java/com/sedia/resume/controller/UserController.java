@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/user") // 在user根路徑
 public class UserController {
 
     final UserService service;
@@ -37,16 +37,15 @@ public class UserController {
     }
 
     /**
-     * TODO
-     * 1. 將圖片存到 resources/user/{account}/profile/{檔案名稱} (以後要換到 AWS S3 上)
-     * 2. 檔案名稱要替換，上傳新的圖片，舊的要刪掉
-     * 3. 儲存路徑寫入 user imgPath 欄位
-     * 4. 回傳成功 or 失敗
-     * @throws IOException 
+     * TODO 1. 將圖片存到 resources/user/{account}/profile/{檔案名稱} (以後要換到 AWS S3 上) 2. 檔案名稱要替換，上傳新的圖片，舊的要刪掉 3. 儲存路徑寫入 user
+     * imgPath 欄位 4. 回傳成功 or 失敗
+     * 
+     * @throws IOException
      */
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
-    public boolean uploadImage(@RequestParam("image") MultipartFile image) throws IOException {	
-    	return service.uptoS3(image);
+    public boolean uploadImage(@RequestParam("image") MultipartFile image) throws IOException {
+
+        return service.uptoS3(image);
     }
 
     /**

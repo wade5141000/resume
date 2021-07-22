@@ -15,4 +15,7 @@ public interface UserMapper {
 
     void save(UserEntity user);
 
+    // 上傳圖片
+    void upLoadImg(UserEntity user);
+
 }
