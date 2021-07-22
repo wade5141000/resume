@@ -9,11 +9,11 @@
         <result column="TOWN" property="town" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id=" getAllCities" resultMap="AddressResultMap">
+    <select id=" getAllCities" resultType="String">
         SELECT CITY FROM ADDRESS;
     </select>
     
-    <select id="getAllTowns" resultMap="AddressResultMap">
+    <select id="getAllTowns" resultType="String">
         SELECT TOWN FROM ADDRESS  WHERE CITY = #{city};
     </select>
 

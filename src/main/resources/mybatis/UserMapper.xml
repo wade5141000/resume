@@ -45,7 +45,7 @@
         , #{address}, #{specialIdentity}, #{introduction}, #{bioChn}, #{bioEng}, #{imgPath}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
     
-    <select id="loadImg" resultMap="UserResultMap">
+    <select id="loadImg" resultType="String">
         SELECT PROFILE_IMG_PATH FROM USER WHERE ID = #{id};
 	</select>
     

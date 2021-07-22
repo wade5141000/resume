@@ -28,7 +28,7 @@ public class AddressService {
     	                .maximumSize(1000)
     	                .build();
     	 
-    @Cacheable(value = "cache",key = "getCityList")
+    @Cacheable(value = "cache")
     public List<String> getCityList() {
     	System.out.print("取得所有城市資料");
         return addressMapper.getAllCities();

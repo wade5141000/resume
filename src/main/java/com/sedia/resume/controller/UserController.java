@@ -6,6 +6,8 @@ import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,10 +58,13 @@ public class UserController {
      */
     
     
-    @GetMapping("/{id}/image")
-    public void getImage(@PathVariable int id, HttpServletResponse response) throws IOException {
-    	String imgPath = service.getImgById(id);
-    	final FileInputStream  in = new FileInputStream(new File(imgPath));
+    @GetMapping("/image")
+    public void getImage(HttpServletResponse response) throws IOException {
+    	int id = service.getCurrentUser().getId();
+    	String imgPath = service.getImgById(id); 	
+    	File file = new ClassPathResource(imgPath).getFile();
+    	//File file = new ClassPathResource("user.wade/profile/example.jpg").getFile();
+    	final FileInputStream  in = new FileInputStream(file);
     	response.setContentType("image/png"); // 如果是 jpg 則為 image/jpeg，svg 為 image/svg+xml 等
         IOUtils.copy(in, response.getOutputStream());
         in.close();

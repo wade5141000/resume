@@ -1,8 +1,6 @@
 package com.sedia.resume.service;
 
-import com.amazonaws.auth.policy.Resource;
-import com.amazonaws.services.ec2.model.Image;
-import com.amazonaws.util.IOUtils;
+
 import com.itextpdf.kernel.geom.Path;
 import com.sedia.resume.controller.UserController;
 import com.sedia.resume.entity.SkillEntity;
@@ -41,7 +39,6 @@ public class UserService {
 
     final UserMapper userMapper;
     final BCryptPasswordEncoder passwordEncoder;
-    private final Path fileStorageLocation;
 
     public UserEntity getCurrentUser() {
         String account = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
