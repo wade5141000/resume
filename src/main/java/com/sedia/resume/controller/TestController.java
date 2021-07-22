@@ -64,10 +64,9 @@ public class TestController {
 
     @GetMapping("/upload")
     public String testUpload() throws IOException {
-    	
+
         Resource resource = new ClassPathResource("temp/test.txt");
-        
-        
+
         File file = resource.getFile();
         boolean result = awsUtils.uploadFileToS3(file);
         if (result) {
