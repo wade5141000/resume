@@ -37,7 +37,7 @@ public class UserController {
     }
 
     /**
-     * TODO 1. 將圖片存到 resources/user/{account}/profile/{檔案名稱} (以後要換到 AWS S3 上) 2. 檔案名稱要替換，上傳新的圖片，舊的要刪掉 3. 儲存路徑寫入 user
+     * TODO 1. 將圖片存到 resources/user/{userId}/profile/{檔案名稱} (以後要換到 AWS S3 上) 2. 檔案名稱要替換，上傳新的圖片，舊的要刪掉 3. 儲存路徑寫入 user
      * imgPath 欄位 4. 回傳成功 or 失敗
      * 
      * @throws IOException
