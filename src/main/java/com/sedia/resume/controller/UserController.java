@@ -49,27 +49,25 @@ public class UserController {
      */
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
     public boolean uploadImage(@RequestParam("image") MultipartFile image) {
-    	return false;
+        return false;
     }
-    
 
     /**
      * TODO 1. 根據登入使用者的 img_path 欄位資訊，從 resource 取得圖片 (以後要換到 AWS S3 上) 2. 使用 response 把檔案回傳至 consumer
      */
-    
-    
+
     @GetMapping("/image")
     public void getImage(HttpServletResponse response) throws IOException {
-    	int id = service.getCurrentUser().getId();
-    	String imgPath = service.getImgById(id); 	
-    	File file = new ClassPathResource(imgPath).getFile();
-    	//File file = new ClassPathResource("user.wade/profile/example.jpg").getFile();
-    	final FileInputStream  in = new FileInputStream(file);
-    	response.setContentType("image/png"); // 如果是 jpg 則為 image/jpeg，svg 為 image/svg+xml 等
+        int id = service.getCurrentUser().getId();
+        String imgPath = service.getImgById(id);
+        File file = new ClassPathResource(imgPath).getFile();
+        // File file = new ClassPathResource("user.wade/profile/example.jpg").getFile();
+        final FileInputStream in = new FileInputStream(file);
+        response.setContentType("image/png"); // 如果是 jpg 則為 image/jpeg，svg 為 image/svg+xml 等
         IOUtils.copy(in, response.getOutputStream());
         in.close();
         response.getOutputStream().close();
-    	
+
     }
 
 }

@@ -1,6 +1,5 @@
 package com.sedia.resume.service;
 
-
 import com.itextpdf.kernel.geom.Path;
 import com.sedia.resume.controller.UserController;
 import com.sedia.resume.entity.SkillEntity;
@@ -29,7 +28,6 @@ import java.net.MalformedURLException;
 import java.nio.file.*;
 
 import org.springframework.util.ResourceUtils;
-
 
 @Service
 @Transactional
@@ -65,13 +63,9 @@ public class UserService {
     public UserEntity getUserById(int id) {
         return userMapper.findById(id).orElseThrow(() -> new ApiException("找不到 User"));
     }
-    
-    
-	
-    public String getImgById(int id)  {
-    	return userMapper.loadImg(id);
+
+    public String getImgById(int id) {
+        return userMapper.loadImg(id);
     }
-    
-    
 
 }

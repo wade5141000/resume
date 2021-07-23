@@ -15,13 +15,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressEntity {
-	
-	private int id;
+
+    private int id;
 
     private String city;
-    
-    private String town;
 
-    
+    private String town;
 
 }

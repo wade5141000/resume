@@ -1,12 +1,9 @@
 package com.sedia.resume.repository;
 
-
 import com.sedia.resume.entity.UserEntity;
 
 import java.util.List;
 import java.util.Optional;
-
-
 
 public interface UserMapper {
 
@@ -17,7 +14,7 @@ public interface UserMapper {
     Optional<UserEntity> findById(int id);
 
     void save(UserEntity user);
-    
+
     String loadImg(int id);// return the img_path
 
 }

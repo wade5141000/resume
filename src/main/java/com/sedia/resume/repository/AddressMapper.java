@@ -7,17 +7,17 @@ import org.apache.ibatis.annotations.Select;
 
 public interface AddressMapper {
 
-//	@Select("SELECT CITY FROM ADDRESS")
-    List<String> getAllCities();   
-    
-//    @Select("SELECT * FROM ADDRESS WHERE city = #{city}")
+    // @Select("SELECT CITY FROM ADDRESS")
+    List<String> getAllCities();
+
+    // @Select("SELECT * FROM ADDRESS WHERE city = #{city}")
     List<String> getAllTowns(String city);
-     
-//    @Select("SELECT CITY FROM ADDRESS WHERE id = #{id}")
-//    String selectCityById(int id);
-//    
-//    @Select("SELECT TOWN FROM ADDRESS WHERE id = #{id}")
-//    String selectTownById(int id);
-//    
+
+    // @Select("SELECT CITY FROM ADDRESS WHERE id = #{id}")
+    // String selectCityById(int id);
+    //
+    // @Select("SELECT TOWN FROM ADDRESS WHERE id = #{id}")
+    // String selectTownById(int id);
+    //
 
 }

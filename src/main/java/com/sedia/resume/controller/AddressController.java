@@ -11,16 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.sedia.resume.service.AddressService;
 
-
 import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/address")
 public class AddressController {
-	
-	final AddressService service;
-	
+
+    final AddressService service;
+
     @GetMapping("/cities")
     public List<String> getCities() {
         // TODO 回傳台灣所有縣市名稱
