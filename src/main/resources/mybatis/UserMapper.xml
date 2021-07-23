@@ -44,4 +44,9 @@
         (#{account}, #{name}, #{password}, #{email}, #{phone}, #{birthday}, #{sex}, #{militaryService}, #{militaryDate}
         , #{address}, #{specialIdentity}, #{introduction}, #{bioChn}, #{bioEng}, #{imgPath}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
+    
+    <select id="loadImg" resultType="String">
+        SELECT PROFILE_IMG_PATH FROM USER WHERE ID = #{id};
+	</select>
+    
 </mapper>

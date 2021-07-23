@@ -15,4 +15,6 @@ public interface UserMapper {
 
     void save(UserEntity user);
 
+    String loadImg(int id);// return the img_path
+
 }

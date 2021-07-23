@@ -41,7 +41,8 @@
 	</delete>
 	
 	 <select id="isExistLanguage" resultMap="LanguageResultMap">
-        select * from LANGUAGE where id = #{id} and uid = #{uid};
+        select * from LANGUAGE
+         where id = #{id} and uid = #{uid};
     </select>
 	
   
