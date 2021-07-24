@@ -1,13 +1,9 @@
 package com.sedia.resume.service;
 
 import com.sedia.resume.entity.LinkEntity;
-import com.itextpdf.kernel.geom.Path;
-import com.sedia.resume.controller.UserController;
-import com.sedia.resume.entity.SkillEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
-import com.sedia.resume.repository.SkillMapper;
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
@@ -23,12 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,14 +30,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
-
 @Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class UserService {
 
     final BCryptPasswordEncoder passwordEncoder;
@@ -139,8 +129,8 @@ public class UserService {
         // 宣告預設檔名、根目錄、預設目錄、取得的圖片格式
         // relative paths:server's workspace\src\main\resources\{userId}\profile\...
         int name = currentuser.getId();
-        String rootpath = "src/main/";
-        String strpath = new ClassPathResource("resources/user/" + name + "/profile/").getPath();
+        String rootpath = "src/main/resources/";
+        String strpath = "user/" + name + "/profile/";
         String ext = FilenameUtils.getExtension(image.getOriginalFilename());
 
         // 準備及確認使用者的資料夾狀況
@@ -175,7 +165,7 @@ public class UserService {
             // 圖片改名並將圖片,路徑存入伺服器及資料庫
             reImgName(image.getInputStream(), rootpath + strpath + name + "." + ext);
 
-            currentuser.setImgPath(rootpath + strpath + name + "." + ext);
+            currentuser.setImgPath(strpath + name + "." + ext);
             currentuser.setUpdateUser(currentuser.getAccount());
             currentuser.setUpdateDate(LocalDateTime.now());
             userMapper.upLoadImg(currentuser);

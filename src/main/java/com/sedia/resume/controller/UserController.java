@@ -1,20 +1,15 @@
 package com.sedia.resume.controller;
 
 import com.amazonaws.util.IOUtils;
-import com.itextpdf.styledxmlparser.css.media.MediaType;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
