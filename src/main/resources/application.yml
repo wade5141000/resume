@@ -46,3 +46,6 @@ jasypt:
 sendgrid:
   api-key: ENC(RL/YEV8X22wtYMGEktgFxVo34nUEmzyavLYPE772zjRRdEHjQmUU2sM/Q0Plm0u5jp1KlU3iIyDuuDmpOhzzCuYl5gfTy66pQRTg8MaNyeHWbnB1du5xZd9D7eZkYMwhsVOLImQ6H7HMT0s3enF/XQ==)
 
+logging:
+  level:
+    com.sedia.resume: debug
