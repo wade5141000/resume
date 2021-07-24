@@ -49,3 +49,10 @@ sendgrid:
 logging:
   level:
     com.sedia.resume: debug
+
+resume:
+  mail:
+    from: wade5141000@outlook.com
+    from-name: resume-service
+    frontend-host: http://resume-frontend.s3-website-ap-northeast-1.amazonaws.com/
+

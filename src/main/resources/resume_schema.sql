@@ -222,9 +222,18 @@ CREATE TABLE `resume`.`address` (
  `TOWN` varchar(10) NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='address';
 
+DROP TABLE IF EXISTS `resume`.`reset_password_token`;
+CREATE TABLE `resume`.`reset_password_token` (
+  `ID` int primary key AUTO_INCREMENT,
+  `UID` int NOT NULL,
+  `TOKEN` varchar(255) NOT NULL,
+  `EXPIRY_DATE` timestamp NOT NULL,
+  `IS_USED` TINYINT(1) NOT NULL
+);
+
 ALTER TABLE resume.address AUTO_INCREMENT=1;
 INSERT INTO resume.address (city,town) VALUES
-    ("連江縣","北竿鄉"),
+("連江縣","北竿鄉"),
 ("連江縣","南竿鄉"),
 ("連江縣","東引鄉"),
 ("連江縣","莒光鄉"),

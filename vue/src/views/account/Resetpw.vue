@@ -67,7 +67,6 @@
 
 <script>
 import http from "../../utils/http";
-import axios from "axios";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
@@ -76,6 +75,9 @@ export default {
     password: { required, maxLength: maxLength(10) },
     password1: { required, maxLength: maxLength(10) },
     minLength: minLength(4)
+  },
+  created: function() {
+    // http.post() TODO check token
   },
   data() {
     return {
