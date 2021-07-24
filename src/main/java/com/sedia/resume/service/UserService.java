@@ -1,14 +1,20 @@
 package com.sedia.resume.service;
 
+import com.itextpdf.kernel.geom.Path;
+import com.sedia.resume.controller.UserController;
+import com.sedia.resume.entity.SkillEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
+import com.sedia.resume.repository.SkillMapper;
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.ClassPathResource;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,6 +39,7 @@ import javax.imageio.ImageWriter;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     final UserMapper userMapper;
@@ -65,6 +72,10 @@ public class UserService {
 
     public UserEntity getUserById(int id) {
         return userMapper.findById(id).orElseThrow(() -> new ApiException("找不到 User"));
+    }
+
+    public String getImgById(int id) {
+        return userMapper.loadImg(id);
     }
 
     // * 1. 將圖片存到 resources/user/{account}/profile/{檔案名稱} (以後要換到 AWS S3 上)
@@ -164,6 +175,7 @@ public class UserService {
         bos.close();
 
         return bos;
+
     }
 
 }
