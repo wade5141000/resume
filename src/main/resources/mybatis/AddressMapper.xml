@@ -9,7 +9,7 @@
         <result column="TOWN" property="town" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id=" getAllCities" resultType="String">
+    <select id="getAllCities" resultType="String">
         SELECT CITY FROM ADDRESS;
     </select>
     

@@ -1,19 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Index from "../views/Index";
-import About from "../views/Index.vue";
-import Login from "../views/account/Login.vue";
-import Signup from "../views/account/Signup.vue";
-import Privacy from "../views/Privacy.vue";
-import Terms from "../views/Terms.vue";
+import Login from "../views/account/Login";
+import Signup from "../views/account/Signup";
+import Privacy from "../views/Privacy";
+import Terms from "../views/Terms";
 import Forgetpw from "../views/account/Forgetpw";
-import Resetpw from "../views/account/Resetpw.vue";
+import Resetpw from "../views/account/Resetpw";
 import BasicInfo from "../views/user-info/BasicInfo";
 import EducationInfo from "../views/user-info/EducationInfo";
 import ExperienceInfo from "../views/user-info/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import LanguageLicense from "../views/user-info/LanguageLicense";
 import Autobiography from "../views/user-info/Autobiography";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -48,14 +48,6 @@ const routes = [
     component: Resetpw,
     meta: {
       title: "重設密碼"
-    }
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About,
-    meta: {
-      title: "關於我們"
     }
   },
   {
@@ -146,7 +138,36 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title;
   }
-  next();
+
+  let allow = false;
+  let allowPass = [
+    "/",
+    "/login",
+    "/forgetpw",
+    "/resetpw",
+    "/signup",
+    "/terms",
+    "/privacy"
+  ];
+  allowPass.forEach(path => {
+    if (path === to.path) {
+      allow = true;
+    }
+  });
+
+  if (allow) {
+    next();
+  } else if (localStorage.getItem("user")) {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user.expiration >= Date.now()) {
+      next();
+    } else {
+      store.commit("logout");
+      next({ path: "/login" });
+    }
+  } else {
+    next({ path: "/login" });
+  }
 });
 
 export default router;

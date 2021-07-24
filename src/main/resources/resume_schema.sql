@@ -9,14 +9,16 @@ CREATE TABLE `resume`.`user` (
   `ACCOUNT` varchar(30) NOT NULL COMMENT '使用者帳號',
   `USER_NAME` varchar(30) DEFAULT NULL COMMENT '姓名',
   `PASSWORD` varchar(200) DEFAULT NULL COMMENT '密碼',
-  `EMAIL` varchar(30) NOT NULL COMMENT '信箱',
+  `EMAIL` varchar(30) COMMENT '信箱',
   `PHONE` varchar(20) DEFAULT NULL COMMENT '電話',
   `BIRTHDAY` timestamp NULL DEFAULT NULL COMMENT '生日',
   `SEX` char(1) DEFAULT NULL COMMENT '性別',
   `MILITARY_SERVICE` varchar(10) DEFAULT NULL COMMENT '服役情況',
-  `MILITARY_DATE` timestamp NULL DEFAULT NULL COMMENT '退伍日期',
+  `MILITARY_DATE` varchar(10) NULL DEFAULT NULL COMMENT '退伍日期',
   `ADDRESS` varchar(255) DEFAULT NULL COMMENT '通訊地址',
+  `DRIVER_LICENSE` varchar(50) DEFAULT NULL COMMENT '駕照',
   `SPECIAL_IDENTITY` varchar(50) DEFAULT NULL COMMENT '特殊身分',
+  `FEATURE` varchar(500) DEFAULT NULL COMMENT '個人特色',
   `INTRODUCTION` varchar(200) DEFAULT NULL COMMENT '自我介紹',
   `BIO_ENG` varchar(4000) DEFAULT NULL COMMENT '英文自傳',
   `BIO_CHN` varchar(4000) DEFAULT NULL COMMENT '中文自傳',
@@ -121,18 +123,18 @@ CREATE TABLE `resume`.`experience` (
   UNIQUE KEY `ID_UNIQUE` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='工作經驗' AUTO_INCREMENT=1;
 
-DROP TABLE IF EXISTS `resume`.`feature`;
-CREATE TABLE `resume`.`feature` (
-  `ID` int NOT NULL AUTO_INCREMENT COMMENT '個人特色編號',
-  `UID` int NOT NULL COMMENT '使用者編號',
-  `CONTENT` varchar(20) DEFAULT NULL COMMENT '內容',
-  `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
-  `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
-  `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
-  `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
-  PRIMARY KEY (`ID`,`UID`),
-  UNIQUE KEY `ID_UNIQUE` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='個人特色' AUTO_INCREMENT=1;
+# DROP TABLE IF EXISTS `resume`.`feature`;
+# CREATE TABLE `resume`.`feature` (
+#   `ID` int NOT NULL AUTO_INCREMENT COMMENT '個人特色編號',
+#   `UID` int NOT NULL COMMENT '使用者編號',
+#   `CONTENT` varchar(20) DEFAULT NULL COMMENT '內容',
+#   `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
+#   `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
+#   `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
+#   `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
+#   PRIMARY KEY (`ID`,`UID`),
+#   UNIQUE KEY `ID_UNIQUE` (`ID`)
+# ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='個人特色' AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS `resume`.`language`;
 CREATE TABLE `resume`.`language` (
@@ -169,7 +171,7 @@ CREATE TABLE `resume`.`link` (
   `ID` int NOT NULL AUTO_INCREMENT COMMENT '個人連結編號',
   `UID` int NOT NULL COMMENT '使用者編號',
   `PLATFORM` varchar(20) DEFAULT NULL COMMENT '平台',
-  `URL` varchar(200) DEFAULT NULL COMMENT '連結網址',
+  `URL` varchar(1000) DEFAULT NULL COMMENT '連結網址',
   `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
   `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
@@ -220,9 +222,18 @@ CREATE TABLE `resume`.`address` (
  `TOWN` varchar(10) NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='address';
 
+DROP TABLE IF EXISTS `resume`.`reset_password_token`;
+CREATE TABLE `resume`.`reset_password_token` (
+  `ID` int primary key AUTO_INCREMENT,
+  `UID` int NOT NULL,
+  `TOKEN` varchar(255) NOT NULL,
+  `EXPIRY_DATE` timestamp NOT NULL,
+  `IS_USED` TINYINT(1) NOT NULL
+);
+
 ALTER TABLE resume.address AUTO_INCREMENT=1;
 INSERT INTO resume.address (city,town) VALUES
-    ("連江縣","北竿鄉"),
+("連江縣","北竿鄉"),
 ("連江縣","南竿鄉"),
 ("連江縣","東引鄉"),
 ("連江縣","莒光鄉"),

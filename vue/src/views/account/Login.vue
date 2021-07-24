@@ -60,7 +60,14 @@
                   </router-link>
                 </div>
 
-                <v-btn depressed block large class="mr-4" color="primary">
+                <v-btn
+                  depressed
+                  block
+                  large
+                  class="mr-4"
+                  color="primary"
+                  @click="login"
+                >
                   立即登入
                 </v-btn>
                 <div class="text-center my-5">
@@ -112,11 +119,6 @@ export default {
     }
   },
   methods: {
-    getUser() {
-      http.get("/user").then(function(response) {
-        console.log(response);
-      });
-    },
     login() {
       const data = {
         account: this.account,
@@ -134,12 +136,12 @@ export default {
       axios
         .post(process.env.VUE_APP_BACKEND_URL + "/login", formData, config)
         .then(response => {
-          console.log("登入成功");
+          alert("登入成功");
           console.log(response.data);
           this.$store.commit("login", response.data);
         })
         .catch(() => {
-          console.log("登入失敗");
+          alert("登入失敗");
         });
     },
     logout() {

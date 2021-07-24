@@ -1,15 +1,18 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="10" lg="8">
+    <v-col cols="12" md="10" lg="9">
       <theStepper step="6"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
+            <template v-slot:actions>
+              <v-icon color="white">$expand</v-icon>
+            </template>
             <span class="white--text text-h6">自傳</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="mt-6" no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8" class="d-flex justify-end">
+              <v-col cols="12" md="10" lg="9" class="d-flex justify-end">
                 <theDialog>
                   <template v-slot:btn>
                     <v-icon color="blue">mdi-chat-question</v-icon>看看範例
@@ -18,7 +21,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
+              <v-col cols="12" md="10" lg="9">
                 <v-textarea
                   label="自傳(中文)"
                   outlined
@@ -32,7 +35,7 @@
               </v-col>
             </v-row>
             <v-row class="mt-6" no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8" class="d-flex justify-end">
+              <v-col cols="12" md="10" lg="9" class="d-flex justify-end">
                 <theDialog>
                   <template v-slot:btn>
                     <v-icon color="blue">mdi-chat-question</v-icon>看看範例
@@ -41,7 +44,7 @@
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
+              <v-col cols="12" md="10" lg="9">
                 <v-textarea
                   label="自傳(英文)"
                   outlined

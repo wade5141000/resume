@@ -1,10 +1,13 @@
 <template>
   <v-row justify="center">
-    <v-col cols="12" md="10" lg="8">
+    <v-col cols="12" md="10" lg="9">
       <theStepper step="5"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
+            <template v-slot:actions>
+              <v-icon color="white">$expand</v-icon>
+            </template>
             <span class="white--text text-h6">語言能力</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
@@ -78,6 +81,9 @@
 
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
+            <template v-slot:actions>
+              <v-icon color="white">$expand</v-icon>
+            </template>
             <span class="white--text text-h6">證照</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>

@@ -1,11 +1,9 @@
 package com.sedia.resume.service;
 
-import com.itextpdf.kernel.geom.Path;
-import com.sedia.resume.controller.UserController;
-import com.sedia.resume.entity.SkillEntity;
+import com.sedia.resume.entity.LinkEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
-import com.sedia.resume.repository.SkillMapper;
+import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
@@ -21,29 +19,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
-
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class UserService {
 
-    final UserMapper userMapper;
     final BCryptPasswordEncoder passwordEncoder;
+    final UserMapper userMapper;
+    final LinkMapper linkMapper;
     final AwsUtils awsUtils;
     // @Autowired
     // final CacheManager cacheManager;
@@ -57,21 +52,64 @@ public class UserService {
         return userMapper.findAll();
     }
 
+    public UserEntity getUserById(int id) {
+        return userMapper.findById(id).orElseThrow(() -> new ApiException("找不到 User"));
+    }
+
     public UserEntity save(UserEntity user) {
         if (userMapper.findByAccount(user.getAccount()).isEmpty()) {
+            LocalDateTime now = LocalDateTime.now();
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setCreateDate(LocalDateTime.now());
+            user.setCreateDate(now);
             user.setCreateUser(user.getAccount());
-            user.setUpdateDate(LocalDateTime.now());
+            user.setUpdateDate(now);
             user.setUpdateUser(user.getAccount());
+            user.setEmail(user.getAccount());
             userMapper.save(user);
             return user;
         }
         throw new ApiException("account already exists");
     }
 
-    public UserEntity getUserById(int id) {
-        return userMapper.findById(id).orElseThrow(() -> new ApiException("找不到 User"));
+    public UserEntity getUser() {
+        UserEntity currentUser = getCurrentUser();
+        currentUser.setLinks(linkMapper.findAll(currentUser.getId()));
+        return currentUser;
+    }
+
+    public boolean updateBasicInfo(UserEntity user) {
+        LocalDateTime now = LocalDateTime.now();
+
+        try {
+            UserEntity currentUser = getCurrentUser();
+            user.setId(currentUser.getId());
+            user.setUpdateDate(now);
+            user.setUpdateUser(user.getAccount());
+            userMapper.update(user);
+
+            List<LinkEntity> links = user.getLinks();
+            List<Integer> originalLinkIds = linkMapper.findAll(user.getId()).stream().mapToInt(LinkEntity::getId)
+                    .boxed().collect(Collectors.toList());
+            links.forEach(link -> {
+                if (link.getId() == null) {
+                    link.setUid(currentUser.getId());
+                    link.setCreateDate(now);
+                    link.setCreateUser(user.getAccount());
+                    link.setUpdateDate(now);
+                    link.setUpdateUser(user.getAccount());
+                    linkMapper.save(link);
+                } else {
+                    link.setUpdateDate(now);
+                    linkMapper.update(link);
+                    originalLinkIds.remove(link.getId());
+                }
+            });
+            originalLinkIds.forEach(id -> linkMapper.delete(id, user.getId()));
+            return true;
+        } catch (Exception e) {
+            log.error("更新失敗", e);
+            return false;
+        }
     }
 
     public String getImgById(int id) {
@@ -91,8 +129,8 @@ public class UserService {
         // 宣告預設檔名、根目錄、預設目錄、取得的圖片格式
         // relative paths:server's workspace\src\main\resources\{userId}\profile\...
         int name = currentuser.getId();
-        String rootpath = "src/main/";
-        String strpath = new ClassPathResource("resources/user/" + name + "/profile/").getPath();
+        String rootpath = "src/main/resources/";
+        String strpath = "user/" + name + "/profile/";
         String ext = FilenameUtils.getExtension(image.getOriginalFilename());
 
         // 準備及確認使用者的資料夾狀況
@@ -127,7 +165,7 @@ public class UserService {
             // 圖片改名並將圖片,路徑存入伺服器及資料庫
             reImgName(image.getInputStream(), rootpath + strpath + name + "." + ext);
 
-            currentuser.setImgPath(rootpath + strpath + name + "." + ext);
+            currentuser.setImgPath(strpath + name + "." + ext);
             currentuser.setUpdateUser(currentuser.getAccount());
             currentuser.setUpdateDate(LocalDateTime.now());
             userMapper.upLoadImg(currentuser);
