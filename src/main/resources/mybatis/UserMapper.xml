@@ -45,8 +45,15 @@
         , #{address}, #{specialIdentity}, #{introduction}, #{bioChn}, #{bioEng}, #{imgPath}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
     
+
     <select id="loadImg" resultType="String">
         SELECT PROFILE_IMG_PATH FROM USER WHERE ID = #{id};
 	</select>
     
+
+    <update id="upLoadImg" parameterType="com.sedia.resume.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+ 		UPDATE USER SET PROFILE_IMG_PATH=#{imgPath},UP_USER=#{updateUser}, UP_DATETIME=#{updateDate} where ID = #{id};
+ 		
+    </update>
+
 </mapper>
