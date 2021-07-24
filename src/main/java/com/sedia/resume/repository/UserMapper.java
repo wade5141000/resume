@@ -17,4 +17,7 @@ public interface UserMapper {
 
     void update(UserEntity user);
 
+    // 上傳圖片
+    void upLoadImg(UserEntity user);
+
 }
