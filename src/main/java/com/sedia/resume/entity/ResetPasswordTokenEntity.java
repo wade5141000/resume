@@ -20,7 +20,7 @@ public class ResetPasswordTokenEntity extends GenericEntity {
     private boolean isUsed;
     
     // 建立人
-    private String createUser;
+    private String crUser;
     // 建立時間
     private LocalDateTime crDatetime;
     // 更新人
