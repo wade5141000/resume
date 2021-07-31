@@ -22,10 +22,10 @@ public class ResetPasswordTokenEntity extends GenericEntity {
     // 建立人
     private String createUser;
     // 建立時間
-    private LocalDateTime createDate;
+    private LocalDateTime crDatetime;
     // 更新人
-    private String updateUser;
+    private String upUser;
     // 更新時間
-    private LocalDateTime updateDate;
+    private LocalDateTime upDatetime;
 
 }
