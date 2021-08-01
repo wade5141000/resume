@@ -39,7 +39,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
 
-    UserService service;
     final BCryptPasswordEncoder passwordEncoder;
     final UserMapper userMapper;
     final LinkMapper linkMapper;

@@ -1,5 +1,6 @@
 package com.sedia.resume.service;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,10 +39,15 @@ public class ResetPasswordTokenService {
             java.time.LocalDateTime ldt = deadline.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
             reset.setExpiryDate(ldt);
             reset.setUsed(false);
+            LocalDateTime now = LocalDateTime.now();
+            reset.setCreateDate(now);
+            reset.setCreateUser(reset.getCreateUser());
+            reset.setCreateUser(reset.getUpdateUser());
+            reset.setUpdateDate(now);
             resetPasswordTokenMapper.save(reset);
             return true;
         } catch (Exception e) {
-            log.error("更新失敗");
+            log.error("token儲存失敗");
             return false;
         }
 

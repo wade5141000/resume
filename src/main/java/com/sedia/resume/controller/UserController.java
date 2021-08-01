@@ -94,7 +94,8 @@ public class UserController {
     public boolean sendToken(@RequestParam("email") String email, @Value("${sendgrid.api-key}") String sendGridKey,
             @Value("${resume.mail.from}") String from, @Value("${resume.mail.from-name}") String fromName,
             @Value("${resume.mail.frontend-host}") String host) throws Exception {
-
+    	
+    	try {
         // 根據輸入的 email 查詢 user (查詢條件是 account), 查不到就 throw ApiException (含 message)
         UserEntity user = userMapper.findByAccount(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -102,27 +103,20 @@ public class UserController {
         int id = user.getId();
 
         String token = UUID.randomUUID().toString();
-        // ResetPasswordTokenEntity newUserToken = resetPasswordTokenMapper.searchById(id).orElseThrow(() -> new
-        // ApiException("找不到token"));
-
+        
         // 存入一筆 reset password token 到 DB
         ResetPasswordTokenEntity reset = new ResetPasswordTokenEntity();
         reset.setUid(id);
-
         resetPasswordTokenService.save(reset);
 
         // 發送 email, 回傳 email 發送是否成功
-        Email fr = new Email("${resume.mail.from}");
+        Email fr = new Email(from);
         Email to = new Email(service.getCurrentUser().getAccount());
-        fr.setName("${resume.mail.from-name}");
-
-        // 信件標題: Reset Password
+        fr.setName(fromName);
         String subject = "Reset Password";
-
-        // 信件內容(html格式): <h2>請點擊連結：<a href='{url}'>重置你的密碼</a></h2>
-        // url = "{host}/resetpw?token={token}
-        String url = "{host}/resetpw?token={token}";
-        Content content = new Content("text/html", "<h2>請點擊連結：<a href='{url}'>重置你的密碼</a></h2>");
+        String url = host+"/resetpw?token="+token;
+        Content content = new Content("text/html", "<h2>請點擊連結：<a href='"+url+"'>重置你的密碼</a></h2>");
+   
         Mail mail = new Mail(fr, subject, to, content);
 
         SendGrid sg = new SendGrid(sendGridKey);
@@ -135,7 +129,12 @@ public class UserController {
         Response response = sg.api(request);
 
         System.out.printf("response code: %d", response.getStatusCode());
-        return resetPasswordTokenService.save(reset);
+        	return true;
+    	}
+    	catch (Exception e){
+    		return false;
+    	}
+        
 
     }
 
