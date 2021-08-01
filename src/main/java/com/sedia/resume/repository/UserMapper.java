@@ -1,6 +1,5 @@
 package com.sedia.resume.repository;
 
-
 import com.sedia.resume.entity.UserEntity;
 
 import java.util.List;
@@ -22,9 +21,5 @@ public interface UserMapper {
 
     // 上傳圖片
     void upLoadImg(UserEntity user);
-    
-   
-    
-    
 
 }

@@ -6,8 +6,7 @@ import com.sedia.resume.entity.ResetPasswordTokenEntity;
 import com.sedia.resume.entity.UserEntity;
 
 public interface ResetPasswordTokenMapper {
-	
-	 void save(ResetPasswordTokenEntity newUserToken);
-	
+
+    void save(ResetPasswordTokenEntity newUserToken);
 
 }

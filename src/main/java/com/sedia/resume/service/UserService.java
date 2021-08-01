@@ -39,13 +39,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
 
-	UserService service;
+    UserService service;
     final BCryptPasswordEncoder passwordEncoder;
     final UserMapper userMapper;
     final LinkMapper linkMapper;
     final AwsUtils awsUtils;
     final ResetPasswordTokenMapper resetPasswordTokenMapper;
-    
+
     // @Autowired
     // final CacheManager cacheManager;
 
@@ -221,7 +221,5 @@ public class UserService {
         return bos;
 
     }
-    
-    
 
 }
