@@ -60,7 +60,7 @@ public class TestController {
     @Value("${sendgrid.api-key}")
     private String sendGridKey;
 
-    final UserService userService;
+    UserService userService;
 
     @GetMapping("/upload")
     public String testUpload() throws IOException {
