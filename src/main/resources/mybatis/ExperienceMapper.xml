@@ -25,8 +25,8 @@
         <result column="uid" property="uid" jdbcType="INTEGER" />
         <result column="company_name" property="companyName" jdbcType="CHAR" />
         <result column="position" property="position" jdbcType="CHAR" />
-        <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
-        <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+        <result column="start_date" property="startDate" jdbcType="VARCHAR" />
+        <result column="end_date" property="endDate" jdbcType="VARCHAR" />
         <result column="experience_desc" property="experienceDesc" jdbcType="CHAR" />
         <result column="ability" property="ability" jdbcType="CHAR" />
         <result column="cr_user" property="crUser" jdbcType="CHAR" />

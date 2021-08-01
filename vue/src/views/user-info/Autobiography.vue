@@ -30,7 +30,7 @@
                   no-resize
                   maxLength="2000"
                   counter="2000"
-                  v-model="chinese"
+                  v-model="autobiography.chinese"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -53,7 +53,7 @@
                   no-resize
                   maxLength="4000"
                   counter="4000"
-                  v-model="english"
+                  v-model="autobiography.english"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -74,6 +74,7 @@
 <script>
 import theStepper from "../../components/theStepper";
 import theDialog from "../../components/theDialog";
+import http from "../../utils/http";
 export default {
   components: {
     theStepper,
@@ -81,13 +82,19 @@ export default {
   },
   data: () => ({
     panel: [0],
-    chinese: "",
-    english: ""
+    autobiography: {}
   }),
   methods: {
     save() {
-      console.log(this.chinese);
-      console.log(this.english);
+      console.log(this.autobiography);
+      http.put("/user/autobiography", this.autobiography).then(response => {
+        console.log(response);
+        if (response.data === true) {
+          alert("更新成功");
+        } else {
+          alert("更新失敗");
+        }
+      });
     }
   }
 };

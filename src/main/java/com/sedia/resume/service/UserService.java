@@ -1,5 +1,6 @@
 package com.sedia.resume.service;
 
+import com.sedia.resume.domain.AutobiographyRequest;
 import com.sedia.resume.entity.LinkEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
@@ -11,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.core.io.ClassPathResource;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -40,8 +40,6 @@ public class UserService {
     final UserMapper userMapper;
     final LinkMapper linkMapper;
     final AwsUtils awsUtils;
-    // @Autowired
-    // final CacheManager cacheManager;
 
     public UserEntity getCurrentUser() {
         String account = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -108,6 +106,20 @@ public class UserService {
             return true;
         } catch (Exception e) {
             log.error("更新失敗", e);
+            return false;
+        }
+    }
+
+    public boolean updateAutobiography(AutobiographyRequest request) {
+        try {
+            UserEntity currentUser = getCurrentUser();
+            currentUser.setBioEng(request.getEnglish());
+            currentUser.setBioChn(request.getChinese());
+            currentUser.setUpdateDate(LocalDateTime.now());
+            userMapper.updateAutobiography(currentUser);
+            return true;
+        } catch (Exception e) {
+            log.error("更新自傳失敗", e);
             return false;
         }
     }

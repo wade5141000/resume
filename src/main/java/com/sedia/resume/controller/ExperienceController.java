@@ -32,7 +32,7 @@ public class ExperienceController {
     }
 
     // 新增經歷列表
-    @PostMapping("/experience/")
+    @PostMapping("/experience")
     public boolean intserExperience(@RequestBody ExperienceEntity experience) {
         return service.insertExperience(experience);
     }

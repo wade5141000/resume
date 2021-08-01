@@ -13,7 +13,7 @@
         <result column="BIRTHDAY" property="birthday" jdbcType="TIMESTAMP"/>
         <result column="SEX" property="sex" jdbcType="CHAR"/>
         <result column="MILITARY_SERVICE" property="militaryService" jdbcType="VARCHAR"/>
-        <result column="MILITARY_DATE" property="militaryDate" jdbcType="TIMESTAMP"/>
+        <result column="MILITARY_DATE" property="militaryDate" jdbcType="VARCHAR"/>
         <result column="ADDRESS" property="address" jdbcType="VARCHAR"/>
         <result column="DRIVER_LICENSE" property="driverLicense" jdbcType="VARCHAR"/>
         <result column="SPECIAL_IDENTITY" property="specialIdentity" jdbcType="VARCHAR"/>
@@ -55,7 +55,10 @@
         WHERE ID = #{id}
     </update>
 
-
+    <update id="updateAutobiography" parameterType="com.sedia.resume.entity.UserEntity">
+        UPDATE USER SET BIO_ENG = #{bioEng}, BIO_CHN = #{bioChn}, UP_DATETIME = #{updateDate}
+        WHERE ID = #{id}
+    </update>
 
     <select id="loadImg" resultType="String">
         SELECT PROFILE_IMG_PATH FROM USER WHERE ID = #{id};

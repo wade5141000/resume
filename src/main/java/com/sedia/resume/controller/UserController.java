@@ -1,6 +1,7 @@
 package com.sedia.resume.controller;
 
 import com.amazonaws.util.IOUtils;
+import com.sedia.resume.domain.AutobiographyRequest;
 import com.sedia.resume.domain.ResetPasswordRequest;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.UserService;
@@ -27,7 +28,6 @@ public class UserController {
 
     @GetMapping("/all")
     public List<UserEntity> getAllUser() {
-        UserEntity currentUser = service.getCurrentUser(); // 取得當前登入的使用者
         return service.getUsers();
     }
 
@@ -45,6 +45,11 @@ public class UserController {
     @GetMapping
     public UserEntity getUser() {
         return service.getUser();
+    }
+
+    @PutMapping("/autobiography")
+    public boolean updateAutobiography(@RequestBody AutobiographyRequest request) {
+        return service.updateAutobiography(request);
     }
 
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
