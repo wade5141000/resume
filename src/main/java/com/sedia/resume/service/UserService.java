@@ -1,9 +1,12 @@
 package com.sedia.resume.service;
 
+import com.sedia.resume.domain.ResetPasswordRequest;
 import com.sedia.resume.entity.LinkEntity;
+import com.sedia.resume.entity.ResetPasswordTokenEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
+import com.sedia.resume.repository.ResetPasswordTokenMapper;
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
@@ -26,8 +29,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -42,6 +47,7 @@ public class UserService {
     final AwsUtils awsUtils;
     // @Autowired
     // final CacheManager cacheManager;
+    final ResetPasswordTokenMapper passwordTokenMapper;
 
     public UserEntity getCurrentUser() {
         String account = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -214,6 +220,75 @@ public class UserService {
 
         return bos;
 
+    }
+
+    // 1. 根據 token 從 DB 查出 reset password token
+    // 2. 檢查該筆 token 還在有效期內且沒有被使用過
+    // 3. 回傳有效或無效
+    public boolean checkTokenMessage(String token) {
+
+        try {
+            ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(token);
+
+            // 取得符合uid的USER。token內的uid為空該如何處理?不處理會直接跳找不到使用者
+            Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
+            UserEntity currentUser = checkUser.get();
+
+            // System.out.println("Token:"+currentToken);
+            Duration duration = Duration.between(currentToken.getExpiryDate(), LocalDateTime.now());
+            // 1:時效未超過24小時、2:isUsed()=false、3:不在現有資料庫中、4:使用者同一個且在時效內
+            // *********要問wade的，為什麼currentToken==null放這裡判斷會失效
+            if (duration.toHours() < 24 && (currentUser.getId() == currentToken.getUid()) || !currentToken.isUsed()) {
+                return true;
+            }
+            // Token為null
+            else
+                return false;
+        } catch (Exception e) {
+            log.error("Token過期或無效", e);
+            return false;
+        }
+    }
+
+    // 1. 根據 token 從 DB 查出 reset password token
+    // 2. 檢查該筆 token 還在有效期內且沒有被使用過
+    // 3. 變更使用者密碼，需要加密，參考 save user
+    // 4. 修改 token 為已使用
+    // 5. 回傳重置密碼是否成功
+    public boolean resetPasswordMessage(ResetPasswordRequest request) {
+        try {
+            // 確認token有效性 時效或未使用
+            if (checkTokenMessage(request.getToken())) {
+
+                // 取得DB內的token。可能為空值或有值
+                ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(request.getToken());
+
+                // 使用token內的uid查詢DB。token如未使用，uid可能為空
+                // 取得符合uid的USER。token內的uid為空該如何處理?代表此token為新token，也代表未經過send，不合法的token
+
+                // 取得使用者Entity
+                Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
+                UserEntity currentUser = checkUser.get();
+
+                // 變更使用者密碼
+                currentUser.setPassword(passwordEncoder.encode(request.getPassword()));
+                currentUser.setUpdateUser(currentUser.getAccount());
+                currentUser.setUpdateDate(LocalDateTime.now());
+                userMapper.resetPassword(currentUser);
+
+                // 修改token為已使用
+                currentToken.setUsed(true);
+                currentToken.setUpdateUser(currentUser.getAccount());
+                currentToken.setUpdateDate(LocalDateTime.now());
+                passwordTokenMapper.resetPassword(currentToken);
+
+                return true;
+            } else
+                return false;
+        } catch (Exception e) {
+            log.error("憑證無效或UID不相同", e);
+            return false;
+        }
     }
 
 }
