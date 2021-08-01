@@ -238,7 +238,7 @@ public class UserService {
             Duration duration = Duration.between(currentToken.getExpiryDate(), LocalDateTime.now());
             // 1:時效未超過24小時、2:isUsed()=false、3:不在現有資料庫中、4:使用者同一個且在時效內
             // *********要問wade的，為什麼currentToken==null放這裡判斷會失效
-            if (duration.toHours() < 24 && (currentUser.getId() == currentToken.getUid()) || !currentToken.isUsed()) {
+            if (duration.toHours() < 24 && (currentUser.getId() == currentToken.getUid()) && !currentToken.isUsed()) {
                 return true;
             }
             // Token為null
