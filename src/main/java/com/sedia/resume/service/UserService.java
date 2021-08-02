@@ -234,18 +234,17 @@ public class UserService {
             Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
             UserEntity currentUser = checkUser.get();
 
-            // System.out.println("Token:"+currentToken);
             Duration duration = Duration.between(currentToken.getExpiryDate(), LocalDateTime.now());
-            // 1:時效未超過24小時、2:isUsed()=false、3:不在現有資料庫中、4:使用者同一個且在時效內
+            // 1:時效超過24小時與否、2:isUsed()為true與false、3:不在現有資料庫中、
             // *********要問wade的，為什麼currentToken==null放這裡判斷會失效
-            if (duration.toHours() < 24 && (currentUser.getId() == currentToken.getUid()) && !currentToken.isUsed()) {
+            if (duration.toHours() < 24 && duration.toNanos() > 0 && !currentToken.isUsed()) {
                 return true;
             }
             // Token為null
             else
                 return false;
         } catch (Exception e) {
-            log.error("Token過期或無效", e);
+            log.error("非系統正常操作", e);
             return false;
         }
     }
