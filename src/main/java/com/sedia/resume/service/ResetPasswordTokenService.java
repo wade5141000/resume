@@ -28,8 +28,7 @@ public class ResetPasswordTokenService {
     public boolean save(ResetPasswordTokenEntity reset) {
 
         try {
-            String uuid = UUID.randomUUID().toString();
-            reset.setToken(uuid);
+            reset.setToken(reset.getToken());
             // EXPIRY_DATE = 24小時
             int expiryDate = 60 * 24;
             Calendar calendar = Calendar.getInstance();
@@ -47,7 +46,7 @@ public class ResetPasswordTokenService {
             resetPasswordTokenMapper.save(reset);
             return true;
         } catch (Exception e) {
-            log.error("token儲存失敗");
+            log.error("token儲存失敗", e);
             return false;
         }
 

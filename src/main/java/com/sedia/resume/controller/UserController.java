@@ -94,8 +94,7 @@ public class UserController {
     public boolean sendToken(@RequestParam("email") String email, @Value("${sendgrid.api-key}") String sendGridKey,
             @Value("${resume.mail.from}") String from, @Value("${resume.mail.from-name}") String fromName,
             @Value("${resume.mail.frontend-host}") String host) throws Exception {
-    	
-    	try {
+
         // 根據輸入的 email 查詢 user (查詢條件是 account), 查不到就 throw ApiException (含 message)
         UserEntity user = userMapper.findByAccount(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -103,7 +102,7 @@ public class UserController {
         int id = user.getId();
 
         String token = UUID.randomUUID().toString();
-        
+
         // 存入一筆 reset password token 到 DB
         ResetPasswordTokenEntity reset = new ResetPasswordTokenEntity();
         reset.setUid(id);
@@ -114,9 +113,9 @@ public class UserController {
         Email to = new Email(service.getCurrentUser().getAccount());
         fr.setName(fromName);
         String subject = "Reset Password";
-        String url = host+"/resetpw?token="+token;
-        Content content = new Content("text/html", "<h2>請點擊連結：<a href='"+url+"'>重置你的密碼</a></h2>");
-   
+        String url = host + "/resetpw?token=" + token;
+        Content content = new Content("text/html", "<h2>請點擊連結：<a href='" + url + "'>重置你的密碼</a></h2>");
+
         Mail mail = new Mail(fr, subject, to, content);
 
         SendGrid sg = new SendGrid(sendGridKey);
@@ -127,14 +126,13 @@ public class UserController {
         request.setBody(mail.build());
 
         Response response = sg.api(request);
-
-        System.out.printf("response code: %d", response.getStatusCode());
-        	return true;
-    	}
-    	catch (Exception e){
-    		return false;
-    	}
-        
+        if (response.getStatusCode() != 200) {
+            log.debug("response code: %d", response.getStatusCode());
+            return false;
+        } else {
+            log.debug("response code: %d", response.getStatusCode());
+            return true;
+        }
 
     }
 
