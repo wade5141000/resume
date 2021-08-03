@@ -106,6 +106,7 @@ public class UserController {
         // 存入一筆 reset password token 到 DB
         ResetPasswordTokenEntity reset = new ResetPasswordTokenEntity();
         reset.setUid(id);
+        reset.setToken(token);
         resetPasswordTokenService.save(reset);
 
         // 發送 email, 回傳 email 發送是否成功
