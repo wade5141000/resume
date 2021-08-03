@@ -233,8 +233,8 @@ public class UserService {
             // 取得符合uid的USER。token內的uid為空該如何處理?不處理會直接跳找不到使用者
             Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
             UserEntity currentUser = checkUser.get();
-            
-            Duration duration = Duration.between(LocalDateTime.now(),currentToken.getExpiryDate() );
+
+            Duration duration = Duration.between(LocalDateTime.now(), currentToken.getExpiryDate());
             // 1:時效超過24小時與否、2:isUsed()為true與false、3:不在現有資料庫中、
             // *********要問wade的，為什麼currentToken==null放這裡判斷會失效
             if (duration.toHours() < 24 && duration.toNanos() > 0 && !currentToken.isUsed()) {
