@@ -3,12 +3,28 @@ package com.sedia.resume.controller;
 import com.amazonaws.util.IOUtils;
 import com.sedia.resume.domain.AutobiographyRequest;
 import com.sedia.resume.domain.ResetPasswordRequest;
+import com.sedia.resume.entity.ResetPasswordTokenEntity;
 import com.sedia.resume.entity.UserEntity;
+import com.sedia.resume.exception.ApiException;
+import com.sedia.resume.repository.ResetPasswordTokenMapper;
+import com.sedia.resume.repository.UserMapper;
+import com.sedia.resume.service.ResetPasswordTokenService;
 import com.sedia.resume.service.UserService;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +32,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -25,6 +45,9 @@ import java.util.List;
 public class UserController {
 
     final UserService service;
+    final UserMapper userMapper;
+    final ResetPasswordTokenMapper resetPasswordTokenMapper;
+    final ResetPasswordTokenService resetPasswordTokenService;
 
     @GetMapping("/all")
     public List<UserEntity> getAllUser() {
@@ -72,25 +95,50 @@ public class UserController {
 
     }
 
-    // 1. 根據輸入的 email 查詢 user (查詢條件是 account), 查不到就 throw ApiException (含 message)
-    // 2. 存入一筆 reset password token 到 DB
-    // 3. 發送 email, 回傳 email 發送是否成功
     @PostMapping("/send-token")
     public boolean sendToken(@RequestParam("email") String email, @Value("${sendgrid.api-key}") String sendGridKey,
             @Value("${resume.mail.from}") String from, @Value("${resume.mail.from-name}") String fromName,
             @Value("${resume.mail.frontend-host}") String host) throws Exception {
 
-        // 2. 說明
-        // TOKEN = UUID.randomUUID().toString();
-        // EXPIRY_DATE = 24小時
+        // 根據輸入的 email 查詢 user (查詢條件是 account), 查不到就 throw ApiException (含 message)
+        UserEntity user = userMapper.findByAccount(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        // get uid
+        int id = user.getId();
 
-        // 3. 說明
-        // 參考 TestController testSendMail() 的寫法
-        // 信件標題: Reset Password
-        // 信件內容(html格式): <h2>請點擊連結：<a href='{url}'>重置你的密碼</a></h2>
-        // url = "{host}/resetpw?token={token}
+        String token = UUID.randomUUID().toString();
 
-        return false;
+        // 存入一筆 reset password token 到 DB
+        ResetPasswordTokenEntity reset = new ResetPasswordTokenEntity();
+        reset.setUid(id);
+        reset.setToken(token);
+        resetPasswordTokenService.save(reset);
+
+        // 發送 email, 回傳 email 發送是否成功
+        Email fr = new Email(from);
+        Email to = new Email(service.getCurrentUser().getAccount());
+        fr.setName(fromName);
+        String subject = "Reset Password";
+        String url = host + "/resetpw?token=" + token;
+        Content content = new Content("text/html", "<h2>請點擊連結：<a href='" + url + "'>重置你的密碼</a></h2>");
+
+        Mail mail = new Mail(fr, subject, to, content);
+
+        SendGrid sg = new SendGrid(sendGridKey);
+        Request request = new Request();
+
+        request.setMethod(Method.POST);
+        request.setEndpoint("mail/send");
+        request.setBody(mail.build());
+
+        Response response = sg.api(request);
+        if (response.getStatusCode() != 200) {
+            log.debug("response code: %d", response.getStatusCode());
+            return false;
+        } else {
+            log.debug("response code: %d", response.getStatusCode());
+            return true;
+        }
 
     }
 

@@ -2,9 +2,12 @@ package com.sedia.resume.service;
 
 import com.sedia.resume.domain.AutobiographyRequest;
 import com.sedia.resume.entity.LinkEntity;
+import com.sedia.resume.entity.ResetPasswordTokenEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
+import com.sedia.resume.repository.ResetPasswordTokenMapper;
+import com.sedia.resume.repository.SkillMapper;
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
@@ -40,6 +43,10 @@ public class UserService {
     final UserMapper userMapper;
     final LinkMapper linkMapper;
     final AwsUtils awsUtils;
+    final ResetPasswordTokenMapper resetPasswordTokenMapper;
+
+    // @Autowired
+    // final CacheManager cacheManager;
 
     public UserEntity getCurrentUser() {
         String account = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
