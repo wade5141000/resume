@@ -65,6 +65,10 @@
     <update id="upLoadImg" parameterType="com.sedia.resume.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
  		UPDATE USER SET PROFILE_IMG_PATH=#{imgPath},UP_USER=#{updateUser}, UP_DATETIME=#{updateDate} where ID = #{id};
 
+
     </update>
+    
+    
+    
 
 </mapper>
