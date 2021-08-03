@@ -30,7 +30,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -227,26 +229,19 @@ public class UserService {
     // 3. 回傳有效或無效
     public boolean checkTokenMessage(String token) {
 
-        try {
-            ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(token);
+        ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(token);
 
-            // 取得符合uid的USER。token內的uid為空該如何處理?不處理會直接跳找不到使用者
-            Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
-            UserEntity currentUser = checkUser.get();
+        Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
 
-            Duration duration = Duration.between(LocalDateTime.now(), currentToken.getExpiryDate());
-            // 1:時效超過24小時與否、2:isUsed()為true與false、3:不在現有資料庫中、
-            // *********要問wade的，為什麼currentToken==null放這裡判斷會失效
-            if (duration.toHours() < 24 && duration.toNanos() > 0 && !currentToken.isUsed()) {
-                return true;
-            }
-            // Token為null
-            else
-                return false;
-        } catch (Exception e) {
-            log.error("非系統正常操作", e);
-            return false;
+        Duration duration = Duration.between(LocalDateTime.now(), currentToken.getExpiryDate());
+        // 1:時效超過24與否、2:isUsed()為true與false、3:不在現有資料庫中
+        if (duration.toNanos() > 0 && !currentToken.isUsed()) {
+            return true;
         }
+
+        else
+            return false;
+
     }
 
     // 1. 根據 token 從 DB 查出 reset password token
@@ -255,39 +250,36 @@ public class UserService {
     // 4. 修改 token 為已使用
     // 5. 回傳重置密碼是否成功
     public boolean resetPasswordMessage(ResetPasswordRequest request) {
-        try {
-            // 確認token有效性 時效或未使用
-            if (checkTokenMessage(request.getToken())) {
 
-                // 取得DB內的token。可能為空值或有值
-                ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(request.getToken());
+        // 確認token有效性 時效或未使用
+        if (checkTokenMessage(request.getToken())) {
 
-                // 使用token內的uid查詢DB。token如未使用，uid可能為空
-                // 取得符合uid的USER。token內的uid為空該如何處理?代表此token為新token，也代表未經過send，不合法的token
+            // 取得DB內的token。可能為空值或有值
+            ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(request.getToken());
 
-                // 取得使用者Entity
-                Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
-                UserEntity currentUser = checkUser.get();
+            // 使用token內的uid查詢DB。token如未使用，uid可能為空
+            // 取得符合uid的USER。token內的uid為空該如何處理?代表此token為新token，也代表未經過send，不合法的token
 
-                // 變更使用者密碼
-                currentUser.setPassword(passwordEncoder.encode(request.getPassword()));
-                currentUser.setUpdateUser(currentUser.getAccount());
-                currentUser.setUpdateDate(LocalDateTime.now());
-                userMapper.resetPassword(currentUser);
+            // 取得使用者Entity
+            Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
+            UserEntity currentUser = checkUser.get();
 
-                // 修改token為已使用
-                currentToken.setUsed(true);
-                currentToken.setUpdateUser(currentUser.getAccount());
-                currentToken.setUpdateDate(LocalDateTime.now());
-                passwordTokenMapper.resetPassword(currentToken);
+            // 變更使用者密碼
+            currentUser.setPassword(passwordEncoder.encode(request.getPassword()));
+            currentUser.setUpdateUser(currentUser.getAccount());
+            currentUser.setUpdateDate(LocalDateTime.now());
+            userMapper.resetPassword(currentUser);
 
-                return true;
-            } else
-                return false;
-        } catch (Exception e) {
-            log.error("憑證無效或UID不相同", e);
+            // 修改token為已使用
+            currentToken.setUsed(true);
+            currentToken.setUpdateUser(currentUser.getAccount());
+            currentToken.setUpdateDate(LocalDateTime.now());
+            passwordTokenMapper.resetPassword(currentToken);
+
+            return true;
+        } else
             return false;
-        }
+
     }
 
 }
