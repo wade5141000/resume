@@ -8,7 +8,6 @@ import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
 
-
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
