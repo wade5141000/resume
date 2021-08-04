@@ -7,6 +7,8 @@ import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
+
+
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
@@ -14,8 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.core.io.ClassPathResource;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,9 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,6 +45,8 @@ public class UserService {
     final UserMapper userMapper;
     final LinkMapper linkMapper;
     final AwsUtils awsUtils;
+    final ResetPasswordTokenMapper resetPasswordTokenMapper;
+
     // @Autowired
     // final CacheManager cacheManager;
     final ResetPasswordTokenMapper passwordTokenMapper;

@@ -8,4 +8,5 @@ public interface ResetPasswordTokenMapper {
 
     void resetPassword(ResetPasswordTokenEntity currentToken);
 
+    void save(ResetPasswordTokenEntity newUserToken);
 }
