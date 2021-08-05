@@ -24,4 +24,7 @@ public interface UserMapper {
     // 上傳圖片
     void upLoadImg(UserEntity user);
 
+    // 修改密碼
+    void resetPassword(UserEntity user);
+
 }

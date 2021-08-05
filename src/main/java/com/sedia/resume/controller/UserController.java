@@ -147,7 +147,7 @@ public class UserController {
     // 3. 回傳有效或無效
     @PostMapping("/check-token") // 檢查 token 是否有效，並且跳轉到修改密碼頁面
     public boolean checkToken(@RequestParam("token") String token) {
-        return false;
+        return service.checkTokenMessage(token);
     }
 
     // 1. 根據 token 從 DB 查出 reset password token
@@ -156,8 +156,8 @@ public class UserController {
     // 4. 修改 token 為已使用
     // 5. 回傳重置密碼是否成功
     @PostMapping("/reset-password")
-    public boolean resetPassword(ResetPasswordRequest request) {
-        return false;
+    public boolean resetPassword(@RequestBody ResetPasswordRequest request) {
+        return service.resetPasswordMessage(request);
     }
 
 }
