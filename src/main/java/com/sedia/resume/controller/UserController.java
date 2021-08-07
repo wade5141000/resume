@@ -5,7 +5,6 @@ import com.sedia.resume.domain.AutobiographyRequest;
 import com.sedia.resume.domain.ResetPasswordRequest;
 import com.sedia.resume.entity.ResetPasswordTokenEntity;
 import com.sedia.resume.entity.UserEntity;
-import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.service.ResetPasswordTokenService;
@@ -21,7 +20,6 @@ import com.sendgrid.helpers.mail.objects.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,9 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -112,14 +107,17 @@ public class UserController {
         ResetPasswordTokenEntity reset = new ResetPasswordTokenEntity();
         reset.setUid(id);
         reset.setToken(token);
+        reset.setCreateUser(user.getAccount());
+        reset.setUpdateUser(user.getAccount());
         resetPasswordTokenService.save(reset);
 
         // 發送 email, 回傳 email 發送是否成功
         Email fr = new Email(from);
-        Email to = new Email(service.getCurrentUser().getAccount());
+        Email to = new Email(user.getAccount());
         fr.setName(fromName);
         String subject = "Reset Password";
         String url = host + "/resetpw?token=" + token;
+        log.debug("reset password url: {}", url);
         Content content = new Content("text/html", "<h2>請點擊連結：<a href='" + url + "'>重置你的密碼</a></h2>");
 
         Mail mail = new Mail(fr, subject, to, content);
@@ -132,11 +130,11 @@ public class UserController {
         request.setBody(mail.build());
 
         Response response = sg.api(request);
-        if (response.getStatusCode() != 200) {
-            log.debug("response code: %d", response.getStatusCode());
+        if (response.getStatusCode() >= 300) {
+            log.debug("response code: {}", response.getStatusCode());
             return false;
         } else {
-            log.debug("response code: %d", response.getStatusCode());
+            log.debug("response code: {}", response.getStatusCode());
             return true;
         }
 

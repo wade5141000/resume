@@ -55,7 +55,6 @@
 
 <script>
 import http from "../../utils/http";
-import axios from "axios";
 import { required, email } from "vuelidate/lib/validators";
 export default {
   validations: {
@@ -77,7 +76,23 @@ export default {
   },
   methods: {
     submit() {
-      this.$v.$touch();
+      if (this.$v.email.email && this.email.length > 0) {
+        http
+          .post("/user/send-token?email=" + this.email)
+          .then(response => {
+            console.log(response);
+            if (response.data == true) {
+              alert("發送成功");
+            } else {
+              alert("發生錯誤!");
+            }
+          })
+          .catch(error => {
+            alert("發生錯誤");
+            //alert(error.response.data.message);
+            console.log(error.response.data.message);
+          });
+      }
     }
   }
 };

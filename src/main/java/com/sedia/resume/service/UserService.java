@@ -8,7 +8,6 @@ import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
-
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.utils.AwsUtils;
 
@@ -48,8 +47,6 @@ public class UserService {
     final AwsUtils awsUtils;
     final ResetPasswordTokenMapper resetPasswordTokenMapper;
 
-    // @Autowired
-    // final CacheManager cacheManager;
     final ResetPasswordTokenMapper passwordTokenMapper;
 
     public UserEntity getCurrentUser() {
