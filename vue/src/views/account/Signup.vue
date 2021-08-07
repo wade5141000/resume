@@ -20,13 +20,13 @@
               <form>
                 <v-text-field
                   v-model="username"
-                  :counter="10"
+                  maxLength="30"
+                  counter="30"
                   outlined
                   required
                   label="帳號"
                   prepend-inner-icon="mdi-account-outline"
                   hide-details="auto"
-                  placeholder="帳號(須為4-10個英文或數字)"
                   :error-messages="usernameErrors"
                   @input="$v.username.$touch()"
                   @blur="$v.username.$touch()"
@@ -34,7 +34,8 @@
                 <v-text-field
                   v-model="password"
                   :type="'password'"
-                  :counter="10"
+                  maxLength="10"
+                  counter="10"
                   outlined
                   required
                   label="密碼"
@@ -101,10 +102,10 @@ export default {
   computed: {
     usernameErrors() {
       const errors = [];
-      if (!this.$v.username.$dirty) return errors;
-      !this.$v.username.maxLength && errors.push("帳號為10個英文或數字");
-      !this.$v.username.required &&
-        errors.push("請輸入帳號(須為4-10個英文或數字)");
+      // if (!this.$v.username.$dirty) return errors;
+      // !this.$v.username.maxLength && errors.push("帳號為10個英文或數字");
+      // !this.$v.username.required &&
+      //   errors.push("請輸入帳號(須為4-10個英文或數字)");
       return errors;
     },
     passwordErrors() {

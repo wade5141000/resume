@@ -14,7 +14,12 @@
             <v-row class="mt-6" justify="center">
               <v-col cols="12" md="10" lg="8">
                 <span></span>
-                <v-text-field label="專長名稱" outlined dense></v-text-field>
+                <v-text-field
+                  label="專長名稱"
+                  outlined
+                  dense
+                  v-model="skill.skillName"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
@@ -36,6 +41,7 @@
                   no-resize
                   maxLength="100"
                   counter="100"
+                  v-model="skill.skillDesc"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -56,18 +62,30 @@
 <script>
 import theStepper from "../../components/theStepper";
 import theDialog from "../../components/theDialog";
+import http from "../../utils/http";
 export default {
   components: {
     theStepper,
     theDialog
   },
+  created: function() {},
   data: () => ({
     panel: [0],
     skill: {}
   }),
   methods: {
     nextStep() {
-      this.$router.push("/language-license");
+      console.log(this.skill);
+      http.post("/skill", this.skill).then(response => {
+        // skill 有換行的問題要處理
+        console.log(response);
+        if (response.data === true) {
+          alert("新增成功");
+        } else {
+          alert("新增失敗");
+        }
+      });
+      // this.$router.push("/language-license");
     }
   }
 };

@@ -102,4 +102,14 @@ public class LanguageService {
 
     }
 
+    public boolean saveLanguages(List<LanguageEntity> languages) {
+        try {
+            languages.forEach(this::insertLanguage);
+            return true;
+        } catch (Exception e) {
+            log.error("新增語言能力失敗", e);
+            return false;
+        }
+    }
+
 }

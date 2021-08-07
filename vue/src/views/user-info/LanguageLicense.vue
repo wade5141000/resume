@@ -26,7 +26,7 @@
             <v-row
               justify="center"
               class="mt-0"
-              v-for="(item, index) in languages"
+              v-for="(language, index) in languages"
               v-bind:key="index"
             >
               <v-col cols="12" md="3" lg="3">
@@ -35,9 +35,10 @@
                   outlined
                   dense
                   hide-details
+                  v-model="language.language"
                 >
                   <template v-slot:prepend>
-                    <v-icon @click="removeLanguage" color="red">
+                    <v-icon @click="removeLanguage(index)" color="red">
                       mdi-close
                     </v-icon>
                   </template>
@@ -49,6 +50,7 @@
                   dense
                   outlined
                   :items="languageLevels"
+                  v-model="language.listening"
                 ></v-select>
               </v-col>
               <v-col cols="6" md="2" lg="2">
@@ -57,6 +59,7 @@
                   dense
                   outlined
                   :items="languageLevels"
+                  v-model="language.speaking"
                 ></v-select>
               </v-col>
               <v-col cols="6" md="2" lg="2">
@@ -65,6 +68,7 @@
                   dense
                   outlined
                   :items="languageLevels"
+                  v-model="language.reading"
                 ></v-select>
               </v-col>
               <v-col cols="6" md="2" lg="2">
@@ -73,12 +77,12 @@
                   dense
                   outlined
                   :items="languageLevels"
+                  v-model="language.writing"
                 ></v-select>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
-
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
             <template v-slot:actions>
@@ -130,14 +134,29 @@
 <script>
 import theStepper from "../../components/theStepper";
 import theDialog from "../../components/theDialog";
+import http from "../../utils/http";
 export default {
   components: {
     theStepper,
     theDialog
   },
+  created: function() {
+    if (this.languages.length === 0) {
+      this.languages.push({
+        id: null,
+        language: "",
+        listening: "",
+        speaking: "",
+        reading: "",
+        writing: ""
+      });
+    } else {
+      //this.links = response.data.links;
+    }
+  },
   data: () => ({
     panel: [0, 1],
-    languages: [1],
+    languages: [],
     license: "",
     licenses: [],
     languageLevels: [
@@ -148,9 +167,6 @@ export default {
     ]
   }),
   methods: {
-    nextStep() {
-      this.$router.push("/autobiography");
-    },
     onLicenseEnter() {
       if (this.license.length > 0) {
         this.licenses.push(this.license);
@@ -161,10 +177,30 @@ export default {
       this.licenses = this.licenses.filter(item => item !== str);
     },
     addLanguage() {
-      this.languages.push(1);
+      this.languages.push({
+        id: null,
+        language: "",
+        listening: "",
+        speaking: "",
+        reading: "",
+        writing: ""
+      });
     },
-    removeLanguage() {
-      console.log("remove");
+    removeLanguage(index) {
+      console.log(index);
+      this.languages.splice(index, 1);
+    },
+    nextStep() {
+      http.post("/language/languages", this.languages).then(response => {
+        console.log(response);
+        if (response.data === true) {
+          alert("新增成功");
+        } else {
+          alert("新增失敗");
+        }
+      });
+      //console.log(this.languages);
+      //this.$router.push("/autobiography");
     }
   }
 };

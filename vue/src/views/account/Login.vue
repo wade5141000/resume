@@ -20,7 +20,8 @@
               <form>
                 <v-text-field
                   v-model="account"
-                  :counter="10"
+                  maxLength="30"
+                  counter="30"
                   outlined
                   required
                   label="帳號"
@@ -34,7 +35,8 @@
                 <v-text-field
                   v-model="password"
                   :type="'password'"
-                  :counter="10"
+                  maxLength="10"
+                  counter="10"
                   outlined
                   required
                   label="密碼"
@@ -92,7 +94,7 @@ import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
   mixins: [validationMixin],
   validations: {
-    account: { required, maxLength: maxLength(10) },
+    account: { required },
     password: { required, maxLength: maxLength(10) },
     minLength: minLength(4)
   },
@@ -105,9 +107,9 @@ export default {
   computed: {
     accountErrors() {
       const errors = [];
-      if (!this.$v.account.$dirty) return errors;
-      !this.$v.account.maxLength && errors.push("帳號為4-10個英文或數字");
-      !this.$v.account.required && errors.push("請輸入帳號");
+      // if (!this.$v.account.$dirty) return errors;
+      // !this.$v.account.maxLength && errors.push("帳號為4-10個英文或數字");
+      // !this.$v.account.required && errors.push("請輸入帳號");
       return errors;
     },
     passwordErrors() {

@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sedia.resume.entity.ResetPasswordTokenEntity;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
-import com.sedia.resume.repository.UserMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ResetPasswordTokenService {
 
-    ResetPasswordTokenMapper resetPasswordTokenMapper;
-    ResetPasswordTokenEntity reset;
+    final ResetPasswordTokenMapper resetPasswordTokenMapper;
 
     // token存入DB
     public boolean save(ResetPasswordTokenEntity reset) {
@@ -40,8 +37,6 @@ public class ResetPasswordTokenService {
             reset.setUsed(false);
             LocalDateTime now = LocalDateTime.now();
             reset.setCreateDate(now);
-            reset.setCreateUser(reset.getCreateUser());
-            reset.setCreateUser(reset.getUpdateUser());
             reset.setUpdateDate(now);
             resetPasswordTokenMapper.save(reset);
             return true;

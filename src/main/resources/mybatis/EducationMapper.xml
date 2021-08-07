@@ -11,8 +11,8 @@
         <result column="MAJOR" property="major" jdbcType="VARCHAR"/>
         <result column="SECOND_MAJOR" property="secondMajor" jdbcType="VARCHAR"/>
         <result column="STATUS" property="status" jdbcType="TIMESTAMP"/>
-        <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP"/>
-        <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP"/>
+        <result column="START_DATE" property="startDate" jdbcType="VARCHAR"/>
+        <result column="END_DATE" property="endDate" jdbcType="VARCHAR"/>
         <result column="COUNTRY" property="country" jdbcType="VARCHAR"/>
         <result column="GPA" property="gpa" jdbcType="FLOAT"/>
         <result column="CR_USER" property="createUser" jdbcType="VARCHAR"/>

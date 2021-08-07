@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,7 +32,7 @@ public class UserEntity extends GenericEntity implements UserDetails {
 
     private String militaryService;
 
-    private YearMonth militaryDate;
+    private String militaryDate;
 
     private String address;
 

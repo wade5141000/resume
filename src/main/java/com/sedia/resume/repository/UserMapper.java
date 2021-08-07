@@ -17,6 +17,8 @@ public interface UserMapper {
 
     void update(UserEntity user);
 
+    void updateAutobiography(UserEntity user);
+
     String loadImg(int id);// return the img_path
 
     // 上傳圖片

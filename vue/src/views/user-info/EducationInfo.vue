@@ -163,7 +163,8 @@
                   label="在校成績"
                   outlined
                   dense
-                  v-model="edu.GPA"
+                  v-model="edu.gpa"
+                  type="number"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -184,6 +185,7 @@
 <script>
 import theStepper from "../../components/theStepper";
 import theDialog from "../../components/theDialog";
+import http from "../../utils/http";
 export default {
   components: {
     theStepper,
@@ -197,6 +199,7 @@ export default {
       val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
     }
   },
+  created: function() {},
   data: () => ({
     panel: [0],
     menu: false,
@@ -224,7 +227,15 @@ export default {
     },
     nextStep() {
       console.log(this.edu);
-      this.$router.push("/experience");
+      http.post("/education", this.edu).then(response => {
+        console.log(response);
+        if (response.data === true) {
+          alert("新增成功");
+        } else {
+          alert("新增失敗");
+        }
+      });
+      //this.$router.push("/experience");
     }
   }
 };
