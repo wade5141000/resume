@@ -1,87 +1,34 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" md="10" lg="9">
-      <theStepper step="2"></theStepper>
+      <theStepper step="3"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
             <template v-slot:actions>
               <v-icon color="white">$expand</v-icon>
             </template>
-            <span class="white--text text-h6">學歷</span>
+            <span class="white--text text-h6">工作經歷</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-row class="mt-6" justify="center">
-              <v-col cols="12" md="7" lg="6">
-                <span></span>
+              <v-col cols="12" md="10" lg="8">
                 <v-text-field
-                  label="學校名稱"
+                  label="公司名稱"
                   outlined
                   dense
-                  v-model="edu.schoolName"
+                  v-model="experience.companyName"
                 ></v-text-field>
-              </v-col>
-              <v-col cols="12" md="3" lg="2">
-                <v-select
-                  label="學歷"
-                  :items="educationLevels"
-                  outlined
-                  dense
-                  v-model="edu.level"
-                ></v-select>
               </v-col>
             </v-row>
             <v-row justify="center">
               <v-col cols="12" md="10" lg="8">
                 <v-text-field
-                  label="科系名稱"
+                  label="職務名稱"
                   outlined
                   dense
-                  v-model="edu.major"
-                >
-                </v-text-field>
-              </v-col>
-            </v-row>
-            <v-row justify="center" v-if="secondMajor">
-              <v-col cols="12" md="10" lg="8">
-                <v-text-field
-                  label="科系2 名稱"
-                  outlined
-                  dense
-                  v-model="edu.secondMajor"
+                  v-model="experience.position"
                 ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row no-gutters justify="center" v-else>
-              <v-col cols="12" md="10" lg="8" class="d-flex justify-end">
-                <v-btn text color="primary" @click="addSecondMajor">
-                  <v-icon color="blue">mdi-plus</v-icon>新增科系
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-row justify="center">
-              <v-col cols="12" md="5" lg="5">
-                <v-radio-group
-                  label="就學狀態"
-                  v-model="edu.status"
-                  row
-                  class="mt-0"
-                >
-                  <v-radio label="畢業" value="畢業"></v-radio>
-                  <v-radio label="肄業" value="肄業"></v-radio>
-                  <v-radio label="就學中" value="就學中"></v-radio>
-                </v-radio-group>
-              </v-col>
-              <v-col cols="12" md="5" lg="4">
-                <v-radio-group
-                  label="學校地區"
-                  v-model="edu.country"
-                  row
-                  class="mt-0"
-                >
-                  <v-radio label="台灣" value="台灣"></v-radio>
-                  <v-radio label="國外" value="國外"></v-radio>
-                </v-radio-group>
               </v-col>
             </v-row>
             <v-row justify="center">
@@ -96,8 +43,8 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      label="開始日"
-                      v-model="edu.startDate"
+                      label="就職開始日"
+                      v-model="experience.startDate"
                       outlined
                       dense
                       prepend-inner-icon="mdi-calendar"
@@ -109,7 +56,7 @@
                   <v-date-picker
                     ref="picker"
                     type="month"
-                    v-model="edu.startDate"
+                    v-model="experience.startDate"
                     :max="new Date().toISOString().substr(0, 10)"
                     min="1950-01-01"
                     @change="pickStartDate"
@@ -127,8 +74,8 @@
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      label="結束日"
-                      v-model="edu.endDate"
+                      label="就職結束日"
+                      v-model="experience.endDate"
                       outlined
                       dense
                       prepend-inner-icon="mdi-calendar"
@@ -140,7 +87,7 @@
                   <v-date-picker
                     ref="picker2"
                     type="month"
-                    v-model="edu.endDate"
+                    v-model="experience.endDate"
                     :max="new Date().toISOString().substr(0, 10)"
                     min="1950-01-01"
                     @change="pickEndDate"
@@ -152,20 +99,50 @@
               <v-col cols="12" md="10" lg="8" class="d-flex justify-end">
                 <theDialog>
                   <template v-slot:btn>
-                    <v-icon color="blue">mdi-chat-question</v-icon>如何換算GPA
+                    <v-icon color="blue">mdi-chat-question</v-icon>看看範例
                   </template>
                 </theDialog>
               </v-col>
             </v-row>
             <v-row no-gutters justify="center">
               <v-col cols="12" md="10" lg="8">
+                <v-textarea
+                  label="工作描述"
+                  outlined
+                  hint="假如你應徵的職位很看重某項工作技能，而你在某間公司得到的經驗，剛好可以佐證你具有相關能力，足以應付未來的挑戰。這時你必須把它放進工作經歷內並詳細描述說明。"
+                  v-model="experience.experienceDesc"
+                  rows="5"
+                  auto-grow
+                  no-resize
+                  maxLength="500"
+                  counter="500"
+                ></v-textarea>
+              </v-col>
+            </v-row>
+            <v-row justify="center">
+              <v-col cols="12" md="10" lg="8">
                 <v-text-field
-                  label="在校成績"
+                  label="工作技能"
                   outlined
                   dense
-                  v-model="edu.gpa"
-                  type="number"
+                  v-model="ability"
+                  v-on:keyup.enter="onAbilityEnter()"
+                  maxLength="20"
+                  counter="20"
+                  hint="輸入完畢按下【Enter】鍵完成新增"
+                  persistent-hint
                 ></v-text-field>
+                <v-chip
+                  v-for="(item, index) in abilities"
+                  v-bind:key="index"
+                  close
+                  color="blue"
+                  text-color="white"
+                  class="mr-2 mb-2"
+                  @click:close="close(item)"
+                >
+                  {{ item }}
+                </v-chip>
               </v-col>
             </v-row>
             <v-row justify="center" class="mb-2">
@@ -183,9 +160,9 @@
 </template>
 
 <script>
-import theStepper from "../../components/theStepper";
-import theDialog from "../../components/theDialog";
-import http from "../../utils/http";
+import theStepper from "../../../components/theStepper";
+import theDialog from "../../../components/theDialog";
+import http from "../../../utils/http";
 export default {
   components: {
     theStepper,
@@ -204,16 +181,9 @@ export default {
     panel: [0],
     menu: false,
     menu2: false,
-    educationLevels: [
-      { text: "國小", value: "國小" },
-      { text: "國中", value: "國中" },
-      { text: "高中", value: "高中" },
-      { text: "學士", value: "學士" },
-      { text: "碩士", value: "碩士" },
-      { text: "博士", value: "博士" }
-    ],
-    edu: {},
-    secondMajor: false
+    experience: {},
+    ability: "",
+    abilities: []
   }),
   methods: {
     pickStartDate(date) {
@@ -222,12 +192,10 @@ export default {
     pickEndDate(date) {
       this.$refs.menu2.save(date);
     },
-    addSecondMajor() {
-      this.secondMajor = true;
-    },
     nextStep() {
-      console.log(this.edu);
-      http.post("/education", this.edu).then(response => {
+      this.experience.ability = this.abilities.join(",");
+      console.log(this.experience);
+      http.post("/experience", this.experience).then(response => {
         console.log(response);
         if (response.data === true) {
           alert("新增成功");
@@ -235,7 +203,16 @@ export default {
           alert("新增失敗");
         }
       });
-      //this.$router.push("/experience");
+      // this.$router.push("/skill");
+    },
+    onAbilityEnter() {
+      if (this.ability.length > 0) {
+        this.abilities.push(this.ability);
+        this.ability = "";
+      }
+    },
+    close(str) {
+      this.abilities = this.abilities.filter(item => item !== str);
     }
   }
 };

@@ -107,7 +107,7 @@ export default {
           .post("/user/reset-password", { token, password: this.password })
           .then(response => {
             console.log(response);
-            if (response.data == true) {
+            if (response.data === true) {
               alert("修改成功");
             } else {
               alert("發生錯誤!");
