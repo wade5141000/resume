@@ -60,7 +60,7 @@
               </v-col>
             </v-row>
             <v-row justify="center">
-              <v-col cols="12" md="5" lg="5">
+              <v-col cols="12" md="5" lg="8">
                 <v-radio-group
                   label="就學狀態"
                   v-model="edu.status"
@@ -72,7 +72,7 @@
                   <v-radio label="就學中" value="就學中"></v-radio>
                 </v-radio-group>
               </v-col>
-              <v-col cols="12" md="5" lg="4">
+              <v-col cols="12" md="5" lg="8">
                 <v-radio-group
                   label="學校地區"
                   v-model="edu.country"
