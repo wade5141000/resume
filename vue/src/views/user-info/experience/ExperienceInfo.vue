@@ -176,7 +176,18 @@ export default {
       val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
     }
   },
-  created: function() {},
+  created: function() {
+    let id = this.$route.query.id;
+    if (id) {
+      http.get("/experience/" + id).then(response => {
+        //console.log(response.data)
+        this.experience = response.data;
+        if (response.data.ability && response.data.ability.length > 0) {
+          this.abilities = response.data.ability.split(",");
+        }
+      });
+    }
+  },
   data: () => ({
     panel: [0],
     menu: false,
@@ -195,15 +206,25 @@ export default {
     nextStep() {
       this.experience.ability = this.abilities.join(",");
       console.log(this.experience);
-      http.post("/experience", this.experience).then(response => {
-        console.log(response);
-        if (response.data === true) {
-          alert("新增成功");
-        } else {
-          alert("新增失敗");
-        }
-      });
-      // this.$router.push("/skill");
+      if (this.experience.sn) {
+        http.put("/experience", this.experience).then(response => {
+          console.log(response);
+          if (response.data === true) {
+            alert("更新成功");
+          } else {
+            alert("更新失敗");
+          }
+        });
+      } else {
+        http.post("/experience", this.experience).then(response => {
+          console.log(response);
+          if (response.data === true) {
+            alert("新增成功");
+          } else {
+            alert("新增失敗");
+          }
+        });
+      }
     },
     onAbilityEnter() {
       if (this.ability.length > 0) {

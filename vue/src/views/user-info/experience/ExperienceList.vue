@@ -4,152 +4,70 @@
       <theStepper step="3"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
-          <v-expansion-panel-header color="blue">
-            <template v-slot:actions>
-              <v-icon color="white">$expand</v-icon>
-            </template>
-            <span class="white--text text-h6">工作經歷</span>
+          <v-expansion-panel-header color="blue" hide-actions>
+            <v-row>
+              <v-col><span class="white--text text-h6">工作經歷</span></v-col>
+              <v-col class="d-flex justify-end">
+                <v-btn text color="white" @click.native.stop="add">
+                  <v-icon left>
+                    mdi-plus-circle
+                  </v-icon>
+                  新增工作經歷
+                </v-btn>
+              </v-col>
+            </v-row>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row class="mt-6" justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <v-text-field
-                  label="公司名稱"
-                  outlined
-                  dense
-                  v-model="experience.companyName"
-                ></v-text-field>
+            <v-row
+              class="mt-4"
+              justify="center"
+              v-for="(experience, index) in experiences"
+              :key="index"
+            >
+              <v-col cols="12" md="10" lg="6">
+                <v-card elevation="2" outlined class="my-0 py-0"
+                  ><v-card-title>{{ experience.position }}</v-card-title>
+                  <v-card-subtitle class="pt-1"
+                    >{{ experience.companyName
+                    }}<span class="float-right"
+                      >{{ experience.startDate }}~{{ experience.endDate }}</span
+                    ></v-card-subtitle
+                  >
+                  <v-divider class="mx-4 mb-1"></v-divider>
+                  <v-card-text class="py-1">{{
+                    experience.experienceDesc
+                  }}</v-card-text>
+                  <v-card-text
+                    class="py-1"
+                    v-if="
+                      experience.ability.split(',').filter(s => s.length > 0)
+                        .length > 0
+                    "
+                  >
+                    <v-chip
+                      v-for="(ability, index) in experience.ability.split(',')"
+                      :key="index"
+                      color="blue"
+                      text-color="white"
+                      class="mr-2"
+                      >{{ ability }}</v-chip
+                    >
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-btn icon color="primary" @click="edit(experience.sn)">
+                      <v-icon>mdi-square-edit-outline</v-icon>
+                    </v-btn>
+                    <v-btn icon color="red" @click="remove(experience.sn)">
+                      <v-icon>mdi-delete-forever</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
               </v-col>
             </v-row>
-            <v-row justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <v-text-field
-                  label="職務名稱"
-                  outlined
-                  dense
-                  v-model="experience.position"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row justify="center">
-              <v-col cols="6" md="5" lg="4">
-                <v-menu
-                  ref="menu"
-                  v-model="menu"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="auto"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      label="就職開始日"
-                      v-model="experience.startDate"
-                      outlined
-                      dense
-                      prepend-inner-icon="mdi-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    ref="picker"
-                    type="month"
-                    v-model="experience.startDate"
-                    :max="new Date().toISOString().substr(0, 10)"
-                    min="1950-01-01"
-                    @change="pickStartDate"
-                  ></v-date-picker>
-                </v-menu>
-              </v-col>
-              <v-col cols="6" md="5" lg="4">
-                <v-menu
-                  ref="menu2"
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="auto"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      label="就職結束日"
-                      v-model="experience.endDate"
-                      outlined
-                      dense
-                      prepend-inner-icon="mdi-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    ref="picker2"
-                    type="month"
-                    v-model="experience.endDate"
-                    :max="new Date().toISOString().substr(0, 10)"
-                    min="1950-01-01"
-                    @change="pickEndDate"
-                  ></v-date-picker>
-                </v-menu>
-              </v-col>
-            </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8" class="d-flex justify-end">
-                <theDialog>
-                  <template v-slot:btn>
-                    <v-icon color="blue">mdi-chat-question</v-icon>看看範例
-                  </template>
-                </theDialog>
-              </v-col>
-            </v-row>
-            <v-row no-gutters justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <v-textarea
-                  label="工作描述"
-                  outlined
-                  hint="假如你應徵的職位很看重某項工作技能，而你在某間公司得到的經驗，剛好可以佐證你具有相關能力，足以應付未來的挑戰。這時你必須把它放進工作經歷內並詳細描述說明。"
-                  v-model="experience.experienceDesc"
-                  rows="5"
-                  auto-grow
-                  no-resize
-                  maxLength="500"
-                  counter="500"
-                ></v-textarea>
-              </v-col>
-            </v-row>
-            <v-row justify="center">
-              <v-col cols="12" md="10" lg="8">
-                <v-text-field
-                  label="工作技能"
-                  outlined
-                  dense
-                  v-model="ability"
-                  v-on:keyup.enter="onAbilityEnter()"
-                  maxLength="20"
-                  counter="20"
-                  hint="輸入完畢按下【Enter】鍵完成新增"
-                  persistent-hint
-                ></v-text-field>
-                <v-chip
-                  v-for="(item, index) in abilities"
-                  v-bind:key="index"
-                  close
-                  color="blue"
-                  text-color="white"
-                  class="mr-2 mb-2"
-                  @click:close="close(item)"
-                >
-                  {{ item }}
-                </v-chip>
-              </v-col>
-            </v-row>
-            <v-row justify="center" class="mb-2">
+
+            <v-row justify="center" class="mb-2 mt-6">
               <v-col cols="5" md="4" lg="4">
-                <v-btn depressed large block color="primary" @click="nextStep"
-                  >下一步</v-btn
-                >
+                <v-btn depressed large block color="primary">下一步</v-btn>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -168,58 +86,35 @@ export default {
     theStepper,
     theDialog
   },
-  watch: {
-    menu(val) {
-      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    },
-    menu2(val) {
-      val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
-    }
+  created: function() {
+    this.init();
   },
-  created: function() {},
   data: () => ({
     panel: [0],
-    menu: false,
-    menu2: false,
-    experience: {},
-    ability: "",
-    abilities: []
+    experiences: []
   }),
   methods: {
-    pickStartDate(date) {
-      this.$refs.menu.save(date);
-    },
-    pickEndDate(date) {
-      this.$refs.menu2.save(date);
-    },
-    nextStep() {
-      this.experience.ability = this.abilities.join(",");
-      console.log(this.experience);
-      http.post("/experience", this.experience).then(response => {
+    init() {
+      http.get("/experience").then(response => {
         console.log(response);
+        this.experiences = response.data;
+      });
+    },
+    edit(id) {
+      this.$router.push("/experience?id=" + id);
+    },
+    remove(id) {
+      http.delete("/experience/" + id).then(response => {
         if (response.data === true) {
-          alert("新增成功");
+          this.init();
         } else {
-          alert("新增失敗");
+          alert("刪除失敗");
         }
       });
-      // this.$router.push("/skill");
     },
-    onAbilityEnter() {
-      if (this.ability.length > 0) {
-        this.abilities.push(this.ability);
-        this.ability = "";
-      }
-    },
-    close(str) {
-      this.abilities = this.abilities.filter(item => item !== str);
+    add() {
+      this.$router.push("/experience");
     }
   }
 };
 </script>
-
-<style scoped>
-/*span {*/
-/*  color: dodgerblue;*/
-/*}*/
-</style>

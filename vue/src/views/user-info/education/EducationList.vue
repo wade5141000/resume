@@ -25,7 +25,7 @@
               :key="index"
             >
               <v-col cols="12" md="10" lg="6">
-                <v-card elevation="2" outlined shaped class="my-0 py-0"
+                <v-card elevation="2" outlined class="my-0 py-0"
                   ><v-card-title
                     >{{ education.schoolName }}({{
                       education.country
@@ -50,7 +50,7 @@
               </v-col>
             </v-row>
 
-            <v-row justify="center" class="mb-2">
+            <v-row justify="center" class="mb-2 mt-6">
               <v-col cols="5" md="4" lg="4">
                 <v-btn depressed large block color="primary">下一步</v-btn>
               </v-col>
