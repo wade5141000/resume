@@ -25,7 +25,7 @@ public class LicenseController {
 
     // 使用者取得證照
     @GetMapping("/license/{sn}")
-    public LicenseEntity getLicense(int sn) {
+    public LicenseEntity getLicense(@PathVariable int sn) {
         return service.getLicense(sn);
     }
 

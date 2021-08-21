@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         String[] allowPass = { "/", "/login", "/actuator/**", "/test/**", "/v3/api-docs/**", "/swagger-ui/**",
-                "/swagger-ui.html", "/user/send-token", "/user/check-token", "/user/reset-password" };
+                "/swagger-ui.html", "/user/send-token", "/user/check-token", "/user/reset-password", "/template/**" };
         CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
         corsConfiguration.setAllowedMethods(List.of("*"));
         http.cors().configurationSource(request -> corsConfiguration).and().authorizeRequests()
