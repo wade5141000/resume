@@ -40,9 +40,13 @@ public class ResumeController {
     @PutMapping("/{id}/basic-info")
     public boolean updateBasicInfo(@PathVariable int id, List<String> basicInfoType) {
         // TODO 更新 resume 的 BASIC_INFO_COLUMNS (逗號隔開)
+        // List<String> -> String
+        // ["aaa", "bbb", "ccc"] -> "aaa,bbb,ccc"
+
         return false;
     }
 
+    // ====================================================================================
     @PutMapping("/{id}/education")
     public boolean updateEducation(@PathVariable int id, List<Integer> educationId) {
         // TODO 存到 rel_resume_edu table
@@ -51,6 +55,13 @@ public class ResumeController {
 
     @PutMapping("/{id}/experience")
     public boolean updateExperience(@PathVariable int id, List<Integer> experienceId) {
+
+        // a. experienceId -> [1,2,3]
+        // b. experienceId -> [2,3]
+        //
+        // 1. remove a
+        // 2. save b
+
         return false;
     }
 
