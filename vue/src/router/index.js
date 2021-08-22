@@ -8,8 +8,10 @@ import Terms from "../views/Terms";
 import Forgetpw from "../views/account/Forgetpw";
 import Resetpw from "../views/account/Resetpw";
 import BasicInfo from "../views/user-info/BasicInfo";
-import EducationInfo from "../views/user-info/EducationInfo";
-import ExperienceInfo from "../views/user-info/ExperienceInfo";
+import EducationList from "../views/user-info/education/EducationList";
+import EducationInfo from "../views/user-info/education/EducationInfo";
+import ExperienceList from "../views/user-info/experience/ExperienceList";
+import ExperienceInfo from "../views/user-info/experience/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import LanguageLicense from "../views/user-info/LanguageLicense";
 import Autobiography from "../views/user-info/Autobiography";
@@ -120,6 +122,22 @@ const routes = [
     component: LanguageLicense,
     meta: {
       title: "語言能力與證書"
+    }
+  },
+  {
+    path: "/experience-list",
+    name: "ExperienceList",
+    component: ExperienceList,
+    meta: {
+      title: "工作經歷列表"
+    }
+  },
+  {
+    path: "/education-list",
+    name: "EducationList",
+    component: EducationList,
+    meta: {
+      title: "學歷列表"
     }
   },
   {

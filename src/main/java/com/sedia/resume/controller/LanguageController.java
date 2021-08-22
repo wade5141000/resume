@@ -23,7 +23,7 @@ public class LanguageController {
 
     // 取得語言資料
     @GetMapping("/language/{id}")
-    public LanguageEntity getLanguage(int id) {
+    public LanguageEntity getLanguage(@PathVariable int id) {
         return service.getLanguage(id);
     }
 

@@ -24,7 +24,7 @@ public class SkillController {
 
     // 取得一筆技能資料
     @GetMapping("/skill/{id}")
-    public SkillEntity getSkill(int id) {
+    public SkillEntity getSkill(@PathVariable int id) {
         return service.getSkill(id);
     }
 

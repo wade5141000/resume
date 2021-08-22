@@ -81,7 +81,7 @@ export default {
           .post("/user/send-token?email=" + this.email)
           .then(response => {
             console.log(response);
-            if (response.data == true) {
+            if (response.data === true) {
               alert("發送成功");
             } else {
               alert("發生錯誤!");

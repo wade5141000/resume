@@ -42,7 +42,7 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row justify="center" v-if="secondMajor">
+            <v-row justify="center" v-if="edu.secondMajor || secondMajor">
               <v-col cols="12" md="10" lg="8">
                 <v-text-field
                   label="科系2 名稱"
@@ -60,7 +60,7 @@
               </v-col>
             </v-row>
             <v-row justify="center">
-              <v-col cols="12" md="5" lg="5">
+              <v-col cols="12" md="5" lg="8">
                 <v-radio-group
                   label="就學狀態"
                   v-model="edu.status"
@@ -72,7 +72,7 @@
                   <v-radio label="就學中" value="就學中"></v-radio>
                 </v-radio-group>
               </v-col>
-              <v-col cols="12" md="5" lg="4">
+              <v-col cols="12" md="5" lg="8">
                 <v-radio-group
                   label="學校地區"
                   v-model="edu.country"
@@ -183,9 +183,9 @@
 </template>
 
 <script>
-import theStepper from "../../components/theStepper";
-import theDialog from "../../components/theDialog";
-import http from "../../utils/http";
+import theStepper from "../../../components/theStepper";
+import theDialog from "../../../components/theDialog";
+import http from "../../../utils/http";
 export default {
   components: {
     theStepper,
@@ -199,7 +199,15 @@ export default {
       val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
     }
   },
-  created: function() {},
+  created: function() {
+    let id = this.$route.query.id;
+    if (id) {
+      http.get("/education/" + id).then(response => {
+        //console.log(response.data)
+        this.edu = response.data;
+      });
+    }
+  },
   data: () => ({
     panel: [0],
     menu: false,
@@ -227,14 +235,26 @@ export default {
     },
     nextStep() {
       console.log(this.edu);
-      http.post("/education", this.edu).then(response => {
-        console.log(response);
-        if (response.data === true) {
-          alert("新增成功");
-        } else {
-          alert("新增失敗");
-        }
-      });
+      if (this.edu.id) {
+        http.put("/education", this.edu).then(response => {
+          //console.log(response.data)
+          if (response.data === true) {
+            alert("更新成功");
+          } else {
+            alert("更新失敗");
+          }
+        });
+      } else {
+        http.post("/education", this.edu).then(response => {
+          console.log(response);
+          if (response.data === true) {
+            this.edu = {};
+            alert("新增成功");
+          } else {
+            alert("新增失敗");
+          }
+        });
+      }
       //this.$router.push("/experience");
     }
   }

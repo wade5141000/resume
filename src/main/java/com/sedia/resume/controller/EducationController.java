@@ -24,7 +24,7 @@ public class EducationController {
 
     // 取得使用者一筆學歷資料
     @GetMapping("/education/{id}")
-    public EducationEntity getEducation(int id) {
+    public EducationEntity getEducation(@PathVariable int id) {
         return service.getEducation(id);
     }
 

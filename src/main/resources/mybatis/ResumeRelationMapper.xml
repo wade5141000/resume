@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sedia.resume.repository.ResumeRelationMapper">
+
+    <select id="getEducationIdByResumeId" resultType="Integer">
+        select EDU_ID from rel_resume_edu where #{resumeId} = RID;
+    </select>
+
+    <select id="getExperienceIdByResumeId" resultType="Integer">
+        select EXP_ID from rel_resume_exp where #{resumeId} = RID;
+    </select>
+
+    <select id="getLanguageIdByResumeId" resultType="Integer">
+        select LANGUAGE_ID from rel_resume_lang where #{resumeId} = RID;
+    </select>
+
+    <select id="getLicenseIdByResumeId" resultType="Integer">
+        select LICENSE_ID from rel_resume_license where #{resumeId} = RID;
+    </select>
+
+    <select id="getSkillIdByResumeId" resultType="Integer">
+        select SKILL_ID from rel_resume_skill where #{resumeId} = RID;
+    </select>
+    
+ 
+</mapper>

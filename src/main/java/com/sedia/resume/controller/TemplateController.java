@@ -16,11 +16,13 @@ public class TemplateController {
 
     @GetMapping
     public List<TemplateEntity> getTemplates() {
+        // TODO 不需要userId
         return null;
     }
 
     @GetMapping("/{id}")
     public TemplateEntity getTemplate(@PathVariable int id) {
+        // TODO 不需要userId
         return null;
     }
 
