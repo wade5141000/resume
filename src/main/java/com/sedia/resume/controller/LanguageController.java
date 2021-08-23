@@ -2,7 +2,6 @@ package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.LanguageEntity;
 import com.sedia.resume.service.LanguageService;
-import com.sedia.resume.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

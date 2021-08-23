@@ -8,7 +8,11 @@
             <v-row>
               <v-col><span class="white--text text-h6">學歷</span></v-col>
               <v-col class="d-flex justify-end">
-                <v-btn text color="white" @click.native.stop="add">
+                <v-btn
+                  text
+                  color="white"
+                  @click.native.stop="routeTo('/education')"
+                >
                   <v-icon left>
                     mdi-plus-circle
                   </v-icon>
@@ -24,7 +28,7 @@
               v-for="(education, index) in educations"
               :key="index"
             >
-              <v-col cols="12" md="10" lg="6">
+              <v-col cols="12" md="10" lg="8">
                 <v-card elevation="2" outlined class="my-0 py-0"
                   ><v-card-title
                     >{{ education.schoolName }}({{
@@ -51,8 +55,20 @@
             </v-row>
 
             <v-row justify="center" class="mb-2 mt-6">
-              <v-col cols="5" md="4" lg="4">
-                <v-btn depressed large block color="primary">下一步</v-btn>
+              <v-col cols="6" md="5" lg="4">
+                <v-btn depressed large block color="primary" to="/user-info"
+                  >上一步</v-btn
+                >
+              </v-col>
+              <v-col cols="6" md="5" lg="4">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  to="/experience-list"
+                  >下一步</v-btn
+                >
               </v-col>
             </v-row>
           </v-expansion-panel-content>
@@ -89,6 +105,7 @@ export default {
       this.$router.push("/education?id=" + id);
     },
     remove(id) {
+      // TODO 警告視窗
       http.delete("/education/" + id).then(response => {
         if (response.data === true) {
           this.init();
@@ -97,8 +114,8 @@ export default {
         }
       });
     },
-    add() {
-      this.$router.push("/education");
+    routeTo(path) {
+      this.$router.push(path);
     }
   }
 };

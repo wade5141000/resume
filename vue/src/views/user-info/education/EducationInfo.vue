@@ -60,7 +60,7 @@
               </v-col>
             </v-row>
             <v-row justify="center">
-              <v-col cols="12" md="5" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <v-radio-group
                   label="就學狀態"
                   v-model="edu.status"
@@ -72,7 +72,7 @@
                   <v-radio label="就學中" value="就學中"></v-radio>
                 </v-radio-group>
               </v-col>
-              <v-col cols="12" md="5" lg="8">
+              <v-col cols="12" md="10" lg="8">
                 <v-radio-group
                   label="學校地區"
                   v-model="edu.country"
@@ -169,9 +169,19 @@
               </v-col>
             </v-row>
             <v-row justify="center" class="mb-2">
-              <v-col cols="5" md="4" lg="4">
+              <v-col cols="6" md="5" lg="4">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  to="/education-list"
+                  >回上一頁</v-btn
+                >
+              </v-col>
+              <v-col cols="6" md="5" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
-                  >下一步</v-btn
+                  >儲存</v-btn
                 >
               </v-col>
             </v-row>
@@ -239,7 +249,9 @@ export default {
         http.put("/education", this.edu).then(response => {
           //console.log(response.data)
           if (response.data === true) {
-            alert("更新成功");
+            // TODO 成功談窗
+            this.$router.push("/education-list");
+            // alert("更新成功");
           } else {
             alert("更新失敗");
           }
@@ -249,13 +261,13 @@ export default {
           console.log(response);
           if (response.data === true) {
             this.edu = {};
-            alert("新增成功");
+            this.$router.push("/education-list");
+            // alert("新增成功");
           } else {
             alert("新增失敗");
           }
         });
       }
-      //this.$router.push("/experience");
     }
   }
 };
