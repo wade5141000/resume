@@ -44,4 +44,9 @@ public class LicenseController {
     public boolean deleteLicense(@PathVariable int sn) {
         return service.deleteLicense(sn);
     }
+
+    @PutMapping("/license/replace")
+    public boolean replaceLicense(@RequestBody List<LicenseEntity> licenses) {
+        return service.replaceLicense(licenses);
+    }
 }

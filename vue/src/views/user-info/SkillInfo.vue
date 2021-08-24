@@ -167,9 +167,9 @@
                   color="blue"
                   text-color="white"
                   class="mr-2 mb-2"
-                  @click:close="close(item)"
+                  @click:close="close(index)"
                 >
-                  {{ item }}
+                  {{ item.lsName }}
                 </v-chip>
               </v-col>
             </v-row>
@@ -231,9 +231,7 @@ export default {
 
     http.get("/license").then(response => {
       if (response.data.length > 0) {
-        response.data.forEach(license => {
-          this.licenses.push(license.lsName);
-        });
+        this.licenses = response.data;
       }
     });
   },
@@ -253,12 +251,14 @@ export default {
   methods: {
     onLicenseEnter() {
       if (this.license.length > 0) {
-        this.licenses.push(this.license);
+        this.licenses.push({
+          lsName: this.license
+        });
         this.license = "";
       }
     },
-    close(str) {
-      this.licenses = this.licenses.filter(item => item !== str);
+    close(index) {
+      this.licenses.splice(index, 1);
     },
     addLanguage() {
       this.languages.push({
@@ -284,17 +284,19 @@ export default {
       this.skills.splice(index, 1);
     },
     nextStep() {
-      console.log(this.skills);
-      console.log(this.languages);
-      console.log(this.licenses);
-      // http.post("/language/languages", this.languages).then(response => {
-      //   console.log(response);
-      //   if (response.data === true) {
-      //     alert("新增成功");
-      //   } else {
-      //     alert("新增失敗");
-      //   }
-      // });
+      http.put("/skill/replace", this.skills).then(response => {
+        console.log(response);
+      });
+
+      http.put("/language/replace", this.languages).then(response => {
+        console.log(response);
+      });
+
+      http.put("/license/replace", this.licenses).then(response => {
+        console.log(response);
+      });
+
+      this.$router.push("/autobiography");
     }
   }
 };

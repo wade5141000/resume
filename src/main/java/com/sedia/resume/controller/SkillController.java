@@ -44,4 +44,9 @@ public class SkillController {
         return service.deleteSkill(id);
     }
 
+    @PutMapping("/skill/replace")
+    public boolean replaceSkill(@RequestBody List<SkillEntity> skills) {
+        return service.replaceSkill(skills);
+    }
+
 }

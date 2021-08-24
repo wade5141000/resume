@@ -29,7 +29,7 @@
     
     <update id="updateSkill" parameterType="com.sedia.resume.entity.SkillEntity" useGeneratedKeys="true" keyProperty="id">
         UPDATE SKILL SET 
-        SKILL_NAME = #{skillName}, SKILL_DESC = #{skillDesc}, CR_USER = #{createUser}, CR_DATETIME = #{createDate}, UP_USER = #{updateUser}, UP_DATETIME= #{updateDate}
+        SKILL_NAME = #{skillName}, SKILL_DESC = #{skillDesc}, UP_USER = #{updateUser}, UP_DATETIME= #{updateDate}
         where id = #{id} and uid = #{uid};
 	</update>
 	
@@ -39,6 +39,13 @@
 	
 	 <select id="isExistSkill" resultMap="SkillResultMap">
         select * from SKILL where id = #{id} and uid = #{uid};
+    </select>
+
+    <select id="getSkillNotInIds" resultMap="SkillResultMap">
+        select * from SKILL where id not in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
   
 </mapper>

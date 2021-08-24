@@ -28,4 +28,6 @@ public interface LicenseMapper {
     // 證照資料表 是否已存在
     boolean isExistLicense(int sn, int uid);
 
+    List<LicenseEntity> getLicenseNotInIds(List<Integer> ids);
+
 }

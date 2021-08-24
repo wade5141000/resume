@@ -45,11 +45,9 @@ public class LanguageController {
         return service.deleteLanguage(id);
     }
 
-    // 新增一組語言資料
-    @PostMapping("/language/languages")
-    public boolean createSkills(@RequestBody List<LanguageEntity> languages) {
-
-        return service.saveLanguages(languages);
+    @PutMapping("/language/replace")
+    public boolean replaceLanguage(@RequestBody List<LanguageEntity> languages) {
+        return service.replaceLanguage(languages);
     }
 
 }

@@ -25,4 +25,6 @@ public interface LanguageMapper {
     // 語言資料表 是否已存在
     boolean isExistLanguage(int id, int uid);
 
+    List<LanguageEntity> getLanguageNotInIds(List<Integer> ids);
+
 }
