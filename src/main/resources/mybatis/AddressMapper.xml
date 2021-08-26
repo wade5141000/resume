@@ -10,11 +10,11 @@
     </resultMap>
 
     <select id="getAllCities" resultType="String">
-        SELECT CITY FROM ADDRESS;
+        SELECT CITY FROM address;
     </select>
     
     <select id="getAllTowns" resultType="String">
-        SELECT TOWN FROM ADDRESS  WHERE CITY = #{city};
+        SELECT TOWN FROM address  WHERE CITY = #{city};
     </select>
 
    <!--  <select id="selectCityById" resultMap="AddressResultMap">

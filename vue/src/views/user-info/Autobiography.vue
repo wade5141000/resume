@@ -85,9 +85,18 @@ export default {
     theStepper,
     theDialog
   },
+  created() {
+    http.get("/user").then(response => {
+      this.autobiography.chinese = response.data.bioChn;
+      this.autobiography.english = response.data.bioEng;
+    });
+  },
   data: () => ({
     panel: [0],
-    autobiography: {}
+    autobiography: {
+      chinese: "",
+      english: ""
+    }
   }),
   methods: {
     save() {

@@ -88,7 +88,6 @@
                     ref="picker2"
                     type="month"
                     v-model="experience.endDate"
-                    :max="new Date().toISOString().substr(0, 10)"
                     min="1950-01-01"
                     @change="pickEndDate"
                   ></v-date-picker>

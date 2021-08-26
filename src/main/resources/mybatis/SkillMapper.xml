@@ -15,34 +15,34 @@
     </resultMap>
 
     <select id="listSkill" resultMap="SkillResultMap">
-        SELECT * FROM SKILL WHERE UID = #{uid};
+        SELECT * FROM skill WHERE UID = #{uid};
     </select>
     
     <select id="firstSkill" resultMap="SkillResultMap">
-        SELECT * FROM SKILL WHERE ID = #{id} and uid = #{uid};
+        SELECT * FROM skill WHERE ID = #{id} and uid = #{uid};
     </select>
 
     <insert id="insertSkill" parameterType="com.sedia.resume.entity.SkillEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO SKILL (UID, SKILL_NAME, SKILL_DESC, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
+        INSERT INTO skill (UID, SKILL_NAME, SKILL_DESC, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
    VALUES (#{uid}, #{skillName}, #{skillDesc}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
     
     <update id="updateSkill" parameterType="com.sedia.resume.entity.SkillEntity" useGeneratedKeys="true" keyProperty="id">
-        UPDATE SKILL SET 
+        UPDATE skill SET
         SKILL_NAME = #{skillName}, SKILL_DESC = #{skillDesc}, UP_USER = #{updateUser}, UP_DATETIME= #{updateDate}
         where id = #{id} and uid = #{uid};
 	</update>
 	
 	<delete id="deleteSkill">
-  		delete from Skill where id = #{id} and uid = #{uid};
+  		delete from skill where id = #{id} and uid = #{uid};
 	</delete>
 	
 	 <select id="isExistSkill" resultMap="SkillResultMap">
-        select * from SKILL where id = #{id} and uid = #{uid};
+        select * from skill where id = #{id} and uid = #{uid};
     </select>
 
     <select id="getSkillNotInIds" resultMap="SkillResultMap">
-        select * from SKILL where id not in
+        select * from skill where id not in
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>

@@ -15,23 +15,23 @@
     </resultMap>
 
     <select id="findAll" resultMap="result">
-        SELECT * FROM LINK WHERE UID = #{userId};
+        SELECT * FROM link WHERE UID = #{userId};
     </select>
     
 
     <insert id="save" parameterType="com.sedia.resume.entity.LinkEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO LINK (UID, PLATFORM, URL, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
+        INSERT INTO link (UID, PLATFORM, URL, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME)
             VALUES (#{uid}, #{platform}, #{url}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
 
     <update id="update" parameterType="com.sedia.resume.entity.LinkEntity">
-        UPDATE LINK SET PLATFORM = #{platform}, URL = #{url}, UP_DATETIME = #{updateDate}
+        UPDATE link SET PLATFORM = #{platform}, URL = #{url}, UP_DATETIME = #{updateDate}
         WHERE ID = #{id} AND UID = #{uid}
     </update>
     
 
 	<delete id="delete">
-  		delete from LINK where ID = #{id} and UID = #{userId};
+  		delete from link where ID = #{id} and UID = #{userId};
 	</delete>
 
 </mapper>

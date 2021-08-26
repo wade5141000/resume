@@ -194,4 +194,10 @@ public class TestController {
         return false;
     }
 
+    @GetMapping("/hello")
+    public String hello() {
+        log.info("Hello from test.");
+        return "hello";
+    }
+
 }

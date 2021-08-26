@@ -201,13 +201,14 @@
                   value="原住民"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12" md="4" lg="5">
+              <v-col cols="6" md="3" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="身心障礙"
                   value="身心障礙"
                 ></v-checkbox>
               </v-col>
+              <v-col cols="6" md="1" lg="3"> </v-col>
             </v-row>
             <v-row no-gutters justify="center">
               <v-col cols="12" md="10" lg="9" class="d-flex justify-end">
