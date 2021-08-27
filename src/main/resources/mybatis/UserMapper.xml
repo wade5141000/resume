@@ -29,26 +29,26 @@
     </resultMap>
 
     <select id="findAll" resultMap="UserResultMap">
-        SELECT * FROM USER;
+        SELECT * FROM user;
     </select>
 
     <select id="findByAccount" resultMap="UserResultMap">
-        SELECT * FROM USER WHERE ACCOUNT = #{account};
+        SELECT * FROM user WHERE ACCOUNT = #{account};
     </select>
 
     <select id="findById" resultMap="UserResultMap">
-        SELECT * FROM USER WHERE ID = #{id};
+        SELECT * FROM user WHERE ID = #{id};
     </select>
 
     <insert id="save" parameterType="com.sedia.resume.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO USER (ACCOUNT, USER_NAME, PASSWORD, EMAIL, PHONE, BIRTHDAY, SEX, MILITARY_SERVICE, MILITARY_DATE,
+        INSERT INTO user (ACCOUNT, USER_NAME, PASSWORD, EMAIL, PHONE, BIRTHDAY, SEX, MILITARY_SERVICE, MILITARY_DATE,
         ADDRESS, DRIVER_LICENSE, SPECIAL_IDENTITY, FEATURE, INTRODUCTION, BIO_CHN, BIO_ENG, PROFILE_IMG_PATH, CR_USER, CR_DATETIME, UP_USER, UP_DATETIME) VALUES
         (#{account}, #{name}, #{password}, #{email}, #{phone}, #{birthday}, #{sex}, #{militaryService}, #{militaryDate}
         , #{address}, #{driverLicense}, #{specialIdentity}, #{feature}, #{introduction}, #{bioChn}, #{bioEng}, #{imgPath}, #{createUser}, #{createDate}, #{updateUser}, #{updateDate});
     </insert>
 
     <update id="update" parameterType="com.sedia.resume.entity.UserEntity">
-        UPDATE USER SET USER_NAME = #{name}, EMAIL = #{email}, PHONE = #{phone}, BIRTHDAY = #{birthday}, SEX = #{sex},
+        UPDATE user SET USER_NAME = #{name}, EMAIL = #{email}, PHONE = #{phone}, BIRTHDAY = #{birthday}, SEX = #{sex},
                         MILITARY_SERVICE = #{militaryService}, MILITARY_DATE = #{militaryDate}, ADDRESS = #{address},
                         DRIVER_LICENSE = #{driverLicense}, SPECIAL_IDENTITY = #{specialIdentity}, FEATURE = #{feature},
                         INTRODUCTION = #{introduction}, UP_USER = #{updateUser}, UP_DATETIME = #{updateDate}
@@ -56,24 +56,24 @@
     </update>
 
     <update id="updateAutobiography" parameterType="com.sedia.resume.entity.UserEntity">
-        UPDATE USER SET BIO_ENG = #{bioEng}, BIO_CHN = #{bioChn}, UP_DATETIME = #{updateDate}
+        UPDATE user SET BIO_ENG = #{bioEng}, BIO_CHN = #{bioChn}, UP_DATETIME = #{updateDate}
         WHERE ID = #{id}
     </update>
 
     <select id="loadImg" resultType="String">
-        SELECT PROFILE_IMG_PATH FROM USER WHERE ID = #{id};
+        SELECT PROFILE_IMG_PATH FROM user WHERE ID = #{id};
 	</select>
 
 
     <update id="upLoadImg" parameterType="com.sedia.resume.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
- 		UPDATE USER SET PROFILE_IMG_PATH=#{imgPath},UP_USER=#{updateUser}, UP_DATETIME=#{updateDate} where ID = #{id};
+ 		UPDATE user SET PROFILE_IMG_PATH=#{imgPath},UP_USER=#{updateUser}, UP_DATETIME=#{updateDate} where ID = #{id};
 
 
     </update>
     
 
     <update id="resetPassword" parameterType="com.sedia.resume.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
- 		UPDATE USER SET PASSWORD=#{password},UP_USER=#{updateUser}, UP_DATETIME=#{updateDate} where ID = #{id};
+ 		UPDATE user SET PASSWORD=#{password},UP_USER=#{updateUser}, UP_DATETIME=#{updateDate} where ID = #{id};
 
     </update>
 

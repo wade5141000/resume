@@ -88,7 +88,6 @@
                     ref="picker2"
                     type="month"
                     v-model="experience.endDate"
-                    :max="new Date().toISOString().substr(0, 10)"
                     min="1950-01-01"
                     @change="pickEndDate"
                   ></v-date-picker>
@@ -146,9 +145,19 @@
               </v-col>
             </v-row>
             <v-row justify="center" class="mb-2">
-              <v-col cols="5" md="4" lg="4">
+              <v-col cols="6" md="5" lg="4">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  to="/experience-list"
+                  >回上一頁</v-btn
+                >
+              </v-col>
+              <v-col cols="6" md="5" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
-                  >下一步</v-btn
+                  >儲存</v-btn
                 >
               </v-col>
             </v-row>
@@ -210,7 +219,8 @@ export default {
         http.put("/experience", this.experience).then(response => {
           console.log(response);
           if (response.data === true) {
-            alert("更新成功");
+            this.$router.push("/experience-list");
+            //alert("更新成功");
           } else {
             alert("更新失敗");
           }
@@ -219,7 +229,8 @@ export default {
         http.post("/experience", this.experience).then(response => {
           console.log(response);
           if (response.data === true) {
-            alert("新增成功");
+            this.$router.push("/experience-list");
+            //alert("新增成功");
           } else {
             alert("新增失敗");
           }

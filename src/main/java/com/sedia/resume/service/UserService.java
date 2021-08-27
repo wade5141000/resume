@@ -9,7 +9,7 @@ import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
 import com.sedia.resume.repository.UserMapper;
-import com.sedia.resume.utils.AwsUtils;
+//import com.sedia.resume.utils.AwsUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class UserService {
     final BCryptPasswordEncoder passwordEncoder;
     final UserMapper userMapper;
     final LinkMapper linkMapper;
-    final AwsUtils awsUtils;
+    // final AwsUtils awsUtils;
     final ResetPasswordTokenMapper resetPasswordTokenMapper;
 
     final ResetPasswordTokenMapper passwordTokenMapper;

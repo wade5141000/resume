@@ -201,13 +201,14 @@
                   value="原住民"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12" md="4" lg="5">
+              <v-col cols="6" md="3" lg="2">
                 <v-checkbox
                   v-model="specialIdentity"
                   label="身心障礙"
                   value="身心障礙"
                 ></v-checkbox>
               </v-col>
+              <v-col cols="6" md="1" lg="3"> </v-col>
             </v-row>
             <v-row no-gutters justify="center">
               <v-col cols="12" md="10" lg="9" class="d-flex justify-end">
@@ -305,7 +306,7 @@
             <v-row justify="center" class="mb-2">
               <v-col cols="5" md="4" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
-                  >下一步</v-btn
+                  >儲存，下一步</v-btn
                 >
               </v-col>
             </v-row>
@@ -331,6 +332,11 @@ export default {
     },
     menu2(val) {
       val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
+    },
+    city(newValue, oldValue) {
+      http.get("/address/towns/" + newValue).then(response => {
+        this.towns = response.data;
+      });
     }
   },
   created: function() {
@@ -342,14 +348,16 @@ export default {
         this.city = user.address.substring(0, 3);
         user.address = user.address.substring(3);
 
-        this.towns.forEach(town => {
-          if (user.address.startsWith(town.text)) {
-            this.town = user.address.substring(0, town.text.length);
-            this.address = user.address.substring(town.text.length);
-            return false;
-          }
+        http.get("/address/towns/" + this.city).then(response => {
+          this.towns = response.data;
+          this.towns.forEach(town => {
+            if (user.address.startsWith(town)) {
+              this.town = user.address.substring(0, town.length);
+              this.address = user.address.substring(town.length);
+              return false;
+            }
+          });
         });
-        user.address = "";
       }
       if (user.driverLicense) {
         this.driverLicense = [].concat(user.driverLicense.split(","));
@@ -370,6 +378,10 @@ export default {
       }
 
       this.user = user;
+
+      http.get("/address/cities").then(response => {
+        this.cities = response.data;
+      });
     });
   },
   data: () => ({
@@ -381,16 +393,8 @@ export default {
       { text: "未服役", value: "未服役" },
       { text: "免役", value: "免役" }
     ],
-    cities: [
-      { text: "台北市", value: "台北市" },
-      { text: "新北市", value: "新北市" },
-      { text: "高雄市", value: "高雄市" }
-    ],
-    towns: [
-      { text: "中正區", value: "中正區" },
-      { text: "信義區", value: "信義區" },
-      { text: "A區", value: "A區" }
-    ],
+    cities: [],
+    towns: [],
     city: "",
     town: "",
     address: "",
@@ -426,8 +430,12 @@ export default {
 
       http.put("/user/basic-info", this.user).then(response => {
         console.log(response);
+        if (response.data === true) {
+          this.$router.push("/education-list");
+        } else {
+          alert("發生錯誤");
+        }
       });
-      //this.$router.push("/education");
     },
     onFeatureEnter() {
       if (this.feature.length > 0) {

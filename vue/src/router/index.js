@@ -13,7 +13,6 @@ import EducationInfo from "../views/user-info/education/EducationInfo";
 import ExperienceList from "../views/user-info/experience/ExperienceList";
 import ExperienceInfo from "../views/user-info/experience/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
-import LanguageLicense from "../views/user-info/LanguageLicense";
 import Autobiography from "../views/user-info/Autobiography";
 import store from "../store";
 
@@ -114,14 +113,6 @@ const routes = [
     component: Autobiography,
     meta: {
       title: "自傳"
-    }
-  },
-  {
-    path: "/language-license",
-    name: "LanguageLicense",
-    component: LanguageLicense,
-    meta: {
-      title: "語言能力與證書"
     }
   },
   {

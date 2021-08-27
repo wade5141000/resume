@@ -21,12 +21,7 @@
       </v-stepper-step>
 
       <v-divider />
-      <v-stepper-step step="5" editable @click="routerTo('/language-license')">
-        語言能力與證照
-      </v-stepper-step>
-
-      <v-divider />
-      <v-stepper-step step="6" editable @click="routerTo('/autobiography')">
+      <v-stepper-step step="5" editable @click="routerTo('/autobiography')">
         自傳
       </v-stepper-step>
     </v-stepper-header>

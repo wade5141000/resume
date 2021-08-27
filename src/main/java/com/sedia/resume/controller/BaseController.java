@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class BaseController {
 
-    @GetMapping
-    public String toIndex() {
-        return "redirect:https://resume-frontend.s3-ap-northeast-1.amazonaws.com/index.html";
-    }
+    // @GetMapping
+    // public String toIndex() {
+    // return "redirect:https://resume-frontend.s3-ap-northeast-1.amazonaws.com/index.html";
+    // }
 
 }
