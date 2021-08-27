@@ -1,6 +1,5 @@
 package com.sedia.resume.controller;
 
-import com.amazonaws.util.IOUtils;
 import com.sedia.resume.domain.AutobiographyRequest;
 import com.sedia.resume.domain.ResetPasswordRequest;
 import com.sedia.resume.entity.ResetPasswordTokenEntity;
@@ -84,7 +83,7 @@ public class UserController {
         // File file = new ClassPathResource("user.wade/profile/example.jpg").getFile();
         final FileInputStream in = new FileInputStream(file);
         response.setContentType("image/png"); // 如果是 jpg 則為 image/jpeg，svg 為 image/svg+xml 等
-        IOUtils.copy(in, response.getOutputStream());
+        // IOUtils.copy(in, response.getOutputStream());
         in.close();
         response.getOutputStream().close();
 

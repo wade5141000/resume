@@ -7,3 +7,5 @@ spring:
 resume:
   mail:
     frontend-host: http://localhost:9000
+
+#debug: true
