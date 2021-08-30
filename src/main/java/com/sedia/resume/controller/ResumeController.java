@@ -1,8 +1,6 @@
 package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.ResumeEntity;
-import com.sedia.resume.service.ResumeService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,40 +11,39 @@ import java.util.List;
 @RequestMapping("/resume")
 public class ResumeController {
 
-    final ResumeService service;
-
     @GetMapping
     public List<ResumeEntity> getResumes() {
-
-        return service.getResumeList();
+        // TODO 取得使用者所有履歷
+        return null;
     }
 
     @GetMapping("/{id}")
     public ResumeEntity getResume(@PathVariable int id) {
-        return service.getResume(id);
+        return null;
     }
 
     @PostMapping
-    public boolean saveResume(@RequestBody ResumeEntity resume) {
-        return service.insertResume(resume);
+    public boolean saveResume(ResumeEntity resume) {
+        return false;
     }
 
     @PutMapping
-    public boolean updateResume(@RequestBody ResumeEntity resume) {
-        return service.updateResume(resume);
+    public boolean updateResume(ResumeEntity resume) {
+        return false;
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteResume(@PathVariable int id) {
-        return service.deleteResume(id);
+        return false;
     }
 
-    @PutMapping("/{id}/basic-info") // 要套用的資料
+    @PutMapping("/{id}/basic-info")
     public boolean updateBasicInfo(@PathVariable int id, List<String> basicInfoType) {
-        // TODO 更新SQL resume 的 BASIC_INFO_COLUMNS (逗號隔開)
-        // List<String> -> String, 放欄位名稱 , ex: ["aaa", "bbb", "ccc"] -> "aaa,bbb,ccc"
+        // TODO 更新 resume 的 BASIC_INFO_COLUMNS (逗號隔開)
+        // List<String> -> String
+        // ["aaa", "bbb", "ccc"] -> "aaa,bbb,ccc"
 
-        return service.updateBasicInfo(id, basicInfoType);
+        return false;
     }
 
     // ====================================================================================
