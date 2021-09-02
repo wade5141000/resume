@@ -24,4 +24,6 @@ public interface SkillMapper {
 
     // 技能資料表 是否已存在
     boolean isExistSkill(int id, int uid);
+
+    List<SkillEntity> getSkillNotInIds(List<Integer> ids);
 }

@@ -2,7 +2,6 @@ package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.LanguageEntity;
 import com.sedia.resume.service.LanguageService;
-import com.sedia.resume.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public class LanguageController {
 
     // 取得語言資料
     @GetMapping("/language/{id}")
-    public LanguageEntity getLanguage(int id) {
+    public LanguageEntity getLanguage(@PathVariable int id) {
         return service.getLanguage(id);
     }
 
@@ -44,6 +43,11 @@ public class LanguageController {
     public boolean deleteLanguage(@PathVariable int id) {
 
         return service.deleteLanguage(id);
+    }
+
+    @PutMapping("/language/replace")
+    public boolean replaceLanguage(@RequestBody List<LanguageEntity> languages) {
+        return service.replaceLanguage(languages);
     }
 
 }

@@ -1,20 +1,20 @@
 package com.sedia.resume.service;
 
+import com.sedia.resume.domain.AutobiographyRequest;
+import com.sedia.resume.domain.ResetPasswordRequest;
 import com.sedia.resume.entity.LinkEntity;
 import com.sedia.resume.entity.ResetPasswordTokenEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
-import com.sedia.resume.repository.SkillMapper;
 import com.sedia.resume.repository.UserMapper;
-import com.sedia.resume.utils.AwsUtils;
+//import com.sedia.resume.utils.AwsUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.core.io.ClassPathResource;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,8 +29,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -42,11 +44,10 @@ public class UserService {
     final BCryptPasswordEncoder passwordEncoder;
     final UserMapper userMapper;
     final LinkMapper linkMapper;
-    final AwsUtils awsUtils;
+    // final AwsUtils awsUtils;
     final ResetPasswordTokenMapper resetPasswordTokenMapper;
 
-    // @Autowired
-    // final CacheManager cacheManager;
+    final ResetPasswordTokenMapper passwordTokenMapper;
 
     public UserEntity getCurrentUser() {
         String account = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -113,6 +114,20 @@ public class UserService {
             return true;
         } catch (Exception e) {
             log.error("更新失敗", e);
+            return false;
+        }
+    }
+
+    public boolean updateAutobiography(AutobiographyRequest request) {
+        try {
+            UserEntity currentUser = getCurrentUser();
+            currentUser.setBioEng(request.getEnglish());
+            currentUser.setBioChn(request.getChinese());
+            currentUser.setUpdateDate(LocalDateTime.now());
+            userMapper.updateAutobiography(currentUser);
+            return true;
+        } catch (Exception e) {
+            log.error("更新自傳失敗", e);
             return false;
         }
     }
@@ -218,6 +233,64 @@ public class UserService {
         bos.close();
 
         return bos;
+
+    }
+
+    // 1. 根據 token 從 DB 查出 reset password token
+    // 2. 檢查該筆 token 還在有效期內且沒有被使用過
+    // 3. 回傳有效或無效
+    public boolean checkTokenMessage(String token) {
+
+        ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(token);
+
+        Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
+
+        Duration duration = Duration.between(LocalDateTime.now(), currentToken.getExpiryDate());
+        // 1:時效超過24與否、2:isUsed()為true與false、3:不在現有資料庫中
+        if (duration.toNanos() > 0 && !currentToken.isUsed()) {
+            return true;
+        }
+
+        else
+            return false;
+
+    }
+
+    // 1. 根據 token 從 DB 查出 reset password token
+    // 2. 檢查該筆 token 還在有效期內且沒有被使用過
+    // 3. 變更使用者密碼，需要加密，參考 save user
+    // 4. 修改 token 為已使用
+    // 5. 回傳重置密碼是否成功
+    public boolean resetPasswordMessage(ResetPasswordRequest request) {
+
+        // 確認token有效性 時效或未使用
+        if (checkTokenMessage(request.getToken())) {
+
+            // 取得DB內的token。可能為空值或有值
+            ResetPasswordTokenEntity currentToken = passwordTokenMapper.checkToken(request.getToken());
+
+            // 使用token內的uid查詢DB。token如未使用，uid可能為空
+            // 取得符合uid的USER。token內的uid為空該如何處理?代表此token為新token，也代表未經過send，不合法的token
+
+            // 取得使用者Entity
+            Optional<UserEntity> checkUser = userMapper.findById(currentToken.getUid());
+            UserEntity currentUser = checkUser.get();
+
+            // 變更使用者密碼
+            currentUser.setPassword(passwordEncoder.encode(request.getPassword()));
+            currentUser.setUpdateUser(currentUser.getAccount());
+            currentUser.setUpdateDate(LocalDateTime.now());
+            userMapper.resetPassword(currentUser);
+
+            // 修改token為已使用
+            currentToken.setUsed(true);
+            currentToken.setUpdateUser(currentUser.getAccount());
+            currentToken.setUpdateDate(LocalDateTime.now());
+            passwordTokenMapper.resetPassword(currentToken);
+
+            return true;
+        } else
+            return false;
 
     }
 

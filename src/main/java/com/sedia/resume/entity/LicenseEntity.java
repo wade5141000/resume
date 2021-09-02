@@ -14,7 +14,7 @@ import lombok.Setter;
 public class LicenseEntity {
 
     // DB給予流水號,自動增長
-    private int sn;
+    private Integer sn;
 
     // 使用者帳號
     private int uid;

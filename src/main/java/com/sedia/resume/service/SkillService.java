@@ -5,20 +5,17 @@ import com.sedia.resume.entity.SkillEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.SkillMapper;
-import com.sedia.resume.repository.UserMapper;
-import com.sedia.resume.utils.AwsUtils;
-import com.sedia.resume.exception.ApiException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -102,6 +99,32 @@ public class SkillService {
             return false;
         }
 
+    }
+
+    public boolean replaceSkill(List<SkillEntity> skills) {
+        try {
+            List<Integer> originalSkill = getSkillList().stream().map(SkillEntity::getId).collect(Collectors.toList());
+            originalSkill.retainAll(skills.stream().filter(skill -> skill.getId() != null).map(SkillEntity::getId)
+                    .collect(Collectors.toList()));
+
+            if (CollectionUtils.isEmpty(originalSkill)) {
+                getSkillList().forEach(skill -> this.deleteSkill(skill.getId()));
+            } else {
+                skillMapper.getSkillNotInIds(originalSkill).forEach(skill -> this.deleteSkill(skill.getId()));
+            }
+
+            skills.forEach(skill -> {
+                if (skill.getId() != null) {
+                    updateSkill(skill);
+                } else {
+                    insertSkill(skill);
+                }
+            });
+            return true;
+        } catch (Exception e) {
+            log.error("修改失敗", e);
+            return false;
+        }
     }
 
 }

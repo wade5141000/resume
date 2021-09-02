@@ -1,10 +1,6 @@
 package com.sedia.resume.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,15 +20,15 @@ public class LanguageEntity extends GenericEntity {
     private String language;
 
     // 聽力 - 3:精通、2:中等、1:略懂
-    private int listening;
+    private String listening;
 
     // 口說 - 3:精通、2:中等、1:略懂
-    private int speaking;
+    private String speaking;
 
     // 閱讀 - 3:精通、2:中等、1:略懂
-    private int reading;
+    private String reading;
 
     // 寫作 - 3:精通、2:中等、1:略懂
-    private int writing;
+    private String writing;
 
 }

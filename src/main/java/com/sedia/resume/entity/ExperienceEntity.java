@@ -1,7 +1,5 @@
 package com.sedia.resume.entity;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.Builder;
@@ -25,9 +23,9 @@ public class ExperienceEntity {
     // 到職日
     // DB用timestamp,程式一樣用LocalDateTime
     // 是否需要改為LocalDate
-    private LocalDate startDate;
+    private String startDate;
     // 離職日
-    private LocalDate endDate;
+    private String endDate;
     // 職務簡介(100字)
     private String experienceDesc;
     // 技能(table表未定義明確型別)

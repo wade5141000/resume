@@ -5,15 +5,14 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
 import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
-import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.font.FontProvider;
-import com.sedia.resume.queue.MessageSender;
+//import com.sedia.resume.queue.MessageSender;
 import com.sedia.resume.security.JwtUtil;
 import com.sedia.resume.service.UserService;
-import com.sedia.resume.utils.AwsUtils;
+//import com.sedia.resume.utils.AwsUtils;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -35,7 +34,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,51 +51,51 @@ import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
 @Slf4j
 public class TestController {
 
-    final AwsUtils awsUtils;
+    // final AwsUtils awsUtils;
 
-    final MessageSender sender;
+    // final MessageSender sender;
 
     @Value("${sendgrid.api-key}")
     private String sendGridKey;
 
     final UserService userService;
 
-    @GetMapping("/upload")
-    public String testUpload() throws IOException {
+    // @GetMapping("/upload")
+    // public String testUpload() throws IOException {
+    //
+    // Resource resource = new ClassPathResource("temp/test.txt");
+    //
+    // File file = resource.getFile();
+    // boolean result = awsUtils.uploadFileToS3(file);
+    // if (result) {
+    // return "上傳成功";
+    // }
+    // return "上傳失敗";
+    // }
+    //
+    // @GetMapping("/download-s3")
+    // public ResponseEntity<InputStreamResource> testDownload() {
+    //
+    // String fileName = "test.txt";
+    //
+    // InputStream source = awsUtils.downloadFileFromS3(fileName);
+    // InputStreamResource resource = new InputStreamResource(source);
+    //
+    // HttpHeaders headers = new HttpHeaders();
+    // headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+    // headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+    // headers.add("Pragma", "no-cache");
+    // headers.add("Expires", "0");
+    //
+    // return ResponseEntity.ok().headers(headers).contentType(APPLICATION_OCTET_STREAM).body(resource);
+    // }
 
-        Resource resource = new ClassPathResource("temp/test.txt");
-
-        File file = resource.getFile();
-        boolean result = awsUtils.uploadFileToS3(file);
-        if (result) {
-            return "上傳成功";
-        }
-        return "上傳失敗";
-    }
-
-    @GetMapping("/download-s3")
-    public ResponseEntity<InputStreamResource> testDownload() {
-
-        String fileName = "test.txt";
-
-        InputStream source = awsUtils.downloadFileFromS3(fileName);
-        InputStreamResource resource = new InputStreamResource(source);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Pragma", "no-cache");
-        headers.add("Expires", "0");
-
-        return ResponseEntity.ok().headers(headers).contentType(APPLICATION_OCTET_STREAM).body(resource);
-    }
-
-    @GetMapping("/queue")
-    public String testQueue() {
-        sender.send("Hello World!");
-        // sender.sendObj();
-        return "成功放入queue";
-    }
+    // @GetMapping("/queue")
+    // public String testQueue() {
+    // sender.send("Hello World!");
+    // // sender.sendObj();
+    // return "成功放入queue";
+    // }
 
     @GetMapping("/mail")
     public String testSendMail() throws IOException {
@@ -194,6 +192,12 @@ public class TestController {
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
     public boolean uploadImage(@RequestParam("image") MultipartFile image) {
         return false;
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        log.info("Hello from test.");
+        return "hello";
     }
 
 }
