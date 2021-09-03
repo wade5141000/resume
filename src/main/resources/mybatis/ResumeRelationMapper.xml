@@ -3,16 +3,6 @@
 
 <mapper namespace="com.sedia.resume.repository.ResumeRelationMapper">
 
-	<resultMap id="ResumeRelationResultMap" type="com.sedia.resume.entity.RelResumeEduEntity">
-    
-        <result column="RID" property="resumeId" jdbcType="INTEGER" />
-        <result column="EDU_ID" property="eduId" jdbcType="INTEGER" />
-        <result column="CR_USER" property="createUser" jdbcType="CHAR" />
-        <result column="CR_DATETIME" property="createDate" jdbcType="CHAR" />
-        <result column="UP_USER" property="updateUser" jdbcType="TIMESTAMP" />
-        <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP" />
-    </resultMap>
-
     <select id="getEducationIdByResumeId" resultType="Integer">
         select EDU_ID from rel_resume_edu where #{resumeId} = RID;
     </select>
@@ -32,16 +22,51 @@
     <select id="getSkillIdByResumeId" resultType="Integer">
         select SKILL_ID from rel_resume_skill where #{resumeId} = RID;
     </select>
-    
-    <insert id="insertResumeEducation" parameterType="com.sedia.resume.entity.RelResumeEduEntity" useGeneratedKeys="true" keyProperty="id">
+
+    <insert id="insertResumeEducation">
         INSERT INTO rel_resume_edu (RID, EDU_ID)
-   		VALUES (#{resumeId}, #{eduId});
+   		VALUES (#{rId}, #{eduId});
     </insert>
 
 	<delete id="deleteResumeEducation">
-  		delete from rel_resume_edu where RID = #{resumeId};
+  		delete from rel_resume_edu where RID = #{rId};
 	</delete>
 	
+	<insert id="insertResumeExperience">
+        INSERT INTO rel_resume_exp (RID, EXP_ID)
+   		VALUES (#{rId}, #{expId});
+    </insert>
+
+	<delete id="deleteResumeExperience">
+  		delete from rel_resume_exp where RID = #{rId};
+	</delete>
+	
+	<insert id="insertResumeLanguage">
+        INSERT INTO rel_resume_lang (RID, LANGUAGE_ID)
+   		VALUES (#{rId}, #{languageId});
+    </insert>
+
+	<delete id="deleteResumeLanguage">
+  		delete from rel_resume_lang where RID = #{rId};
+	</delete>
+	
+	<insert id="insertResumeLicense">
+        INSERT INTO rel_resume_license (RID, LICENSE_ID)
+   		VALUES (#{rId}, #{licenseId});
+    </insert>
+
+	<delete id="deleteResumeLicense">
+  		delete from rel_resume_license where RID = #{rId};
+	</delete>
+	
+	<insert id="insertResumeSkill">
+        INSERT INTO rel_resume_skill (RID, SKILL_ID)
+   		VALUES (#{rId}, #{skillId});
+    </insert>
+
+	<delete id="deleteResumeSkill">
+  		delete from rel_resume_skill where RID = #{rId};
+	</delete>
     
  
 </mapper>
