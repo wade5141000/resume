@@ -1,6 +1,8 @@
 package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.ResumeEntity;
+import com.sedia.resume.service.ResumeService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/resume")
 public class ResumeController {
-
+	final ResumeService resumeService;
     @GetMapping
     public List<ResumeEntity> getResumes() {
         // TODO 取得使用者所有履歷
@@ -48,36 +50,30 @@ public class ResumeController {
 
     // ====================================================================================
     @PutMapping("/{id}/education")
-    public boolean updateEducation(@PathVariable int id, List<Integer> educationId) {
+    public boolean updateEducation(@PathVariable int id, @RequestBody List<Integer> educationId) {
         // TODO 存到 rel_resume_edu table
-        return false;
+        return resumeService.updateResumeEducation(id,educationId);
     }
 
     @PutMapping("/{id}/experience")
-    public boolean updateExperience(@PathVariable int id, List<Integer> experienceId) {
+    public boolean updateExperience(@PathVariable int id,@RequestBody List<Integer> experienceId) {
 
-        // a. experienceId -> [1,2,3]
-        // b. experienceId -> [2,3]
-        //
-        // 1. remove a
-        // 2. save b
-
-        return false;
+        return resumeService.updateResumeExperience(id,experienceId);
     }
 
     @PutMapping("/{id}/language")
-    public boolean updateLanguage(@PathVariable int id, List<Integer> languageId) {
-        return false;
+    public boolean updateLanguage(@PathVariable int id,@RequestBody List<Integer> languageId) {
+        return resumeService.updateResumeLanguage(id,languageId);
     }
 
     @PutMapping("/{id}/license")
-    public boolean updateLicense(@PathVariable int id, List<Integer> licenseId) {
-        return false;
+    public boolean updateLicense(@PathVariable int id,@RequestBody List<Integer> licenseId) {
+        return resumeService.updateResumeLicense(id,licenseId);
     }
 
     @PutMapping("/{id}/skill")
-    public boolean updateSkill(@PathVariable int id, List<Integer> skillId) {
-        return false;
+    public boolean updateSkill(@PathVariable int id,@RequestBody List<Integer> skillId) {
+        return resumeService.updateResumeSkill(id,skillId);
     }
 
 }

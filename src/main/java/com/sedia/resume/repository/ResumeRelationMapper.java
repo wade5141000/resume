@@ -13,4 +13,8 @@ public interface ResumeRelationMapper {
     List<Integer> getLicenseIdByResumeId(int resumeId);
 
     List<Integer> getSkillIdByResumeId(int resumeId);
+    
+    void insertResumeEducation(int id, Integer integer);
+
+	void deleteResumeEducation(int id);
 }

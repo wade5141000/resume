@@ -3,6 +3,16 @@
 
 <mapper namespace="com.sedia.resume.repository.ResumeRelationMapper">
 
+	<resultMap id="ResumeRelationResultMap" type="com.sedia.resume.entity.RelResumeEduEntity">
+    
+        <result column="RID" property="resumeId" jdbcType="INTEGER" />
+        <result column="EDU_ID" property="eduId" jdbcType="INTEGER" />
+        <result column="CR_USER" property="createUser" jdbcType="CHAR" />
+        <result column="CR_DATETIME" property="createDate" jdbcType="CHAR" />
+        <result column="UP_USER" property="updateUser" jdbcType="TIMESTAMP" />
+        <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
     <select id="getEducationIdByResumeId" resultType="Integer">
         select EDU_ID from rel_resume_edu where #{resumeId} = RID;
     </select>
@@ -22,6 +32,16 @@
     <select id="getSkillIdByResumeId" resultType="Integer">
         select SKILL_ID from rel_resume_skill where #{resumeId} = RID;
     </select>
+    
+    <insert id="insertResumeEducation" parameterType="com.sedia.resume.entity.RelResumeEduEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO rel_resume_edu (RID, EDU_ID)
+   		VALUES (#{resumeId}, #{eduId});
+    </insert>
+
+	<delete id="deleteResumeEducation">
+  		delete from rel_resume_edu where RID = #{resumeId};
+	</delete>
+	
     
  
 </mapper>
