@@ -18,6 +18,7 @@ import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LanguageMapper;
 import com.sedia.resume.repository.ResumeMapper;
+import com.sedia.resume.repository.ResumeRelationMapper;
 
 @Service
 @Transactional
@@ -25,20 +26,21 @@ import com.sedia.resume.repository.ResumeMapper;
 @Slf4j
 public class ResumeService {
 
-    final ResumeMapper resumeMapper;
+    final ResumeMapper mapper;
+    final ResumeRelationMapper resumeMapper;
     final UserService userService;
 
     public ResumeEntity getResume(int id) {
         UserEntity currentUser = userService.getCurrentUser();
         int uid = currentUser.getId();
-        return resumeMapper.firstResume(id, uid).orElseThrow(() -> new ApiException("找不到語言"));
+        return mapper.firstResume(id, uid).orElseThrow(() -> new ApiException("找不到語言"));
 
     }
 
     public List<ResumeEntity> getResumeList() {
         UserEntity currentUser = userService.getCurrentUser();
         int uid = currentUser.getId();
-        return resumeMapper.listResume(uid);
+        return mapper.listResume(uid);
 
     }
 
@@ -49,7 +51,7 @@ public class ResumeService {
             resume.setUid(currentUser.getId());
             resume.setUpdateUser(currentUser.getAccount());
             resume.setUpdateDate(LocalDateTime.now());
-            resumeMapper.updateResume(resume);
+            mapper.updateResume(resume);
             return true;
         } catch (Exception e) {
             log.error("更新失敗");
@@ -66,7 +68,7 @@ public class ResumeService {
             // 取得cr_user與cr_localdatetime
             resume.setCreateUser(currentUser.getAccount());
             resume.setCreateDate(LocalDateTime.now());
-            resumeMapper.insertResume(resume);
+            mapper.insertResume(resume);
             return true;
         } catch (Exception e) {
             log.error("新增失敗", e);
@@ -79,7 +81,7 @@ public class ResumeService {
         try {
             UserEntity currentUser = userService.getCurrentUser();
             int uid = currentUser.getId();
-            resumeMapper.deleteResume(id, uid);
+            mapper.deleteResume(id, uid);
             return true;
         } catch (Exception e) {
             log.error("刪除失敗", e);
@@ -93,14 +95,14 @@ public class ResumeService {
             UserEntity currentUser = userService.getCurrentUser();
             int uid = currentUser.getId();
             String UpdatebasicInfo = String.join(",", basicInfo);
-            resumeMapper.updateBasicInfo(UpdatebasicInfo, id, uid);
+            mapper.updateBasicInfo(UpdatebasicInfo, id, uid);
             return true;
         } catch (Exception e) {
             log.error("更新失敗", e);
             return false;
         }
     }
-    
+
     // 使用者挑選resumeId根據自己需要的eduId加入
     public boolean updateResumeEducation(int id, List<Integer> educationId) {
         // 資料庫rel_resume_edu table的RID跟EDU_ID都是PrimeKey
