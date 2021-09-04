@@ -41,7 +41,7 @@
                 <v-btn icon>
                   <v-icon title="預覽履歷">mdi-eye</v-icon>
                 </v-btn>
-                
+
                 <v-btn icon>
                   <v-icon title="收藏履歷">mdi-heart</v-icon>
                 </v-btn>
@@ -49,7 +49,6 @@
                 <v-btn icon>
                   <v-icon title="套用履歷">mdi-folder-download</v-icon>
                 </v-btn>
-
               </v-card-actions>
             </v-card>
           </v-col>
