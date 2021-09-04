@@ -42,7 +42,7 @@ public class ResumeController {
     }
 
     @PutMapping("/{id}/basic-info") // 要套用的資料
-    public boolean updateBasicInfo(@PathVariable int id, List<String> basicInfoType) {
+    public boolean updateBasicInfo(@PathVariable int id, @RequestBody List<String> basicInfoType) {
         // TODO 更新SQL resume 的 BASIC_INFO_COLUMNS (逗號隔開)
         // List<String> -> String, 放欄位名稱 , ex: ["aaa", "bbb", "ccc"] -> "aaa,bbb,ccc"
 

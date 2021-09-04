@@ -39,7 +39,7 @@
   		delete from resume where id = #{id} and uid = #{uid};
 	</delete>
 
-	 <update id="updateBasicInfo" parameterType="com.sedia.resume.entity.ResumeEntity" useGeneratedKeys="true" keyProperty="id">
+	 <update id="updateBasicInfo" parameterType="com.sedia.resume.entity.ResumeEntity" useGeneratedKeys="false" keyProperty="id">
         UPDATE resume SET
         BASIC_INFO_COLUMNS = #{basicInfo}
         where id = #{id} and uid = #{uid};
