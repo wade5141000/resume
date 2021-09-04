@@ -20,13 +20,13 @@
               <form>
                 <v-text-field
                   v-model="username"
-                  :counter="10"
+                  maxLength="30"
+                  counter="30"
                   outlined
                   required
                   label="帳號"
                   prepend-inner-icon="mdi-account-outline"
                   hide-details="auto"
-                  placeholder="帳號(須為4-10個英文或數字)"
                   :error-messages="usernameErrors"
                   @input="$v.username.$touch()"
                   @blur="$v.username.$touch()"
@@ -34,7 +34,8 @@
                 <v-text-field
                   v-model="password"
                   :type="'password'"
-                  :counter="10"
+                  maxLength="10"
+                  counter="10"
                   outlined
                   required
                   label="密碼"
@@ -57,7 +58,14 @@
                   </router-link>
                 </div>
 
-                <v-btn depressed block large class="mr-4" color="primary">
+                <v-btn
+                  depressed
+                  block
+                  large
+                  class="mr-4"
+                  color="primary"
+                  @click="signUp"
+                >
                   立即註冊
                 </v-btn>
                 <div class="text-center my-5">
@@ -76,7 +84,6 @@
 
 <script>
 import http from "../../utils/http";
-import axios from "axios";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
@@ -95,10 +102,10 @@ export default {
   computed: {
     usernameErrors() {
       const errors = [];
-      if (!this.$v.username.$dirty) return errors;
-      !this.$v.username.maxLength && errors.push("帳號為10個英文或數字");
-      !this.$v.username.required &&
-        errors.push("請輸入帳號(須為4-10個英文或數字)");
+      // if (!this.$v.username.$dirty) return errors;
+      // !this.$v.username.maxLength && errors.push("帳號為10個英文或數字");
+      // !this.$v.username.required &&
+      //   errors.push("請輸入帳號(須為4-10個英文或數字)");
       return errors;
     },
     passwordErrors() {
@@ -111,46 +118,25 @@ export default {
     }
   },
   methods: {
-    getUser() {
-      http.get("/user").then(function(response) {
-        console.log(response);
-      });
-    },
-    login() {
-      const data = {
-        username: this.username,
-        password: this.password
-      };
-      const formData = new FormData();
-      Object.keys(data).forEach(key => {
-        formData.append(key, data[key]);
-      });
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      };
-      axios
-        .post(process.env.VUE_APP_BACKEND_URL + "/login", formData, config)
-        .then(response => {
-          console.log("登入成功");
-          console.log(response.data);
-          this.$store.commit("login", response.data);
-        })
-        .catch(() => {
-          console.log("登入失敗");
-        });
-    },
-    logout() {
-      this.$store.commit("logout");
-    },
-
-    print() {
-      console.log("state: ");
-      console.log(this.$store.state);
-      console.log("local storage");
-      const userData = JSON.parse(localStorage.getItem("user"));
-      console.log(userData);
+    signUp() {
+      if (this.username && this.password) {
+        http
+          .post("/user", {
+            account: this.username,
+            password: this.password
+          })
+          .then(response => {
+            alert("註冊成功");
+            console.log("註冊成功");
+          })
+          .catch(error => {
+            // console.log(error.response.data)
+            alert(error.response.data.message);
+            console.log(error.response.data.message);
+          });
+      } else {
+        console.log("請輸入帳密");
+      }
     }
   }
 };

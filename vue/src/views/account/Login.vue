@@ -20,7 +20,8 @@
               <form>
                 <v-text-field
                   v-model="account"
-                  :counter="10"
+                  maxLength="30"
+                  counter="30"
                   outlined
                   required
                   label="帳號"
@@ -34,7 +35,8 @@
                 <v-text-field
                   v-model="password"
                   :type="'password'"
-                  :counter="10"
+                  maxLength="10"
+                  counter="10"
                   outlined
                   required
                   label="密碼"
@@ -60,7 +62,14 @@
                   </router-link>
                 </div>
 
-                <v-btn depressed block large class="mr-4" color="primary">
+                <v-btn
+                  depressed
+                  block
+                  large
+                  class="mr-4"
+                  color="primary"
+                  @click="login"
+                >
                   立即登入
                 </v-btn>
                 <div class="text-center my-5">
@@ -85,7 +94,7 @@ import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
   mixins: [validationMixin],
   validations: {
-    account: { required, maxLength: maxLength(10) },
+    account: { required },
     password: { required, maxLength: maxLength(10) },
     minLength: minLength(4)
   },
@@ -98,9 +107,9 @@ export default {
   computed: {
     accountErrors() {
       const errors = [];
-      if (!this.$v.account.$dirty) return errors;
-      !this.$v.account.maxLength && errors.push("帳號為4-10個英文或數字");
-      !this.$v.account.required && errors.push("請輸入帳號");
+      // if (!this.$v.account.$dirty) return errors;
+      // !this.$v.account.maxLength && errors.push("帳號為4-10個英文或數字");
+      // !this.$v.account.required && errors.push("請輸入帳號");
       return errors;
     },
     passwordErrors() {
@@ -112,11 +121,6 @@ export default {
     }
   },
   methods: {
-    getUser() {
-      http.get("/user").then(function(response) {
-        console.log(response);
-      });
-    },
     login() {
       const data = {
         account: this.account,
@@ -134,12 +138,12 @@ export default {
       axios
         .post(process.env.VUE_APP_BACKEND_URL + "/login", formData, config)
         .then(response => {
-          console.log("登入成功");
+          alert("登入成功");
           console.log(response.data);
           this.$store.commit("login", response.data);
         })
         .catch(() => {
-          console.log("登入失敗");
+          alert("登入失敗");
         });
     },
     logout() {

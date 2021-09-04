@@ -23,6 +23,7 @@
     >
       {{ item.text }}
     </v-btn>
+    <v-btn class="mr-2" text color="white" @click="logout"> 登出 </v-btn>
   </div>
 </template>
 
@@ -32,13 +33,17 @@ export default {
     links: [
       { text: "帳號登入", link: "/login" },
       { text: "帳號註冊", link: "/signup" },
-      { text: "使用條款", link: "/terms" },
-      { text: "隱私權政策", link: "/privacy" },
-      { text: "忘記密碼", link: "/forgetpw" },
       { text: "重設密碼", link: "/resetpw" },
       { text: "基本資料", link: "/user-info" },
       { text: "我的履歷", link: "/resume" }
     ]
-  })
+  }),
+  methods: {
+    logout() {
+      this.$store.commit("logout");
+      alert("登出成功");
+      this.$router.push("/");
+    }
+  }
 };
 </script>

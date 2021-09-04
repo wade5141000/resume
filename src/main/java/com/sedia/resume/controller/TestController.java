@@ -3,14 +3,16 @@ package com.sedia.resume.controller;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
+import com.itextpdf.io.font.FontProgram;
+import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.font.FontProvider;
-import com.sedia.resume.queue.MessageSender;
+//import com.sedia.resume.queue.MessageSender;
 import com.sedia.resume.security.JwtUtil;
 import com.sedia.resume.service.UserService;
-import com.sedia.resume.utils.AwsUtils;
+//import com.sedia.resume.utils.AwsUtils;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -49,49 +51,51 @@ import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM;
 @Slf4j
 public class TestController {
 
-    final AwsUtils awsUtils;
+    // final AwsUtils awsUtils;
 
-    final MessageSender sender;
+    // final MessageSender sender;
 
     @Value("${sendgrid.api-key}")
     private String sendGridKey;
 
     final UserService userService;
 
-    @GetMapping("/upload")
-    public String testUpload() throws IOException {
-        Resource resource = new ClassPathResource("temp/test.txt");
-        File file = resource.getFile();
-        boolean result = awsUtils.uploadFileToS3(file);
-        if (result) {
-            return "上傳成功";
-        }
-        return "上傳失敗";
-    }
+    // @GetMapping("/upload")
+    // public String testUpload() throws IOException {
+    //
+    // Resource resource = new ClassPathResource("temp/test.txt");
+    //
+    // File file = resource.getFile();
+    // boolean result = awsUtils.uploadFileToS3(file);
+    // if (result) {
+    // return "上傳成功";
+    // }
+    // return "上傳失敗";
+    // }
+    //
+    // @GetMapping("/download-s3")
+    // public ResponseEntity<InputStreamResource> testDownload() {
+    //
+    // String fileName = "test.txt";
+    //
+    // InputStream source = awsUtils.downloadFileFromS3(fileName);
+    // InputStreamResource resource = new InputStreamResource(source);
+    //
+    // HttpHeaders headers = new HttpHeaders();
+    // headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
+    // headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+    // headers.add("Pragma", "no-cache");
+    // headers.add("Expires", "0");
+    //
+    // return ResponseEntity.ok().headers(headers).contentType(APPLICATION_OCTET_STREAM).body(resource);
+    // }
 
-    @GetMapping("/download-s3")
-    public ResponseEntity<InputStreamResource> testDownload() {
-
-        String fileName = "test.txt";
-
-        InputStream source = awsUtils.downloadFileFromS3(fileName);
-        InputStreamResource resource = new InputStreamResource(source);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName);
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Pragma", "no-cache");
-        headers.add("Expires", "0");
-
-        return ResponseEntity.ok().headers(headers).contentType(APPLICATION_OCTET_STREAM).body(resource);
-    }
-
-    @GetMapping("/queue")
-    public String testQueue() {
-        sender.send("Hello World!");
-        // sender.sendObj();
-        return "成功放入queue";
-    }
+    // @GetMapping("/queue")
+    // public String testQueue() {
+    // sender.send("Hello World!");
+    // // sender.sendObj();
+    // return "成功放入queue";
+    // }
 
     @GetMapping("/mail")
     public String testSendMail() throws IOException {
@@ -137,7 +141,10 @@ public class TestController {
             // System.out.println(htmlString);
 
             File outFile = new File("src/main/resources/temp/test.pdf");
-            FileUtils.touch(outFile);
+            if (!outFile.exists()) {
+                FileUtils.touch(outFile);
+            }
+
             // File outFile = new ClassPathResource("temp/test.pdf").getFile();
 
             PdfWriter writer = new PdfWriter(outFile);
@@ -148,13 +155,12 @@ public class TestController {
             pdf.setDefaultPageSize(a4);
             ConverterProperties prop = new ConverterProperties();
 
-            // PdfFont font = PdfFontFactory.createFont("STSongStd-Light", "UniGB-UCS2-H", false);
-            // FontProvider fontProvider = new FontProvider();
-            // fontProvider.addFont(font.getFontProgram(), "UniGB-UCS2-H");
-            // prop.setFontProvider(fontProvider);
-            FontProvider provider = new DefaultFontProvider(true, true, true);
-            prop.setFontProvider(provider);
-            // prop.setBaseUri("resources/");
+            FontProvider fontProvider = new DefaultFontProvider();
+            String font = "src/main/resources/templates/font/TaipeiSansTCBeta-Regular.ttf";
+            FontProgram fontProgram = FontProgramFactory.createFont(font);
+            fontProvider.addFont(fontProgram);
+            prop.setFontProvider(fontProvider);
+            prop.setBaseUri("src/main/resources/templates/");
             HtmlConverter.convertToPdf(new FileInputStream(template), pdf, prop);
             // HtmlConverter.convertToPdf(htmlString, pdf, prop);
 
@@ -186,6 +192,14 @@ public class TestController {
     @PostMapping(value = "/image/upload", consumes = "multipart/form-data")
     public boolean uploadImage(@RequestParam("image") MultipartFile image) {
         return false;
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        log.info("Hello from test.");
+
+        // test
+        return "hello";
     }
 
 }

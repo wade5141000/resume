@@ -15,4 +15,16 @@ public interface UserMapper {
 
     void save(UserEntity user);
 
+    void update(UserEntity user);
+
+    void updateAutobiography(UserEntity user);
+
+    String loadImg(int id);// return the img_path
+
+    // 上傳圖片
+    void upLoadImg(UserEntity user);
+
+    // 修改密碼
+    void resetPassword(UserEntity user);
+
 }

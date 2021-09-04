@@ -10,8 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -90,6 +93,34 @@ public class LicenseService {
             return true;
         } catch (Exception e) {
             log.error("刪除失敗", e);
+            return false;
+        }
+    }
+
+    public boolean replaceLicense(List<LicenseEntity> licenses) {
+        try {
+            List<Integer> originalLicense = getLicenseList().stream().map(LicenseEntity::getSn)
+                    .collect(Collectors.toList());
+            originalLicense.retainAll(licenses.stream().filter(license -> license.getSn() != null)
+                    .map(LicenseEntity::getSn).collect(Collectors.toList()));
+
+            if (CollectionUtils.isEmpty(originalLicense)) {
+                getLicenseList().forEach(license -> this.deleteLicense(license.getSn()));
+            } else {
+                licenseMapper.getLicenseNotInIds(originalLicense)
+                        .forEach(license -> this.deleteLicense(license.getSn()));
+            }
+
+            licenses.forEach(license -> {
+                if (license.getSn() != null) {
+                    editLicense(license);
+                } else {
+                    insertLicense(license);
+                }
+            });
+            return true;
+        } catch (Exception e) {
+            log.error("修改失敗", e);
             return false;
         }
     }

@@ -3,10 +3,6 @@ package com.sedia.resume.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import org.joda.time.DateTime;
 
 import lombok.NoArgsConstructor;
 
@@ -40,10 +36,10 @@ public class EducationEntity extends GenericEntity {
     private String status;
 
     // 入學時間
-    private LocalDate startDate;
+    private String startDate;
 
     // 畢業時間
-    private LocalDate endDate;
+    private String endDate;
 
     // 國家
     private String country;

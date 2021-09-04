@@ -6,12 +6,12 @@
       </v-stepper-step>
 
       <v-divider />
-      <v-stepper-step step="2" editable @click="routerTo('/education')">
+      <v-stepper-step step="2" editable @click="routerTo('/education-list')">
         學歷
       </v-stepper-step>
 
       <v-divider />
-      <v-stepper-step step="3" editable @click="routerTo('/experience')">
+      <v-stepper-step step="3" editable @click="routerTo('/experience-list')">
         工作經歷
       </v-stepper-step>
 

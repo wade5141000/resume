@@ -1,19 +1,22 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import About from "../views/Index.vue";
-import Login from "../views/account/Login.vue";
-import Signup from "../views/account/Signup.vue";
-import Privacy from "../views/Privacy.vue";
-import Terms from "../views/Terms.vue";
+import Index from "../views/Index";
+import Login from "../views/account/Login";
+import Signup from "../views/account/Signup";
+import Privacy from "../views/Privacy";
+import Terms from "../views/Terms";
 import Forgetpw from "../views/account/Forgetpw";
-import Resetpw from "../views/account/Resetpw.vue";
+import Resetpw from "../views/account/Resetpw";
 import BasicInfo from "../views/user-info/BasicInfo";
-import EducationInfo from "../views/user-info/EducationInfo";
-import ExperienceInfo from "../views/user-info/ExperienceInfo";
+import EducationList from "../views/user-info/education/EducationList";
+import EducationInfo from "../views/user-info/education/EducationInfo";
+import ExperienceList from "../views/user-info/experience/ExperienceList";
+import ExperienceInfo from "../views/user-info/experience/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import Autobiography from "../views/user-info/Autobiography";
 import Resume from "../views/Resume";
 import Index from "../views/Index";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -48,14 +51,6 @@ const routes = [
     component: Resetpw,
     meta: {
       title: "重設密碼"
-    }
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About,
-    meta: {
-      title: "關於我們"
     }
   },
   {
@@ -131,6 +126,22 @@ const routes = [
     }
   },
   {
+    path: "/experience-list",
+    name: "ExperienceList",
+    component: ExperienceList,
+    meta: {
+      title: "工作經歷列表"
+    }
+  },
+  {
+    path: "/education-list",
+    name: "EducationList",
+    component: EducationList,
+    meta: {
+      title: "學歷列表"
+    }
+  },
+  {
     path: "*",
     redirect: "/"
   }
@@ -146,7 +157,36 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title;
   }
-  next();
+
+  let allow = false;
+  let allowPass = [
+    "/",
+    "/login",
+    "/forgetpw",
+    "/resetpw",
+    "/signup",
+    "/terms",
+    "/privacy"
+  ];
+  allowPass.forEach(path => {
+    if (path === to.path) {
+      allow = true;
+    }
+  });
+
+  if (allow) {
+    next();
+  } else if (localStorage.getItem("user")) {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user.expiration >= Date.now()) {
+      next();
+    } else {
+      store.commit("logout");
+      next({ path: "/login" });
+    }
+  } else {
+    next({ path: "/login" });
+  }
 });
 
 export default router;

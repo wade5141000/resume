@@ -67,7 +67,6 @@
 
 <script>
 import http from "../../utils/http";
-import axios from "axios";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
 export default {
@@ -76,6 +75,9 @@ export default {
     password: { required, maxLength: maxLength(10) },
     password1: { required, maxLength: maxLength(10) },
     minLength: minLength(4)
+  },
+  created: function() {
+    // http.post() TODO check token
   },
   data() {
     return {
@@ -94,7 +96,31 @@ export default {
   },
   methods: {
     submit() {
-      this.$v.$touch();
+      let token = this.$route.query.token;
+
+      if (
+        this.password.length > 0 &&
+        this.password === this.password1 &&
+        token
+      ) {
+        http
+          .post("/user/reset-password", { token, password: this.password })
+          .then(response => {
+            console.log(response);
+            if (response.data === true) {
+              alert("修改成功");
+            } else {
+              alert("發生錯誤!");
+            }
+          })
+          .catch(error => {
+            alert("發生錯誤");
+            //alert(error.response.data.message);
+            console.log(error.response.data.message);
+          });
+      } else {
+        alert("密碼輸入有誤");
+      }
     }
   }
 };

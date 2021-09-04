@@ -20,26 +20,26 @@ public class ExperienceController {
     final ExperienceService service;
 
     // 取得使用者所有經歷列表
-    @GetMapping("/experience/")
+    @GetMapping("/experience")
     public List<ExperienceEntity> getExperienceList() {
         return service.getExperienceList();
     }
 
     // 取得使用者一筆經歷
     @GetMapping("/experience/{sn}")
-    public ExperienceEntity getExperience(int sn) {
+    public ExperienceEntity getExperience(@PathVariable int sn) {
         return service.getExperience(sn);
     }
 
     // 新增經歷列表
-    @PostMapping("/experience/")
+    @PostMapping("/experience")
     public boolean intserExperience(@RequestBody ExperienceEntity experience) {
         return service.insertExperience(experience);
     }
 
     // 更新經歷列表
     // 同一uid才能更新自身的經歷，同時sn在這邊已自動填入在Entity。
-    @PutMapping("/experience/")
+    @PutMapping("/experience")
     public boolean editexperience(@RequestBody ExperienceEntity experience) {
         return service.editExperience(experience);
     }

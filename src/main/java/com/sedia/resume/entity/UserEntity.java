@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -31,11 +32,15 @@ public class UserEntity extends GenericEntity implements UserDetails {
 
     private String militaryService;
 
-    private LocalDate militaryDate;
+    private String militaryDate;
 
     private String address;
 
+    private String driverLicense;
+
     private String specialIdentity;
+
+    private String feature;
 
     private String introduction;
 
@@ -44,6 +49,8 @@ public class UserEntity extends GenericEntity implements UserDetails {
     private String bioChn;
 
     private String imgPath;
+
+    private List<LinkEntity> links;
 
     @Hidden
     @Override

@@ -48,5 +48,12 @@
         select * from license where id = #{sn} and uid = #{uid};
     </select>
 
+    <select id="getLicenseNotInIds" resultMap="LicenseResultMap">
+        select * from license where id not in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 
 </mapper>

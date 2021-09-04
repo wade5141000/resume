@@ -4,18 +4,19 @@ package com.sedia.resume.service;
 import com.sedia.resume.entity.LanguageEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.repository.LanguageMapper;
-import com.sedia.resume.utils.AwsUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.sedia.resume.exception.ApiException;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @Transactional
@@ -100,6 +101,36 @@ public class LanguageService {
             return false;
         }
 
+    }
+
+    public boolean replaceLanguage(List<LanguageEntity> languages) {
+        try {
+
+            List<Integer> originalLanguage = getLanguageList().stream().map(LanguageEntity::getId)
+                    .collect(Collectors.toList());
+            originalLanguage.retainAll(languages.stream().filter(language -> language.getId() != null)
+                    .map(LanguageEntity::getId).collect(Collectors.toList()));
+
+            if (CollectionUtils.isEmpty(originalLanguage)) {
+                getLanguageList().forEach(language -> this.deleteLanguage(language.getId()));
+            } else {
+                languageMapper.getLanguageNotInIds(originalLanguage)
+                        .forEach(language -> this.deleteLanguage(language.getId()));
+            }
+
+            languages.forEach(language -> {
+                if (language.getId() != null) {
+                    updateLanguage(language);
+                } else {
+                    insertLanguage(language);
+                }
+            });
+
+            return true;
+        } catch (Exception e) {
+            log.error("修改失敗", e);
+            return false;
+        }
     }
 
 }

@@ -2,10 +2,8 @@ package com.sedia.resume.controller;
 
 import com.sedia.resume.entity.SkillEntity;
 import com.sedia.resume.service.SkillService;
-import com.sedia.resume.service.UserService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +22,7 @@ public class SkillController {
 
     // 取得一筆技能資料
     @GetMapping("/skill/{id}")
-    public SkillEntity getSkill(int id) {
+    public SkillEntity getSkill(@PathVariable int id) {
         return service.getSkill(id);
     }
 
@@ -44,6 +42,11 @@ public class SkillController {
     @DeleteMapping("/skill/{id}")
     public boolean deleteSkill(@PathVariable int id) {
         return service.deleteSkill(id);
+    }
+
+    @PutMapping("/skill/replace")
+    public boolean replaceSkill(@RequestBody List<SkillEntity> skills) {
+        return service.replaceSkill(skills);
     }
 
 }
