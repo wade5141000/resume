@@ -19,7 +19,6 @@ import java.util.List;
 @Slf4j
 public class ResumeService {
 
-
     final ResumeMapper mapper;
     final UserService userService;
     final ResumeRelationMapper resumeMapper;
