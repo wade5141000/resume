@@ -14,32 +14,30 @@ import java.util.List;
 public class ResumeController {
     final ResumeService resumeService;
 
-    final ResumeService service;
-
     @GetMapping
     public List<ResumeEntity> getResumes() {
 
-        return service.getResumeList();
+        return resumeService.getResumeList();
     }
 
     @GetMapping("/{id}")
     public ResumeEntity getResume(@PathVariable int id) {
-        return service.getResume(id);
+        return resumeService.getResume(id);
     }
 
     @PostMapping
     public boolean saveResume(@RequestBody ResumeEntity resume) {
-        return service.insertResume(resume);
+        return resumeService.insertResume(resume);
     }
 
     @PutMapping
     public boolean updateResume(@RequestBody ResumeEntity resume) {
-        return service.updateResume(resume);
+        return resumeService.updateResume(resume);
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteResume(@PathVariable int id) {
-        return service.deleteResume(id);
+        return resumeService.deleteResume(id);
     }
 
     @PutMapping("/{id}/basic-info") // 要套用的資料
@@ -47,7 +45,7 @@ public class ResumeController {
         // TODO 更新SQL resume 的 BASIC_INFO_COLUMNS (逗號隔開)
         // List<String> -> String, 放欄位名稱 , ex: ["aaa", "bbb", "ccc"] -> "aaa,bbb,ccc"
 
-        return service.updateBasicInfo(id, basicInfoType);
+        return resumeService.updateBasicInfo(id, basicInfoType);
     }
 
     // ====================================================================================
@@ -76,6 +74,18 @@ public class ResumeController {
     @PutMapping("/{id}/skill")
     public boolean updateSkill(@PathVariable int id, @RequestBody List<Integer> skillId) {
         return resumeService.updateResumeSkill(id, skillId);
+    }
+
+    @PutMapping("/apply/{id}")
+    public void applyResume(@PathVariable int id) {
+
+        // resumeService.applyResume(id);
+
+    }
+
+    @PostMapping("/download/{id}")
+    public void downloadResume(@PathVariable int id) {
+
     }
 
 }

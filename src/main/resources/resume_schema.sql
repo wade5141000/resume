@@ -39,7 +39,7 @@ CREATE TABLE `resume`.`resume` (
   `TEMPLATE_ID` int DEFAULT NULL COMMENT '模板編號',
   `RESUME_NAME` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '履歷命名',
   `BASIC_INFO_COLUMNS` varchar(200) DEFAULT NULL COMMENT '基本資料類別',
-  `FILE_PATH` varchar(50) NOT NULL COMMENT '檔案路徑',
+  `FILE_PATH` varchar(50) COMMENT '檔案路徑',
   `CR_USER` varchar(30) DEFAULT NULL COMMENT '建立者',
   `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
@@ -229,6 +229,9 @@ CREATE TABLE `resume`.`reset_password_token` (
   `EXPIRY_DATE` timestamp NOT NULL,
   `IS_USED` TINYINT(1) NOT NULL
 );
+
+INSERT INTO resume.template (`NAME`,BASIC_INFO_LIMIT, EDUCATION_LIMIT, EXPERIENCE_LIMIT, SKILL_LIMIT, LICENSE_LIMIT, LANGUAGE_LIMIT, FEATURE_LIMIT, LINK_LIMIT)
+VALUES ('left_right_green', 5, 5, 5, 5, 5, 5, 5, 5);
 
 ALTER TABLE resume.address AUTO_INCREMENT=1;
 INSERT INTO resume.address (city,town) VALUES
