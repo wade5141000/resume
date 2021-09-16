@@ -34,7 +34,8 @@ export default {
       { text: "帳號登入", link: "/login" },
       { text: "帳號註冊", link: "/signup" },
       { text: "重設密碼", link: "/resetpw" },
-      { text: "基本資料", link: "/user-info" }
+      { text: "基本資料", link: "/user-info" },
+      { text: "我的履歷", link: "/resume" }
     ]
   }),
   methods: {
