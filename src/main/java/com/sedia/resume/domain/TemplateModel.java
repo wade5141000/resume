@@ -7,12 +7,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class TemplateModel {
+
+    Map<String, String> basicInfo;
 
     List<EducationEntity> educations;
 
@@ -23,4 +26,6 @@ public class TemplateModel {
     List<LicenseEntity> licenses;
 
     List<SkillEntity> skills;
+
+    List<LinkEntity> links;
 }

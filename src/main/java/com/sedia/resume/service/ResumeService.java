@@ -12,9 +12,11 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.font.FontProvider;
 import com.sedia.resume.domain.TemplateModel;
 import com.sedia.resume.entity.TemplateEntity;
+import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.utils.AwsUtils;
 import freemarker.template.Configuration;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ import com.sedia.resume.repository.ResumeRelationMapper;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +52,7 @@ public class ResumeService {
     final LicenseService licenseService;
     final SkillService skillService;
     final AwsUtils awsUtils;
+    final LinkMapper linkMapper;
 
     public ResumeEntity getResume(int id) {
         UserEntity currentUser = userService.getCurrentUser();
@@ -178,13 +182,39 @@ public class ResumeService {
     public void applyResume(int resumeId) throws Exception {
 
         UserEntity user = userService.getCurrentUser();
-        ResumeEntity resume = resumeMapper.firstResume(resumeId, user.getId()).orElseThrow();
+        int userId = user.getId();
 
-        String[] basicInfoColumn = resume.getBasicInfo().split(",");
+        ResumeEntity resume = resumeMapper.firstResume(resumeId, userId).orElseThrow();
+
+        String[] basicInfoColumns = resume.getBasicInfo().split(",");
+
         TemplateEntity template = templateService.getTemplate(resume.getTemplateID());
 
+        // TODO template size 判斷??
+
+        Map<String, String> basicInfoMap = new HashMap<>();
+
+        basicInfoMap.put("introduction", user.getIntroduction());
+
+        for (String infoColumn : basicInfoColumns) {
+            switch (infoColumn) {
+            case "name":
+                basicInfoMap.put("name", user.getName());
+            case "birthday":
+                basicInfoMap.put("birthday", user.getBirthday().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+            case "sex":
+                basicInfoMap.put("sex", user.getSex());
+            case "phone":
+                basicInfoMap.put("phone", user.getPhone());
+            }
+        }
+
         TemplateModel templateModel = new TemplateModel();
-        // TODO 放 Basic Info
+
+        templateModel.setBasicInfo(basicInfoMap);
+
+        templateModel.setLinks(linkMapper.findAll(userId));
+
         templateModel.setEducations(resumeRelationMapper.getEducationIdByResumeId(resumeId).stream()
                 .map(educationService::getEducation).collect(Collectors.toList()));
         templateModel.setExperiences(resumeRelationMapper.getExperienceIdByResumeId(resumeId).stream()
@@ -196,13 +226,17 @@ public class ResumeService {
         templateModel.setSkills(resumeRelationMapper.getSkillIdByResumeId(resumeId).stream().map(skillService::getSkill)
                 .collect(Collectors.toList()));
 
-        makePdfAndSave(processTemplate(template.getName() + ".html", new TemplateModel()), resume.getResumeName());
+        String filePath = makePdfAndSave(processTemplate(template.getName(), templateModel), resume.getResumeName(),
+                userId);
+
+        resumeMapper.updateFilePath(filePath + resume.getResumeName() + ".pdf", resumeId, userId);
 
         // makePdfAndSave(processTemplate("left_right_green.html", new TemplateModel()), "myresume");
 
     }
 
-    private void makePdfAndSave(String html, String pdfName) throws IOException {
+    @SneakyThrows
+    private String makePdfAndSave(String html, String pdfName, int userId) {
 
         File outFile = null;
 
@@ -235,15 +269,19 @@ public class ResumeService {
 
             HtmlConverter.convertToPdf(html, pdf, prop);
 
-            boolean saveResult = awsUtils.uploadFileToS3(outFile);
+            String filePath = "user_" + userId + "/";
+
+            boolean saveResult = awsUtils.uploadFileToS3(outFile, filePath);
 
             if (!saveResult) {
-                // TODO
                 log.error("save to s3 失敗");
+                throw new RuntimeException("save to s3 失敗");
             }
+            return filePath;
 
         } catch (Exception e) {
             log.error("產生PDF失敗", e);
+            throw e;
         } finally {
             if (outFile != null && outFile.exists()) {
                 FileUtils.forceDelete(outFile);
@@ -253,14 +291,11 @@ public class ResumeService {
     }
 
     private String processTemplate(String template, TemplateModel templateModel) throws Exception {
-        Map<String, String> user = new HashMap<>();
-        user.put("name", "吳韋德");
-        user.put("age", "30");
 
         StringWriter sw = new StringWriter();
 
         // freemarker.getTemplate("template_A4.html").process(user, sw);
-        freemarker.getTemplate(template).process(user, sw);
+        freemarker.getTemplate("html/" + template + "/index.html").process(templateModel, sw);
         log.info("Process template result: {}", sw.toString());
 
         // return new ByteArrayInputStream(sw.toString().getBytes(StandardCharsets.UTF_8));

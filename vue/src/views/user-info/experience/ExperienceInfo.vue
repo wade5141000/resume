@@ -113,8 +113,8 @@
                   rows="5"
                   auto-grow
                   no-resize
-                  maxLength="500"
-                  counter="500"
+                  maxLength="100"
+                  counter="100"
                 ></v-textarea>
               </v-col>
             </v-row>

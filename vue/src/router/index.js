@@ -15,7 +15,6 @@ import ExperienceInfo from "../views/user-info/experience/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import Autobiography from "../views/user-info/Autobiography";
 import Resume from "../views/Resume";
-import Index from "../views/Index";
 import store from "../store";
 
 Vue.use(VueRouter);

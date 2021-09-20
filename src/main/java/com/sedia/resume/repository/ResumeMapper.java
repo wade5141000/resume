@@ -19,4 +19,6 @@ public interface ResumeMapper {
 
     void updateBasicInfo(String basicInfo, int id, int uid);
 
+    void updateFilePath(String filePath, int id, int uid);
+
 }

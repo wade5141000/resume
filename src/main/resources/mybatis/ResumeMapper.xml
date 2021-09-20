@@ -45,5 +45,11 @@
         where id = #{id} and uid = #{uid};
 	</update>
 
+    <update id="updateFilePath">
+        UPDATE resume SET
+            FILE_PATH = #{filePath}
+        where id = #{id} and uid = #{uid};
+    </update>
+
 
 </mapper>

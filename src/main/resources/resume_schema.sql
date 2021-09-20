@@ -231,7 +231,7 @@ CREATE TABLE `resume`.`reset_password_token` (
 );
 
 INSERT INTO resume.template (`NAME`,BASIC_INFO_LIMIT, EDUCATION_LIMIT, EXPERIENCE_LIMIT, SKILL_LIMIT, LICENSE_LIMIT, LANGUAGE_LIMIT, FEATURE_LIMIT, LINK_LIMIT)
-VALUES ('left_right_green', 5, 5, 5, 5, 5, 5, 5, 5);
+VALUES ('left_right_green', 5, 2, 2, 2, 0, 0, 0, 4);
 
 ALTER TABLE resume.address AUTO_INCREMENT=1;
 INSERT INTO resume.address (city,town) VALUES

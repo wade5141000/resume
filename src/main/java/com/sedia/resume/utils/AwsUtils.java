@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,13 @@ public class AwsUtils {
 
     final AmazonS3 s3Client;
 
-    public boolean uploadFileToS3(File file) {
+    public boolean uploadFileToS3(File file, String path) {
         // String path = "test/";
         String fileName = file.getName();
+        if (StringUtils.isNotEmpty(path)) {
+            fileName = path + fileName;
+        }
+
         log.info("Uploading file: [{}] to aws s3.", fileName);
         try {
             s3Client.putObject(new PutObjectRequest(bucketName, fileName, file));
