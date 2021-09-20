@@ -3,9 +3,15 @@ package com.sedia.resume.controller;
 import com.sedia.resume.entity.ResumeEntity;
 import com.sedia.resume.service.ResumeService;
 
+import com.sedia.resume.utils.AwsUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -13,33 +19,32 @@ import java.util.List;
 @RequestMapping("/resume")
 public class ResumeController {
     final ResumeService resumeService;
-
-    final ResumeService service;
+    final AwsUtils awsUtils;
 
     @GetMapping
     public List<ResumeEntity> getResumes() {
 
-        return service.getResumeList();
+        return resumeService.getResumeList();
     }
 
     @GetMapping("/{id}")
     public ResumeEntity getResume(@PathVariable int id) {
-        return service.getResume(id);
+        return resumeService.getResume(id);
     }
 
     @PostMapping
     public boolean saveResume(@RequestBody ResumeEntity resume) {
-        return service.insertResume(resume);
+        return resumeService.insertResume(resume);
     }
 
     @PutMapping
     public boolean updateResume(@RequestBody ResumeEntity resume) {
-        return service.updateResume(resume);
+        return resumeService.updateResume(resume);
     }
 
     @DeleteMapping("/{id}")
     public boolean deleteResume(@PathVariable int id) {
-        return service.deleteResume(id);
+        return resumeService.deleteResume(id);
     }
 
     @PutMapping("/{id}/basic-info") // 要套用的資料
@@ -47,7 +52,7 @@ public class ResumeController {
         // TODO 更新SQL resume 的 BASIC_INFO_COLUMNS (逗號隔開)
         // List<String> -> String, 放欄位名稱 , ex: ["aaa", "bbb", "ccc"] -> "aaa,bbb,ccc"
 
-        return service.updateBasicInfo(id, basicInfoType);
+        return resumeService.updateBasicInfo(id, basicInfoType);
     }
 
     // ====================================================================================
@@ -76,6 +81,30 @@ public class ResumeController {
     @PutMapping("/{id}/skill")
     public boolean updateSkill(@PathVariable int id, @RequestBody List<Integer> skillId) {
         return resumeService.updateResumeSkill(id, skillId);
+    }
+
+    @PutMapping("/apply/{resumeId}")
+    public void applyResume(@PathVariable int resumeId) throws Exception {
+
+        resumeService.applyResume(resumeId);
+
+    }
+
+    @PostMapping("/download/{resumeId}")
+    public ResponseEntity<InputStreamResource> downloadResume(@PathVariable int resumeId) {
+
+        ResumeEntity resume = resumeService.getResume(resumeId);
+
+        InputStream source = awsUtils.downloadFileFromS3(resume.getFilePath());
+        InputStreamResource resource = new InputStreamResource(source);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + resume.getResumeName() + ".pdf");
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_OCTET_STREAM).body(resource);
     }
 
 }

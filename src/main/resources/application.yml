@@ -10,22 +10,22 @@ management:
 mybatis:
   mapper-locations: classpath:mybatis/*.xml
 
-#aws:
-#  s3:
-#    bucket-name: resume-backend-app
+aws:
+  s3:
+    bucket-name: resume-backend-app
 
-#cloud:
-#  aws:
-#    credentials:
-#      access-key: AKIAULGZ7ETA4R4DECGC
-#      secret-key: ENC(jMVO9tgRaxUAI+c+jAW0JhwIbimDEuVhi0eOpvSaGBlk+HhigBsmUZUFgEo5CJD2isMSAsFr9CkfFxtFccD/f7AHvQp6h3OIWwkUSURsAsc=)
-#    region:
-#      static: ap-northeast-1
-#      auto: false
-#    stack:
-#      auto: false
-#    s3:
-#      bucket-name: resume-backend-app
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAULGZ7ETA4R4DECGC
+      secret-key: ENC(jMVO9tgRaxUAI+c+jAW0JhwIbimDEuVhi0eOpvSaGBlk+HhigBsmUZUFgEo5CJD2isMSAsFr9CkfFxtFccD/f7AHvQp6h3OIWwkUSURsAsc=)
+    region:
+      static: ap-northeast-1
+      auto: false
+    stack:
+      auto: false
+    s3:
+      bucket-name: resume-backend-app
 
 spring:
   servlet:
