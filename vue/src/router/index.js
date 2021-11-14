@@ -15,6 +15,10 @@ import ExperienceInfo from "../views/user-info/experience/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import Autobiography from "../views/user-info/Autobiography";
 import BasicInfoApply from "../views/apply-info/BasicInfoApply";
+import EducationInfoApply from "../views/apply-info/EducationInfoApply";
+import ExperienceInfoApply from "../views/apply-info/ExperienceInfoApply";
+import SkillInfoApply from "../views/apply-info/SkillInfoApply";
+import AutobiographyApply from "../views/apply-info/AutobiographyApply";
 import Resume from "../views/Resume";
 import store from "../store";
 
@@ -98,9 +102,45 @@ const routes = [
     name: "BasicInfoApply",
     component: BasicInfoApply,
     meta: {
-      title: "套用履歷"
+      title: "套用基本資料"
     }
   },
+
+  {
+    path: "/educationinfo-apply",
+    name: "EducationInfoApply",
+    component: EducationInfoApply,
+    meta: {
+      title: "套用學歷資料"
+    }
+  },
+
+  {
+    path: "/experienceinfo-apply",
+    name: "ExperienceInfoApply",
+    component: ExperienceInfoApply,
+    meta: {
+      title: "套用工作經歷"
+    }
+  },
+  {
+    path: "/skillinfo-apply",
+    name: "SkillInfoApply",
+    component: SkillInfoApply,
+    meta: {
+      title: "套用專業技能"
+    }
+  },
+
+  {
+    path: "/autobiography-apply",
+    name: "AutobiographyApply",
+    component: AutobiographyApply,
+    meta: {
+      title: "套用自傳"
+    }
+  },
+
   {
     path: "/education",
     name: "EducationInfo",
@@ -175,7 +215,18 @@ router.beforeEach((to, from, next) => {
     "/signup",
     "/terms",
     "/apply-info",
-    "/privacy"
+    "/educationinfo-apply",
+    "/experienceinfo-apply",
+    "/privacy",
+    "/user-info",
+    "/education-list",
+    "/education",
+    "/experience-list",
+    "/experience",
+    "/skill",
+    "/autobiography",
+    "/skillinfo-apply",
+    "/autobiography-apply"
   ];
   allowPass.forEach(path => {
     if (path === to.path) {
