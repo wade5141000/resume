@@ -71,7 +71,7 @@
                   value="email"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
+              <v-col cols="10" md="10" lg="10" class="pa-0 mt-0">
                 <v-checkbox
                   label="駕駛執照"
                   color="red darken-3"
