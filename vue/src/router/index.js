@@ -20,7 +20,7 @@ import ExperienceInfoApply from "../views/apply-info/ExperienceInfoApply";
 import SkillInfoApply from "../views/apply-info/SkillInfoApply";
 import AutobiographyApply from "../views/apply-info/AutobiographyApply";
 import ApplyInfoIntro from "../views/apply-info/ApplyInfoIntro";
-import Resume from "../views/Resume";
+import TemplateList from "../views/TemplateList";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -83,11 +83,11 @@ const routes = [
     }
   },
   {
-    path: "/resume",
-    name: "Resume",
-    component: Resume,
+    path: "/template-list",
+    name: "TemplateList",
+    component: TemplateList,
     meta: {
-      title: "我的履歷"
+      title: "履歷模版範本"
     }
   },
   {
@@ -236,7 +236,8 @@ router.beforeEach((to, from, next) => {
     "/autobiography",
     "/skillinfo-apply",
     "/autobiography-apply",
-    "/apply-info-intro"
+    "/apply-info-intro",
+    "/template-list"
   ];
   allowPass.forEach(path => {
     if (path === to.path) {

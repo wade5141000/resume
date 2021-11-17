@@ -37,7 +37,7 @@ export default {
       { text: "基本資料", link: "/user-info" },
       { text: "套用資料說明", link: "/apply-info-intro" },
       { text: "套用資料", link: "/apply-info" },
-      { text: "我的履歷", link: "/resume" }
+      { text: "履歷模版範本", link: "/template-list" }
     ]
   }),
   methods: {
