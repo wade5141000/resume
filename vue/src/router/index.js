@@ -19,6 +19,7 @@ import EducationInfoApply from "../views/apply-info/EducationInfoApply";
 import ExperienceInfoApply from "../views/apply-info/ExperienceInfoApply";
 import SkillInfoApply from "../views/apply-info/SkillInfoApply";
 import AutobiographyApply from "../views/apply-info/AutobiographyApply";
+import ApplyInfoIntro from "../views/apply-info/ApplyInfoIntro";
 import Resume from "../views/Resume";
 import store from "../store";
 
@@ -95,6 +96,14 @@ const routes = [
     component: BasicInfo,
     meta: {
       title: "基本資料"
+    }
+  },
+  {
+    path: "/apply-info-intro",
+    name: "ApplyInfoIntro",
+    component: ApplyInfoIntro,
+    meta: {
+      title: "套用基本資料說明"
     }
   },
   {
@@ -226,7 +235,8 @@ router.beforeEach((to, from, next) => {
     "/skill",
     "/autobiography",
     "/skillinfo-apply",
-    "/autobiography-apply"
+    "/autobiography-apply",
+    "/apply-info-intro"
   ];
   allowPass.forEach(path => {
     if (path === to.path) {

@@ -26,22 +26,17 @@
               <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
                 <v-card elevation="1" class="mx-auto pa-0">
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
-                    <v-checkbox
-                      class="white--text"
-                      label="專業技能"
-                      color="white"
-                      value="專業技能"
-                    ></v-checkbox>
+                    <p class="v-input--selection-controls v-input--checkbox v-input__control" style="font-size:16px; line-height:20px;">專業技能</p>
                   </v-card-title>
-                  <v-row class="mx-auto ml-10 pa-0">
-                    <v-col cols="10" md="10" lg="10" class="pa-0 mt-0">
+                  <v-row class="mx-auto mt-2 px-10 pa-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="專長1名稱 &amp; 專長1描述"
                         color="red darken-3"
                         value="專長1名稱 &amp; 專長1描述"
                       ></v-checkbox>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="專長2名稱 &amp; 專長2描述"
                         color="red darken-3"
@@ -55,22 +50,17 @@
               <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
                 <v-card elevation="1" class="mx-auto pa-0">
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
-                    <v-checkbox
-                      class="white--text"
-                      label="語言能力"
-                      color="white"
-                      value="語言能力"
-                    ></v-checkbox>
+                    <p class="v-input--selection-controls v-input--checkbox v-input__control" style="font-size:16px; line-height:20px;">語言能力</p>
                   </v-card-title>
-                  <v-row class="mx-auto ml-10 pa-0">
-                    <v-col cols="10" md="10" lg="10" class="pa-0 mt-0">
+                  <v-row class="mx-auto mt-2 px-10 pa-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="語言類型1名稱 &amp; 語言類型1聽說讀寫"
                         color="red darken-3"
                         value="語言類型1名稱 &amp; 語言類型1聽說讀寫"
                       ></v-checkbox>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="語言類型2名稱 &amp; 語言類型2聽說讀寫"
                         color="red darken-3"
@@ -81,39 +71,34 @@
                 </v-card>
               </v-col>
 
-                            <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
+              <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
                 <v-card elevation="1" class="mx-auto pa-0">
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
-                    <v-checkbox
-                      class="white--text"
-                      label="證照"
-                      color="white"
-                      value="證照"
-                    ></v-checkbox>
+                    <p class="v-input--selection-controls v-input--checkbox v-input__control" style="font-size:16px; line-height:20px;">證照</p>
                   </v-card-title>
-                  <v-row class="mx-auto ml-10 pa-0">
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
+                  <v-row class="mx-auto mt-2 px-10 pa-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="證照名稱1"
                         color="red darken-3"
                         value="證照名稱1"
                       ></v-checkbox>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="證照名稱2"
                         color="red darken-3"
                         value="證照名稱2"
                       ></v-checkbox>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="證照名稱3"
                         color="red darken-3"
                         value="證照名稱3"
                       ></v-checkbox>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
+                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
                       <v-checkbox
                         label="證照名稱4"
                         color="red darken-3"

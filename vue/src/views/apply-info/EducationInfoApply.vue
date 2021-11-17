@@ -26,60 +26,32 @@
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
                     <v-checkbox
                       class="white--text"
-                      label="學校名稱"
-                      color="white"
-                      value="學校名稱"
+                      label="天主教輔仁大學"
+                      color="red"
+                      value="天主教輔仁大學"
                     ></v-checkbox>
                   </v-card-title>
-                  <v-row class="mx-auto ml-10 pa-0">
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="學歷"
-                        color="red darken-3"
-                        value="學歷"
-                      ></v-checkbox>
+                  <v-row class="mx-auto mt-5 ml-10 pa-0">
+                    <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
+                      <p>大學</p>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="科系名稱"
-                        color="red darken-3"
-                        value="科系名稱"
-                      ></v-checkbox>
+                    <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
+                      <p>軟體工程與數位創意學位學程</p>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="就學狀態"
-                        color="red darken-3"
-                        value="就學狀態"
-                      ></v-checkbox>
+                    <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
+                      <p>畢業</p>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="學校地區"
-                        color="red darken-3"
-                        value="學校地區"
-                      ></v-checkbox>
+                    <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
+                      <p>台灣</p>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="開始日"
-                        color="red darken-3"
-                        value="開始日"
-                      ></v-checkbox>
+                    <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
+                      <p>就學日期：2009/09/01</p>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="結束日"
-                        color="red darken-3"
-                        value="結束日"
-                      ></v-checkbox>
+                    <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
+                      <p>畢業日期：2022/06/22</p>
                     </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="在校成績"
-                        color="red darken-3"
-                        value="在校成績"
-                      ></v-checkbox>
+                    <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
+                      <p>在校成績：87</p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -90,60 +62,32 @@
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
                     <v-checkbox
                       class="white--text"
-                      label="學校名稱"
-                      color="white"
-                      value="學校名稱"
+                      label="天主教輔仁大學"
+                      color="red"
+                      value="天主教輔仁大學"
                     ></v-checkbox>
                   </v-card-title>
-                  <v-row class="mx-auto ml-10 pa-0">
+                  <v-row class="mx-auto mt-5 ml-10 pa-0">
                     <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="學歷"
-                        color="red darken-3"
-                        value="學歷"
-                      ></v-checkbox>
+                      <p>大學</p>
                     </v-col>
                     <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="科系名稱"
-                        color="red darken-3"
-                        value="科系名稱"
-                      ></v-checkbox>
+                      <p>軟體工程與數位創意學位學程</p>
                     </v-col>
                     <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="就學狀態"
-                        color="red darken-3"
-                        value="就學狀態"
-                      ></v-checkbox>
+                      <p>畢業</p>
                     </v-col>
                     <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="學校地區"
-                        color="red darken-3"
-                        value="學校地區"
-                      ></v-checkbox>
+                      <p>台灣</p>
                     </v-col>
                     <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="開始日"
-                        color="red darken-3"
-                        value="開始日"
-                      ></v-checkbox>
+                      <p>就學日期：2009/09/01</p>
                     </v-col>
                     <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="結束日"
-                        color="red darken-3"
-                        value="結束日"
-                      ></v-checkbox>
+                      <p>畢業日期：2022/06/22</p>
                     </v-col>
                     <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="在校成績"
-                        color="red darken-3"
-                        value="在校成績"
-                      ></v-checkbox>
+                      <p>在校成績：87</p>
                     </v-col>
                   </v-row>
                 </v-card>
