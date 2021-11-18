@@ -14,7 +14,13 @@ import ExperienceList from "../views/user-info/experience/ExperienceList";
 import ExperienceInfo from "../views/user-info/experience/ExperienceInfo";
 import SkillInfo from "../views/user-info/SkillInfo";
 import Autobiography from "../views/user-info/Autobiography";
-import Resume from "../views/Resume";
+import BasicInfoApply from "../views/apply-info/BasicInfoApply";
+import EducationInfoApply from "../views/apply-info/EducationInfoApply";
+import ExperienceInfoApply from "../views/apply-info/ExperienceInfoApply";
+import SkillInfoApply from "../views/apply-info/SkillInfoApply";
+import AutobiographyApply from "../views/apply-info/AutobiographyApply";
+import ApplyInfoIntro from "../views/apply-info/ApplyInfoIntro";
+import TemplateList from "../views/TemplateList";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -77,11 +83,11 @@ const routes = [
     }
   },
   {
-    path: "/resume",
-    name: "Resume",
-    component: Resume,
+    path: "/template-list",
+    name: "TemplateList",
+    component: TemplateList,
     meta: {
-      title: "我的履歷"
+      title: "履歷模版範本"
     }
   },
   {
@@ -92,6 +98,58 @@ const routes = [
       title: "基本資料"
     }
   },
+  {
+    path: "/apply-info-intro",
+    name: "ApplyInfoIntro",
+    component: ApplyInfoIntro,
+    meta: {
+      title: "套用基本資料說明"
+    }
+  },
+  {
+    path: "/apply-info",
+    name: "BasicInfoApply",
+    component: BasicInfoApply,
+    meta: {
+      title: "套用基本資料"
+    }
+  },
+
+  {
+    path: "/educationinfo-apply",
+    name: "EducationInfoApply",
+    component: EducationInfoApply,
+    meta: {
+      title: "套用學歷資料"
+    }
+  },
+
+  {
+    path: "/experienceinfo-apply",
+    name: "ExperienceInfoApply",
+    component: ExperienceInfoApply,
+    meta: {
+      title: "套用工作經歷"
+    }
+  },
+  {
+    path: "/skillinfo-apply",
+    name: "SkillInfoApply",
+    component: SkillInfoApply,
+    meta: {
+      title: "套用專業技能"
+    }
+  },
+
+  {
+    path: "/autobiography-apply",
+    name: "AutobiographyApply",
+    component: AutobiographyApply,
+    meta: {
+      title: "套用自傳"
+    }
+  },
+
   {
     path: "/education",
     name: "EducationInfo",
@@ -165,7 +223,21 @@ router.beforeEach((to, from, next) => {
     "/resetpw",
     "/signup",
     "/terms",
-    "/privacy"
+    "/apply-info",
+    "/educationinfo-apply",
+    "/experienceinfo-apply",
+    "/privacy",
+    "/user-info",
+    "/education-list",
+    "/education",
+    "/experience-list",
+    "/experience",
+    "/skill",
+    "/autobiography",
+    "/skillinfo-apply",
+    "/autobiography-apply",
+    "/apply-info-intro",
+    "/template-list"
   ];
   allowPass.forEach(path => {
     if (path === to.path) {
