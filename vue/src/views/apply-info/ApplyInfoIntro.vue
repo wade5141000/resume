@@ -1,7 +1,6 @@
 <template>
   <v-row justify="center">
     <v-col cols="10" md="10" lg="10">
-
       <!-- 套用履歷注意事項 -->
       <v-card class="mx-auto my-5 pa-0">
         <v-row class="ma-0 py-5" justify="center">
@@ -51,7 +50,13 @@
             </div>
             <v-row justify="start" class="mb-2">
               <v-col cols="12" md="6" lg="6">
-                <v-btn depressed large block outlined color="primary" to="/apply-info"
+                <v-btn
+                  depressed
+                  large
+                  block
+                  outlined
+                  color="primary"
+                  to="/apply-info"
                   >重新選擇版型</v-btn
                 >
               </v-col>
@@ -62,7 +67,6 @@
               </v-col>
             </v-row>
           </v-col>
-          
         </v-row>
       </v-card>
 
@@ -85,10 +89,12 @@
             <div justify="start" class="my-4">
               <h3 justify="center">個人基本資料（Personal information）</h3>
               <p class="subtitle-2 my-2">
-                個人基本資料（Personal information），就是一個人的表徵，出方便僱主查閱。記得列上聯絡方式，如：聯絡電話、E-mail，不然我想請你，也連絡不到你阿。
+                個人基本資料（Personal
+                information），就是一個人的表徵，出方便僱主查閱。記得列上聯絡方式，如：聯絡電話、E-mail，不然我想請你，也連絡不到你阿。
               </p>
               <p class="subtitle-2 my-2">
-                在台灣求職，在履歷表上附上照片是必要的，照片的選擇可以根據履歷表的類型、風格做相應地調整。一般個人履歷表的照片只要畫面乾淨清晰，人像大小適當即可，照片的選擇要依循以下 3 個要點：
+                在台灣求職，在履歷表上附上照片是必要的，照片的選擇可以根據履歷表的類型、風格做相應地調整。一般個人履歷表的照片只要畫面乾淨清晰，人像大小適當即可，照片的選擇要依循以下
+                3 個要點：
               </p>
               <v-alert
                 dense
@@ -120,7 +126,6 @@
               </v-col>
             </v-row>
           </v-col>
-          
         </v-row>
       </v-card>
 
@@ -157,7 +162,6 @@
               </v-col>
             </v-row>
           </v-col>
-          
         </v-row>
       </v-card>
 
@@ -167,11 +171,7 @@
           <v-col cols="9" md="4" lg="4" class="px-5 pt-5">
             <div justify="end">
               <v-responsive>
-                <v-img
-                  src="../../assets/job.svg"
-                  max-height="350"
-                  contain
-                >
+                <v-img src="../../assets/job.svg" max-height="350" contain>
                 </v-img>
               </v-responsive>
             </div>
@@ -183,12 +183,17 @@
                 建議由最新、較近期的工作經歷向後排序。工作實力會隨著經歷的增加而提升，最新的工作經歷往往能概括之前的收穫。而面試官在閱讀履歷時，通常都是由前往後、由上往下閱讀，因此在面試官注意力最集中時，放上近期的成果，也能避免自己的工作能力被眾多的履歷埋沒。
               </p>
               <p class="subtitle-2 my-2">
-                將工作經歷由新放到舊，不但可以用最近的工作成就加深面試官對你的印象，也更能完整呈現<span class="primary--text px-2"><strong>你「現在」在職場上的價值。</strong></span>
+                將工作經歷由新放到舊，不但可以用最近的工作成就加深面試官對你的印象，也更能完整呈現<span
+                  class="primary--text px-2"
+                  ><strong>你「現在」在職場上的價值。</strong></span
+                >
               </p>
               <p class="subtitle-2 my-2">
-                履歷表的最大用途，就在於幫自己「行銷」，讓自己看起來適合應徵的職位，因此有時候適時地隱藏一些不必要的資訊是可被接受的。其中，最常見的案例，就像是做不到3個月就離職，甚至不到幾天的工作經歷，就不太建議一一列在個人履歷上</p>
+                履歷表的最大用途，就在於幫自己「行銷」，讓自己看起來適合應徵的職位，因此有時候適時地隱藏一些不必要的資訊是可被接受的。其中，最常見的案例，就像是做不到3個月就離職，甚至不到幾天的工作經歷，就不太建議一一列在個人履歷上
+              </p>
               <p class="subtitle-2 my-2">
-                對於剛畢業的社會新鮮人，如：打工/實習、社團/組織/活動、產學合作…等在學經歷，都可以填進去喔！</p>
+                對於剛畢業的社會新鮮人，如：打工/實習、社團/組織/活動、產學合作…等在學經歷，都可以填進去喔！
+              </p>
             </div>
             <v-row justify="start" class="mb-2">
               <v-col cols="10" md="5" lg="5">
@@ -198,7 +203,6 @@
               </v-col>
             </v-row>
           </v-col>
-          
         </v-row>
       </v-card>
 
@@ -232,21 +236,16 @@
               </v-col>
             </v-row>
           </v-col>
-          
         </v-row>
       </v-card>
-      
+
       <!-- 填寫自傳注意事項 -->
       <v-card class="mx-auto my-5 pa-0">
         <v-row class="ma-0 py-5" justify="center">
           <v-col cols="9" md="4" lg="4" class="px-5 pt-5">
             <div justify="end">
               <v-responsive>
-                <v-img
-                  src="../../assets/aboutme.svg"
-                  max-height="350"
-                  contain
-                >
+                <v-img src="../../assets/aboutme.svg" max-height="350" contain>
                 </v-img>
               </v-responsive>
             </div>
@@ -269,7 +268,6 @@
               </v-col>
             </v-row>
           </v-col>
-          
         </v-row>
       </v-card>
 
@@ -302,7 +300,6 @@
               </v-col>
             </v-row>
           </v-col>
-          
         </v-row>
       </v-card>
     </v-col>
@@ -315,14 +312,14 @@ import theDialog from "../../components/theDialog";
 export default {
   components: {
     theStepper,
-    theDialog,
+    theDialog
   },
   watch: {},
-  created: function () {},
+  created: function() {},
   data: () => ({
-    panel: [0],
+    panel: [0]
   }),
-  methods: {},
+  methods: {}
 };
 </script>
 

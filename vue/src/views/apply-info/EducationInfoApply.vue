@@ -119,12 +119,12 @@ import theDialog from "../../components/theDialog";
 export default {
   components: {
     theStepper,
-    theDialog,
+    theDialog
   },
   watch: {},
-  created: function () {},
+  created: function() {},
   data: () => ({
-    panel: [0],
+    panel: [0]
   }),
   methods: {},
   render(h, { children }) {
@@ -135,12 +135,12 @@ export default {
         props: {
           color: "rgba(0, 0, 0, .36)",
           dark: true,
-          height: 50,
-        },
+          height: 50
+        }
       },
       children
     );
-  },
+  }
 };
 </script>
 

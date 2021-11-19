@@ -33,7 +33,7 @@
                   color="red darken-3"
                   value="自傳(英文)"
                 ></v-checkbox>
-              </v-col>             
+              </v-col>
             </v-row>
 
             <v-row justify="center" class="mb-2">

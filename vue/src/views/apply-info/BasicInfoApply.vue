@@ -11,7 +11,7 @@
             <span class="white--text text-h6">基本資料</span>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <v-row no-gutters class="mt-6" justify="center" >
+            <v-row no-gutters class="mt-6" justify="center">
               <v-col cols="10" md="10" lg="10">
                 <v-alert outlined type="error" prominent border="left">
                   <h3 justify="center" class="my-green">
@@ -21,7 +21,7 @@
                 </v-alert>
               </v-col>
             </v-row>
-            <v-row no-gutters class="mt-6 mx-auto" justify="center" >
+            <v-row no-gutters class="mt-6 mx-auto" justify="center">
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
                 <v-checkbox
                   label="姓名"
@@ -78,7 +78,13 @@
                   value="駕駛執照"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="10" md="10" lg="10" class="pa-0 mt-0" justify="start">
+              <v-col
+                cols="10"
+                md="10"
+                lg="10"
+                class="pa-0 mt-0"
+                justify="start"
+              >
                 <v-checkbox
                   label="特殊身份"
                   color="red darken-3"

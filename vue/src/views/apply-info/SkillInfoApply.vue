@@ -20,13 +20,16 @@
                   您目前已勾選 4 項，若有不足，將以空白呈顯。
                 </v-alert>
               </v-col>
-              
-
 
               <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
                 <v-card elevation="1" class="mx-auto pa-0">
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
-                    <p class="v-input--selection-controls v-input--checkbox v-input__control" style="font-size:16px; line-height:20px;">專業技能</p>
+                    <p
+                      class="v-input--selection-controls v-input--checkbox v-input__control"
+                      style="font-size:16px; line-height:20px;"
+                    >
+                      專業技能
+                    </p>
                   </v-card-title>
                   <v-row class="mx-auto mt-2 px-10 pa-0">
                     <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
@@ -50,7 +53,12 @@
               <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
                 <v-card elevation="1" class="mx-auto pa-0">
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
-                    <p class="v-input--selection-controls v-input--checkbox v-input__control" style="font-size:16px; line-height:20px;">語言能力</p>
+                    <p
+                      class="v-input--selection-controls v-input--checkbox v-input__control"
+                      style="font-size:16px; line-height:20px;"
+                    >
+                      語言能力
+                    </p>
                   </v-card-title>
                   <v-row class="mx-auto mt-2 px-10 pa-0">
                     <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
@@ -74,7 +82,12 @@
               <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
                 <v-card elevation="1" class="mx-auto pa-0">
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
-                    <p class="v-input--selection-controls v-input--checkbox v-input__control" style="font-size:16px; line-height:20px;">證照</p>
+                    <p
+                      class="v-input--selection-controls v-input--checkbox v-input__control"
+                      style="font-size:16px; line-height:20px;"
+                    >
+                      證照
+                    </p>
                   </v-card-title>
                   <v-row class="mx-auto mt-2 px-10 pa-0">
                     <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
