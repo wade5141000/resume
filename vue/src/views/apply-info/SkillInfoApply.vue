@@ -17,7 +17,7 @@
                   <h3 justify="center" class="my-green">
                     請勾選 <strong>8</strong> 項，欲顯示在履歷表中的項目
                   </h3>
-                  您目前已勾選 4 項，若有不足，將以空白呈顯。
+                  您目前已勾選 {{ selectedCount }} 項，若有不足，將以空白呈顯。
                 </v-alert>
               </v-col>
 
@@ -32,18 +32,20 @@
                     </p>
                   </v-card-title>
                   <v-row class="mx-auto mt-2 px-10 pa-0">
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
+                    <v-col
+                      cols="12"
+                      md="12"
+                      lg="12"
+                      class="pa-0 mt-0"
+                      v-for="(skill, index) in skills"
+                      :key="index"
+                    >
                       <v-checkbox
-                        label="專長1名稱 &amp; 專長1描述"
+                        :label="skill.skillName + ' &amp; ' + skill.skillDesc"
                         color="red darken-3"
-                        value="專長1名稱 &amp; 專長1描述"
-                      ></v-checkbox>
-                    </v-col>
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="專長2名稱 &amp; 專長2描述"
-                        color="red darken-3"
-                        value="專長2名稱 &amp; 專長2描述"
+                        :value="skill.id"
+                        v-model="skillSelected"
+                        @change="count"
                       ></v-checkbox>
                     </v-col>
                   </v-row>
@@ -61,18 +63,30 @@
                     </p>
                   </v-card-title>
                   <v-row class="mx-auto mt-2 px-10 pa-0">
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
+                    <v-col
+                      cols="12"
+                      md="12"
+                      lg="12"
+                      class="pa-0 mt-0"
+                      v-for="(language, index) in languages"
+                      :key="index"
+                    >
                       <v-checkbox
-                        label="語言類型1名稱 &amp; 語言類型1聽說讀寫"
+                        :label="
+                          language.language +
+                            ' &amp; 聽:' +
+                            language.listening +
+                            ', 說:' +
+                            language.speaking +
+                            ', 讀:' +
+                            language.reading +
+                            ', 寫:' +
+                            language.writing
+                        "
                         color="red darken-3"
-                        value="語言類型1名稱 &amp; 語言類型1聽說讀寫"
-                      ></v-checkbox>
-                    </v-col>
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="語言類型2名稱 &amp; 語言類型2聽說讀寫"
-                        color="red darken-3"
-                        value="語言類型2名稱 &amp; 語言類型2聽說讀寫"
+                        :value="language.id"
+                        v-model="languageSelected"
+                        @change="count"
                       ></v-checkbox>
                     </v-col>
                   </v-row>
@@ -90,32 +104,20 @@
                     </p>
                   </v-card-title>
                   <v-row class="mx-auto mt-2 px-10 pa-0">
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
+                    <v-col
+                      cols="12"
+                      md="12"
+                      lg="12"
+                      class="pa-0 mt-0"
+                      v-for="(license, index) in licenses"
+                      :key="index"
+                    >
                       <v-checkbox
-                        label="證照名稱1"
+                        :label="license.lsName"
                         color="red darken-3"
-                        value="證照名稱1"
-                      ></v-checkbox>
-                    </v-col>
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="證照名稱2"
-                        color="red darken-3"
-                        value="證照名稱2"
-                      ></v-checkbox>
-                    </v-col>
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="證照名稱3"
-                        color="red darken-3"
-                        value="證照名稱3"
-                      ></v-checkbox>
-                    </v-col>
-                    <v-col cols="12" md="12" lg="12" class="pa-0 mt-0">
-                      <v-checkbox
-                        label="證照名稱4"
-                        color="red darken-3"
-                        value="證照名稱4"
+                        :value="license.sn"
+                        v-model="licenseSelected"
+                        @change="count"
                       ></v-checkbox>
                     </v-col>
                   </v-row>
@@ -150,17 +152,48 @@
 <script>
 import theStepper from "../../components/theStepperApply";
 import theDialog from "../../components/theDialog";
+import http from "../../utils/http";
 export default {
   components: {
     theStepper,
     theDialog
   },
   watch: {},
-  created: function() {},
+  created: function() {
+    http.get("/skill").then(response => {
+      this.skills = response.data;
+    });
+    http.get("/language").then(response => {
+      this.languages = response.data;
+    });
+    http.get("/license").then(response => {
+      this.licenses = response.data;
+    });
+  },
   data: () => ({
-    panel: [0]
+    panel: [0],
+    skills: [],
+    languages: [],
+    licenses: [],
+    skillSelected: [],
+    languageSelected: [],
+    licenseSelected: [],
+    selectedCount: 0,
+    template: {}
   }),
-  methods: {}
+  methods: {
+    nextStep() {
+      console.log(this.skillSelected);
+      console.log(this.languageSelected);
+      console.log(this.licenseSelected);
+    },
+    count() {
+      this.selectedCount =
+        this.skillSelected.length +
+        this.languageSelected.length +
+        this.licenseSelected.length;
+    }
+  }
 };
 </script>
 
