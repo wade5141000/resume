@@ -17,77 +17,48 @@
                   <h3 justify="center" class="my-green">
                     請勾選 <strong>8</strong> 項，欲顯示在履歷表中的項目
                   </h3>
-                  您目前已勾選 4 項，若有不足，將以空白呈顯。
+                  您目前已勾選 {{ selectedCount }} 項，若有不足，將以空白呈顯。
                 </v-alert>
               </v-col>
 
               <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
-                <v-card elevation="1" class="mx-auto pa-0">
+                <v-card
+                  elevation="1"
+                  class="mx-auto pa-0"
+                  v-for="(education, index) in educations"
+                  :key="index"
+                >
                   <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
                     <v-checkbox
                       class="white--text"
-                      label="天主教輔仁大學"
+                      :label="education.schoolName"
                       color="red"
-                      value="天主教輔仁大學"
+                      :value="education.id"
+                      v-model="selected"
+                      @change="count"
                     ></v-checkbox>
                   </v-card-title>
                   <v-row class="mx-auto mt-5 ml-10 pa-0">
                     <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
-                      <p>大學</p>
+                      <p>{{ education.schoolName }}</p>
                     </v-col>
                     <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
-                      <p>軟體工程與數位創意學位學程</p>
+                      <p>{{ education.major }}</p>
                     </v-col>
                     <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
-                      <p>畢業</p>
+                      <p>{{ education.status }}</p>
                     </v-col>
                     <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
-                      <p>台灣</p>
+                      <p>{{ education.country }}</p>
                     </v-col>
                     <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
-                      <p>就學日期：2009/09/01</p>
+                      <p>就學日期：{{ education.startDate }}</p>
                     </v-col>
                     <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
-                      <p>畢業日期：2022/06/22</p>
+                      <p>畢業日期：{{ education.endDate }}</p>
                     </v-col>
                     <v-col cols="12" md="6" lg="6" class="pa-0 mt-0">
-                      <p>在校成績：87</p>
-                    </v-col>
-                  </v-row>
-                </v-card>
-              </v-col>
-
-              <v-col cols="10" md="10" lg="10" class="pa-0 mb-2">
-                <v-card elevation="1" class="mx-auto pa-0">
-                  <v-card-title class="blue lighten-4 mt-8 mb-3 pa-1 pl-4">
-                    <v-checkbox
-                      class="white--text"
-                      label="天主教輔仁大學"
-                      color="red"
-                      value="天主教輔仁大學"
-                    ></v-checkbox>
-                  </v-card-title>
-                  <v-row class="mx-auto mt-5 ml-10 pa-0">
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <p>大學</p>
-                    </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <p>軟體工程與數位創意學位學程</p>
-                    </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <p>畢業</p>
-                    </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <p>台灣</p>
-                    </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <p>就學日期：2009/09/01</p>
-                    </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <p>畢業日期：2022/06/22</p>
-                    </v-col>
-                    <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
-                      <p>在校成績：87</p>
+                      <p>在校成績：{{ education.gpa }}</p>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -116,36 +87,35 @@
 <script>
 import theStepper from "../../components/theStepperApply";
 import theDialog from "../../components/theDialog";
+import http from "../../utils/http";
 export default {
   components: {
     theStepper,
     theDialog
   },
   watch: {},
-  created: function() {},
+  created: function() {
+    http.get("/education").then(response => {
+      this.educations = response.data;
+    });
+    // http.get("/education").then(response => {
+    //   this.educations = response.data
+    // });
+  },
   data: () => ({
-    panel: [0]
+    panel: [0],
+    educations: [],
+    selected: [],
+    selectedCount: 0,
+    template: {}
   }),
-  methods: {},
-  render(h, { children }) {
-    return h(
-      "v-sheet",
-      {
-        staticClass: "mt-auto align-center justify-center d-flex px-2",
-        props: {
-          color: "rgba(0, 0, 0, .36)",
-          dark: true,
-          height: 50
-        }
-      },
-      children
-    );
+  methods: {
+    nextStep() {
+      console.log(this.selected);
+    },
+    count() {
+      this.selectedCount = this.selected.length;
+    }
   }
 };
 </script>
-
-<style scoped>
-/*span {*/
-/*  color: dodgerblue;*/
-/*}*/
-</style>

@@ -12,20 +12,20 @@ mybatis:
 
 aws:
   s3:
-    bucket-name: resume-backend-app
+    bucket-name: resume-backend-storage
 
 cloud:
   aws:
     credentials:
-      access-key: AKIAULGZ7ETA4R4DECGC
-      secret-key: ENC(jMVO9tgRaxUAI+c+jAW0JhwIbimDEuVhi0eOpvSaGBlk+HhigBsmUZUFgEo5CJD2isMSAsFr9CkfFxtFccD/f7AHvQp6h3OIWwkUSURsAsc=)
+      access-key: AKIAXIGZRDI4AHSU5TEO
+      secret-key: ENC(TkfDpdf/Sx4ZdU/F4yy99Ri3GVYXDxT7crfNceIZVRZ5oQMYn2ypni8Bx2E3C9VPf+WueDj4VLkiE69CReB3LpcaoSMauTs/ThTzoFVgey8=)
     region:
       static: ap-northeast-1
       auto: false
     stack:
       auto: false
     s3:
-      bucket-name: resume-backend-app
+      bucket-name: resume-backend-storage
 
 spring:
   servlet:
@@ -54,5 +54,5 @@ resume:
   mail:
     from: wade5141000@outlook.com
     from-name: resume-service
-    frontend-host: http://resume-frontend.s3-website-ap-northeast-1.amazonaws.com
+    frontend-host: http://resume-web.s3-website-ap-northeast-1.amazonaws.com/
 
