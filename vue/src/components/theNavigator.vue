@@ -31,6 +31,7 @@
 export default {
   data: () => ({
     links: [
+      { text: "帳號設定", link: "/setting" },
       { text: "帳號登入", link: "/login" },
       { text: "帳號註冊", link: "/signup" },
       { text: "重設密碼", link: "/resetpw" },
