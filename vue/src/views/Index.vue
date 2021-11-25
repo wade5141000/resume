@@ -23,14 +23,14 @@
 
         <v-card-subtitle> 一鍵更換履歷模版 </v-card-subtitle>
         <v-btn
-              outlined
-              color="blue"
-              class="ma-2 pa-5 white--text"
-              href="account/signup"
-            >
-              立即開始製作！
-              <v-icon right light> mdi-pencil-outline </v-icon>
-            </v-btn>
+          outlined
+          color="blue"
+          class="ma-2 pa-5 white--text"
+          href="account/signup"
+        >
+          立即開始製作！
+          <v-icon right light> mdi-pencil-outline </v-icon>
+        </v-btn>
       </v-card>
     </v-col>
   </v-row>
@@ -48,22 +48,22 @@ export default {
     show: false,
     items: [
       {
-        src: "../assets/slider01.jpg",
+        src: "../assets/slider01.jpg"
       },
       {
-        src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
       },
       {
-        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg"
       },
       {
-        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-      },
-    ],
+        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
+      }
+    ]
   }),
   methods: {
     getUser() {
-      http.get("/user/all").then((response) => {
+      http.get("/user/all").then(response => {
         console.log(response);
       });
     },
@@ -77,9 +77,9 @@ export default {
     getImage() {
       axios
         .get(process.env.VUE_APP_BACKEND_URL + "/test/image", {
-          responseType: "arraybuffer",
+          responseType: "arraybuffer"
         })
-        .then((response) => {
+        .then(response => {
           // console.log(response);
           this.src =
             "data:image/jpeg;base64," +
@@ -90,7 +90,7 @@ export default {
               )
             );
         });
-    },
-  },
+    }
+  }
 };
 </script>

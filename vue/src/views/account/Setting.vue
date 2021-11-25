@@ -101,7 +101,7 @@ import http from "../../utils/http";
 export default {
   components: {
     theStepper,
-    theDialog,
+    theDialog
   },
   watch: {
     menu(val) {
@@ -111,13 +111,13 @@ export default {
       val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
     },
     city(newValue, oldValue) {
-      http.get("/address/towns/" + newValue).then((response) => {
+      http.get("/address/towns/" + newValue).then(response => {
         this.towns = response.data;
       });
-    },
+    }
   },
-  created: function () {
-    http.get("/user").then((response) => {
+  created: function() {
+    http.get("/user").then(response => {
       console.log(response.data);
       let user = response.data;
 
@@ -125,9 +125,9 @@ export default {
         this.city = user.address.substring(0, 3);
         user.address = user.address.substring(3);
 
-        http.get("/address/towns/" + this.city).then((response) => {
+        http.get("/address/towns/" + this.city).then(response => {
           this.towns = response.data;
-          this.towns.forEach((town) => {
+          this.towns.forEach(town => {
             if (user.address.startsWith(town)) {
               this.town = user.address.substring(0, town.length);
               this.address = user.address.substring(town.length);
@@ -145,7 +145,7 @@ export default {
       if (user.feature) {
         this.features = []
           .concat(user.feature.split(","))
-          .filter((s) => s.length > 0);
+          .filter(s => s.length > 0);
       }
 
       if (user.links.length === 0) {
@@ -156,7 +156,7 @@ export default {
 
       this.user = user;
 
-      http.get("/address/cities").then((response) => {
+      http.get("/address/cities").then(response => {
         this.cities = response.data;
       });
     });
@@ -175,7 +175,7 @@ export default {
     user: {},
     feature: "",
     features: [],
-    links: [],
+    links: []
   }),
   methods: {
     pickBirthDay(date) {
@@ -193,7 +193,7 @@ export default {
 
       console.log(this.user);
 
-      http.put("/user/basic-info", this.user).then((response) => {
+      http.put("/user/basic-info", this.user).then(response => {
         console.log(response);
         if (response.data === true) {
           this.$router.push("/education-list");
@@ -209,14 +209,14 @@ export default {
       }
     },
     close(str) {
-      this.features = this.features.filter((item) => item !== str);
+      this.features = this.features.filter(item => item !== str);
     },
     addWebsite() {
       this.links.push({ id: null, platform: "", url: "" });
     },
     removeWebsite(index) {
       this.links.splice(index, 1);
-    },
-  },
+    }
+  }
 };
 </script>
