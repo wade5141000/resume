@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="blue" flat>
+    <v-app-bar app color="white" flat>
       <v-container class="px-0 py-0 fill-height">
         <theNavigator />
       </v-container>
