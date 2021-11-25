@@ -1,7 +1,7 @@
 <template>
-  <div class="d-inline-flex mx-5">
+  <div class="d-inline-flex mx-5 ">
     <!-- <v-avatar class="mr-10" color="grey darken-1" size="32"></v-avatar> -->
-    <div class="mr-5 ml-0">
+    <div class="mr-10 ml-0">
       <router-link to="/">
         <v-img
           src="../assets/logo.svg"
@@ -9,11 +9,13 @@
           max-width="200"
           contain
           content-class
+          class="mr-10"
         ></v-img>
       </router-link>
     </div>
+    
     <v-btn
-      class="mr-2"
+      class="mr-2 font-weight-bold"
       v-for="(item, index) in links"
       :key="index"
       text
@@ -24,7 +26,6 @@
     >
       {{ item.text }}
     </v-btn>
-    <v-btn class="mr-2" text x-large color="blue" @click="logout"> 登出 </v-btn>
   </div>
 </template>
 
