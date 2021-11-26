@@ -15,7 +15,9 @@
               <v-col cols="10" md="10" lg="10">
                 <v-alert outlined type="error" prominent border="left">
                   <h3 justify="center" class="my-green">
-                    請勾選 <strong>8</strong> 項，欲顯示在履歷表中的項目
+                    請勾選
+                    <strong>{{ template.basicInfo }}</strong>
+                    項，欲顯示在履歷表中的項目
                   </h3>
                   您目前已勾選 {{ selectedCount }} 項，若有不足，將以空白呈顯。
                 </v-alert>
@@ -172,12 +174,17 @@ export default {
     http.get("/user").then(response => {
       this.user = response.data;
     });
+    http.get("/template/" + this.$route.query.templateId).then(response => {
+      this.template = response.data;
+      console.log(response.data);
+    });
   },
   data: () => ({
     panel: [0],
     user: {},
     selected: [],
-    selectedCount: 0
+    selectedCount: 0,
+    template: {}
   }),
   methods: {
     nextStep() {

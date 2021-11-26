@@ -13,7 +13,7 @@
         ></v-img>
       </router-link>
     </div>
-    
+
     <v-btn
       class="mr-2 font-weight-bold"
       v-for="(item, index) in links"

@@ -18,7 +18,7 @@
               <v-list-item color="rgba(0, 0, 0, .4)" dark>
                 <v-list-item-content>
                   <v-list-item-title class="text-h6 text-center">
-                    <h4>王大明</h4>
+                    <h4>{{ user.name }}</h4>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -29,11 +29,8 @@
                 x-large
                 block
                 outlined
-                :loading="loading3"
-                :disabled="loading3"
                 color="blue"
                 class="ma-2 pa-2 white--text"
-                @click="loader = 'loading3'"
               >
                 上傳頭像
                 <v-icon right light> mdi-image-area </v-icon>
@@ -70,7 +67,7 @@
               x-large
               color="blue"
               class="ma-2 pa-5 white--text"
-              href="resetpw"
+              to="/resetpw"
             >
               變更密碼
               <v-icon right light> mdi-lock-outline </v-icon>
@@ -82,7 +79,7 @@
               x-large
               color="blue"
               class="ma-2 pa-5 white--text"
-              href="user-info"
+              to="/user-info"
             >
               修改履歷資料
               <v-icon right light> mdi-pencil-outline </v-icon>
@@ -98,125 +95,22 @@
 import theStepper from "../../components/theStepper";
 import theDialog from "../../components/theDialog";
 import http from "../../utils/http";
+
 export default {
   components: {
     theStepper,
     theDialog
   },
-  watch: {
-    menu(val) {
-      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    },
-    menu2(val) {
-      val && setTimeout(() => (this.$refs.picker2.activePicker = "YEAR"));
-    },
-    city(newValue, oldValue) {
-      http.get("/address/towns/" + newValue).then(response => {
-        this.towns = response.data;
-      });
-    }
-  },
+  watch: {},
   created: function() {
     http.get("/user").then(response => {
       console.log(response.data);
-      let user = response.data;
-
-      if (user.address) {
-        this.city = user.address.substring(0, 3);
-        user.address = user.address.substring(3);
-
-        http.get("/address/towns/" + this.city).then(response => {
-          this.towns = response.data;
-          this.towns.forEach(town => {
-            if (user.address.startsWith(town)) {
-              this.town = user.address.substring(0, town.length);
-              this.address = user.address.substring(town.length);
-              return false;
-            }
-          });
-        });
-      }
-      if (user.driverLicense) {
-        this.driverLicense = [].concat(user.driverLicense.split(","));
-      }
-      if (user.specialIdentity) {
-        this.specialIdentity = [].concat(user.specialIdentity.split(","));
-      }
-      if (user.feature) {
-        this.features = []
-          .concat(user.feature.split(","))
-          .filter(s => s.length > 0);
-      }
-
-      if (user.links.length === 0) {
-        this.links.push({ id: null, platform: "", url: "" });
-      } else {
-        this.links = response.data.links;
-      }
-
-      this.user = user;
-
-      http.get("/address/cities").then(response => {
-        this.cities = response.data;
-      });
+      this.user = response.data;
     });
   },
   data: () => ({
-    panel: [0],
-    menu: false,
-    menu2: false,
-    cities: [],
-    towns: [],
-    city: "",
-    town: "",
-    address: "",
-    driverLicense: [],
-    specialIdentity: [],
-    user: {},
-    feature: "",
-    features: [],
-    links: []
+    user: {}
   }),
-  methods: {
-    pickBirthDay(date) {
-      this.$refs.menu.save(date);
-    },
-    pickMilitaryServiceDate(date) {
-      this.$refs.menu2.save(date);
-    },
-    nextStep() {
-      this.user.address = this.city + this.town + this.address;
-      this.user.driverLicense = this.driverLicense.join(",");
-      this.user.specialIdentity = this.specialIdentity.join(",");
-      this.user.feature = this.features.join(",");
-      this.user.links = this.links;
-
-      console.log(this.user);
-
-      http.put("/user/basic-info", this.user).then(response => {
-        console.log(response);
-        if (response.data === true) {
-          this.$router.push("/education-list");
-        } else {
-          alert("發生錯誤");
-        }
-      });
-    },
-    onFeatureEnter() {
-      if (this.feature.length > 0) {
-        this.features.push(this.feature);
-        this.feature = "";
-      }
-    },
-    close(str) {
-      this.features = this.features.filter(item => item !== str);
-    },
-    addWebsite() {
-      this.links.push({ id: null, platform: "", url: "" });
-    },
-    removeWebsite(index) {
-      this.links.splice(index, 1);
-    }
-  }
+  methods: {}
 };
 </script>
