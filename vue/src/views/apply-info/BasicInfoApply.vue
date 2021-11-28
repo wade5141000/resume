@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" md="10" lg="9">
-      <theStepper non-linear step="1"></theStepper>
-      <v-expansion-panels v-model="panel" multiple class="mt-4">
+      <theStepper non-linear step="1" v-if="confirm"></theStepper>
+      <v-expansion-panels v-model="panel" multiple class="mt-4" v-if="confirm">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
             <template v-slot:actions>
@@ -156,6 +156,81 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+      <!-- 套用履歷注意事項 -->
+      <v-card class="mx-auto my-5 pa-0" v-if="!confirm">
+        <v-row class="ma-0 py-5" justify="center">
+          <v-col cols="9" md="4" lg="4" class="px-5 pt-5">
+            <div justify="end">
+              <v-responsive>
+                <v-img
+                  src="../../assets/resume_template/resume01.png"
+                  max-height="350"
+                  contain
+                >
+                </v-img>
+              </v-responsive>
+            </div>
+          </v-col>
+          <v-col cols="9" md="5" lg="5" class="px-5 pt-0">
+            <div justify="start" class="my-4">
+              <h3 justify="center">您選擇的履歷版顯示內容及數量如下：</h3>
+              <p class="subtitle-2 my-2">
+                此版型設計簡潔乾淨，分為左右欄，以綠、黃、灰為主要顏色適合應徵工程師、程式設計師…等使用。
+              </p>
+              <v-alert
+                dense
+                color="blue lighten-5"
+                prominent
+                border="left"
+                class="pa-1"
+              >
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title class="subtitle-2 my-1 text--blue"
+                      >基本資料：{{ template.basicInfo }}項</v-list-item-title
+                    >
+                    <v-list-item-title class="subtitle-2 my-1"
+                      >教育：{{ template.education }}項</v-list-item-title
+                    >
+                    <v-list-item-title class="subtitle-2 my-1"
+                      >工作經歷：{{ template.experience }}項</v-list-item-title
+                    >
+                    <v-list-item-title class="subtitle-2 my-1"
+                      >專業技能：{{
+                        template.skill + template.licence + template.language
+                      }}項</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-alert>
+              <p class="subtitle-2 my-2">確定要套用此版型嗎？</p>
+            </div>
+            <v-row justify="start" class="mb-2">
+              <v-col cols="12" md="6" lg="6">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  outlined
+                  color="primary"
+                  to="/template-list"
+                  >重新選擇版型</v-btn
+                >
+              </v-col>
+              <v-col cols="12" md="6" lg="6">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  @click="confirm = true"
+                  >開始套用版型</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -184,7 +259,8 @@ export default {
     user: {},
     selected: [],
     selectedCount: 0,
-    template: {}
+    template: {},
+    confirm: false
   }),
   methods: {
     nextStep() {
