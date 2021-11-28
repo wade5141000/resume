@@ -179,6 +179,11 @@ public class ResumeService {
         return true;
     }
 
+    public boolean updateBio(int id, int uid, boolean bioCh, boolean bioEn) {
+        resumeMapper.updateBio(id, uid, bioCh, bioEn);
+        return true;
+    }
+
     public void applyResume(int resumeId) throws Exception {
 
         UserEntity user = userService.getCurrentUser();

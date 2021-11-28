@@ -21,4 +21,6 @@ public interface ResumeMapper {
 
     void updateFilePath(String filePath, int id, int uid);
 
+    void updateBio(int id, int uid, boolean bioCh, boolean bioEn);
+
 }

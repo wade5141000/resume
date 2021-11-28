@@ -15,7 +15,9 @@
               <v-col cols="10" md="10" lg="10">
                 <v-alert outlined type="error" prominent border="left">
                   <h3 justify="center" class="my-green">
-                    請勾選 <strong>8</strong> 項，欲顯示在履歷表中的項目
+                    請勾選
+                    <strong>{{ template.education }}</strong>
+                    項，欲顯示在履歷表中的項目
                   </h3>
                   您目前已勾選 {{ selectedCount }} 項，若有不足，將以空白呈顯。
                 </v-alert>
@@ -67,13 +69,18 @@
 
             <v-row justify="center" class="mb-2">
               <v-col cols="6" md="5" lg="4">
-                <v-btn depressed large block color="primary" to="/apply-info"
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  :to="'/apply-info?templateId=' + this.$route.query.templateId"
                   >回上一頁</v-btn
                 >
               </v-col>
               <v-col cols="6" md="5" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
-                  >儲存</v-btn
+                  >儲存，下一步</v-btn
                 >
               </v-col>
             </v-row>
@@ -98,9 +105,11 @@ export default {
     http.get("/education").then(response => {
       this.educations = response.data;
     });
-    // http.get("/education").then(response => {
-    //   this.educations = response.data
-    // });
+
+    http.get("/template/" + this.$route.query.templateId).then(response => {
+      this.template = response.data;
+      console.log(response.data);
+    });
   },
   data: () => ({
     panel: [0],
@@ -112,6 +121,23 @@ export default {
   methods: {
     nextStep() {
       console.log(this.selected);
+      if (this.selected.length > this.template.education) {
+        alert("數量超出限制");
+      } else {
+        http
+          .put("/resume/" + this.template.id + "/education", this.selected)
+          .then(response => {
+            if (response.data == true) {
+              alert("成功");
+              this.$router.push(
+                "/experienceinfo-apply?templateId=" +
+                  this.$route.query.templateId
+              );
+            } else {
+              alert("操作失敗");
+            }
+          });
+      }
     },
     count() {
       this.selectedCount = this.selected.length;

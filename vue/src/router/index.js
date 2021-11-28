@@ -5,6 +5,7 @@ import Login from "../views/account/Login";
 import Signup from "../views/account/Signup";
 import Privacy from "../views/Privacy";
 import Terms from "../views/Terms";
+import Setting from "../views/account/Setting";
 import Forgetpw from "../views/account/Forgetpw";
 import Resetpw from "../views/account/Resetpw";
 import BasicInfo from "../views/user-info/BasicInfo";
@@ -199,6 +200,14 @@ const routes = [
     }
   },
   {
+    path: "/setting",
+    name: "Setting",
+    component: Setting,
+    meta: {
+      title: "帳號設定"
+    }
+  },
+  {
     path: "*",
     redirect: "/"
   }
@@ -237,7 +246,8 @@ router.beforeEach((to, from, next) => {
     "/skillinfo-apply",
     "/autobiography-apply",
     "/apply-info-intro",
-    "/template-list"
+    "/template-list",
+    "/setting"
   ];
   allowPass.forEach(path => {
     if (path === to.path) {
