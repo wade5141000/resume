@@ -190,6 +190,23 @@ export default {
     nextStep() {
       console.log(this.user);
       console.log(this.selected);
+      if (this.selected.length > this.template.basicInfo) {
+        alert("數量超出限制");
+      } else {
+        http
+          .put("/resume/" + this.template.id + "/basic-info", this.selected)
+          .then(response => {
+            if (response.data == true) {
+              alert("成功");
+              this.$router.push(
+                "/educationinfo-apply?templateId=" +
+                  this.$route.query.templateId
+              );
+            } else {
+              alert("操作失敗");
+            }
+          });
+      }
     },
     count() {
       this.selectedCount = this.selected.length;

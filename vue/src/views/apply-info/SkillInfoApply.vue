@@ -15,7 +15,8 @@
               <v-col cols="10" md="10" lg="10">
                 <v-alert outlined type="error" prominent border="left">
                   <h3 justify="center" class="my-green">
-                    請勾選 <strong>8</strong> 項，欲顯示在履歷表中的項目
+                    請勾選
+                    <strong>{{ allow }}</strong> 項，欲顯示在履歷表中的項目
                   </h3>
                   您目前已勾選 {{ selectedCount }} 項，若有不足，將以空白呈顯。
                 </v-alert>
@@ -132,13 +133,16 @@
                   large
                   block
                   color="primary"
-                  to="/experienceinfo-apply"
+                  :to="
+                    '/experienceinfo-apply?templateId=' +
+                      this.$route.query.templateId
+                  "
                   >回上一頁</v-btn
                 >
               </v-col>
               <v-col cols="6" md="5" lg="4">
                 <v-btn depressed large block color="primary" @click="nextStep"
-                  >儲存</v-btn
+                  >儲存，下一步</v-btn
                 >
               </v-col>
             </v-row>
@@ -169,6 +173,13 @@ export default {
     http.get("/license").then(response => {
       this.licenses = response.data;
     });
+
+    http.get("/template/" + this.$route.query.templateId).then(response => {
+      console.log(response.data);
+      this.template = response.data;
+      this.allow =
+        this.template.skill + this.template.licence + this.template.language;
+    });
   },
   data: () => ({
     panel: [0],
@@ -179,13 +190,54 @@ export default {
     languageSelected: [],
     licenseSelected: [],
     selectedCount: 0,
-    template: {}
+    template: {},
+    allow: 0
   }),
   methods: {
     nextStep() {
       console.log(this.skillSelected);
       console.log(this.languageSelected);
       console.log(this.licenseSelected);
+
+      if (this.selectedCount > this.allow) {
+        alert("數量超出限制");
+      } else {
+        http
+          .put("/resume/" + this.template.id + "/skill", this.skillSelected)
+          .then(response => {
+            if (response.data == true) {
+              http
+                .put(
+                  "/resume/" + this.template.id + "/language",
+                  this.languageSelected
+                )
+                .then(response2 => {
+                  if (response2.data == true) {
+                    http
+                      .put(
+                        "/resume/" + this.template.id + "/license",
+                        this.licenseSelected
+                      )
+                      .then(response3 => {
+                        if (response3.data == true) {
+                          alert("成功");
+                          this.$router.push(
+                            "/autobiography-apply?templateId=" +
+                              this.$route.query.templateId
+                          );
+                        } else {
+                          alert("操作失敗");
+                        }
+                      });
+                  } else {
+                    alert("操作失敗");
+                  }
+                });
+            } else {
+              alert("操作失敗");
+            }
+          });
+      }
     },
     count() {
       this.selectedCount =
@@ -196,9 +248,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-/*span {*/
-/*  color: dodgerblue;*/
-/*}*/
-</style>

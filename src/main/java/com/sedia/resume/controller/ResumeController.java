@@ -1,8 +1,11 @@
 package com.sedia.resume.controller;
 
+import com.sedia.resume.domain.BioRequest;
 import com.sedia.resume.entity.ResumeEntity;
+import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.ResumeService;
 
+import com.sedia.resume.service.UserService;
 import com.sedia.resume.utils.AwsUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -20,6 +23,7 @@ import java.util.List;
 public class ResumeController {
     final ResumeService resumeService;
     final AwsUtils awsUtils;
+    final UserService userService;
 
     @GetMapping
     public List<ResumeEntity> getResumes() {
@@ -81,6 +85,13 @@ public class ResumeController {
     @PutMapping("/{id}/skill")
     public boolean updateSkill(@PathVariable int id, @RequestBody List<Integer> skillId) {
         return resumeService.updateResumeSkill(id, skillId);
+    }
+
+    @PutMapping("/{id}/bio")
+    public boolean updateBio(@PathVariable int id, @RequestBody BioRequest bioRequest) {
+        UserEntity currentUser = userService.getCurrentUser();
+        int uid = currentUser.getId();
+        return resumeService.updateBio(id, uid, bioRequest.isBioCh(), bioRequest.isBioEn());
     }
 
     @PutMapping("/apply/{resumeId}")

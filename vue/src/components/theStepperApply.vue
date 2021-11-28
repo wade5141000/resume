@@ -1,7 +1,7 @@
 <template>
   <v-stepper alt-labels v-model="step">
     <v-stepper-header>
-      <v-stepper-step step="1" editable @click="routerTo('/apply-info')">
+      <v-stepper-step editable step="1" @click="routerTo('/apply-info')">
         基本資料
       </v-stepper-step>
 
@@ -46,7 +46,9 @@ export default {
   data: () => ({}),
   methods: {
     routerTo(path) {
-      if (this.$router.currentRoute.path !== path) {
+      let variables = "?templateId=" + this.$route.query.templateId;
+      path = path + variables;
+      if (this.$router.currentRoute.path + variables !== path) {
         this.$router.push({ path });
       }
     }

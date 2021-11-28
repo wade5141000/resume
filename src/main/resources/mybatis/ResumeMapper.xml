@@ -52,4 +52,11 @@
     </update>
 
 
+  <update id="updateBio">
+    UPDATE resume SET
+      BIO_CH = #{bioCh}, BIO_EN = #{bioEn}
+    where id = #{id} and uid = #{uid};
+  </update>
+
+
 </mapper>
