@@ -233,7 +233,7 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title;
   }
 
-  console.log(from);
+  // console.log(from);
   let allow = false;
   let allowPass = [
     "/",
