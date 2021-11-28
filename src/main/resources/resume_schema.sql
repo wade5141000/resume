@@ -44,6 +44,8 @@ CREATE TABLE `resume`.`resume` (
   `CR_DATETIME` timestamp NULL DEFAULT NULL COMMENT '建立日期',
   `UP_USER` varchar(30) DEFAULT NULL COMMENT '更新者',
   `UP_DATETIME` timestamp NULL DEFAULT NULL COMMENT '更新日期',
+  `BIO_CH` tinyint NULL,
+  `BIO_EN` tinyint NULL,
   PRIMARY KEY (`ID`,`UID`),
   UNIQUE KEY `ID_UNIQUE` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='履歷' AUTO_INCREMENT=1;
