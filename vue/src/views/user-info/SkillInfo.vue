@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-col cols="12" md="10" lg="9">
       <theStepper step="4"></theStepper>
-      <v-expansion-panels v-model="panel" multiple class="mt-4">
+      <v-expansion-panels v-model="panel" multiple class="mt-4" v-if="confirm">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
             <template v-slot:actions>
@@ -176,7 +176,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-      <v-row justify="center" class="my-6">
+      <v-row justify="center" class="my-6" v-if="confirm">
         <v-col cols="6" md="5" lg="4">
           <v-btn depressed large block color="primary" to="/experience-list"
             >上一步</v-btn
@@ -188,6 +188,43 @@
           >
         </v-col>
       </v-row>
+      <!-- 填寫專業技能注意事項 -->
+      <v-card class="mx-auto my-5 pa-0" v-if="!confirm">
+        <v-row class="ma-0 py-5" justify="center">
+          <v-col cols="9" md="4" lg="4" class="px-5 pt-5">
+            <div justify="end">
+              <v-responsive>
+                <v-img
+                  src="../../assets/certification1.svg"
+                  max-height="350"
+                  contain
+                >
+                </v-img>
+              </v-responsive>
+            </div>
+          </v-col>
+          <v-col cols="9" md="5" lg="5" class="px-5 pt-0">
+            <div justify="start" class="my-4">
+              <h3 justify="center">專業技能（Skill）</h3>
+              <p class="subtitle-2 my-2">
+                建議主要填寫跟職務相關的專業技能，或是語言能力，寫完後再寫生其他跟職務「非」相關的專業技能。
+              </p>
+            </div>
+            <v-row justify="start" class="mb-2">
+              <v-col cols="10" md="5" lg="5">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  @click="confirm = true"
+                  >我瞭解了，開始填寫專業技能！</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -246,7 +283,8 @@ export default {
       { text: "中等", value: "中等" },
       { text: "略懂", value: "略懂" },
       { text: "不會", value: "不會" }
-    ]
+    ],
+    confirm: false
   }),
   methods: {
     onLicenseEnter() {

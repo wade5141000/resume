@@ -33,8 +33,8 @@
 export default {
   data: () => ({
     links: [
-      { text: "履歷模版範本", link: "/template-list" },
-      { text: "套用資料說明", link: "/apply-info-intro" }
+      { text: "履歷模版範本", link: "/template-list" }
+      // { text: "套用資料說明", link: "/apply-info-intro" }
     ]
   }),
   computed: {

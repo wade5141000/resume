@@ -2,7 +2,12 @@
   <v-row justify="center">
     <v-col cols="12" md="10" lg="9">
       <theStepper step="5"></theStepper>
-      <v-expansion-panels v-model="panel" multiple class="mt-4">
+      <v-expansion-panels
+        v-model="panel"
+        multiple
+        class="mt-4"
+        v-if="confirm && !pickInfo"
+      >
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
             <template v-slot:actions>
@@ -58,20 +63,98 @@
               </v-col>
             </v-row>
             <v-row justify="center" class="mb-2">
-              <v-col cols="6" md="5" lg="4">
+              <v-col cols="3" md="3" lg="3">
                 <v-btn depressed large block color="primary" to="/skill"
                   >上一步</v-btn
                 >
               </v-col>
-              <v-col cols="6" md="5" lg="4">
+              <v-col cols="3" md="3" lg="3">
                 <v-btn depressed large block color="primary" @click="save"
                   >儲存</v-btn
+                >
+              </v-col>
+              <v-col cols="3" md="3" lg="3">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  @click="pickInfo = true"
+                  >挑選履歷版型</v-btn
                 >
               </v-col>
             </v-row>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+      <!-- 填寫自傳注意事項 -->
+      <v-card class="mx-auto my-5 pa-0" v-if="!confirm">
+        <v-row class="ma-0 py-5" justify="center">
+          <v-col cols="9" md="4" lg="4" class="px-5 pt-5">
+            <div justify="end">
+              <v-responsive>
+                <v-img src="../../assets/aboutme.svg" max-height="350" contain>
+                </v-img>
+              </v-responsive>
+            </div>
+          </v-col>
+          <v-col cols="9" md="5" lg="5" class="px-5 pt-0">
+            <div justify="start" class="my-4">
+              <h3 justify="center">自傳（Autobiography）</h3>
+              <p class="subtitle-2 my-2">
+                主要目的在於說服人資主管為什麼該選擇你進入面試階段，和另外一項求職文件『求職信』有異曲同工之妙。
+              </p>
+              <p class="subtitle-2 my-2">
+                建議求職者於撰寫自傳時，可以多展現自己適合該職缺/公司的個人特質及工作價值觀，同時利用自己的個人興趣及背景經歷做背書；此外，可以附上自己的職涯規劃。
+              </p>
+            </div>
+            <v-row justify="start" class="mb-2">
+              <v-col cols="10" md="5" lg="5">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  @click="confirm = true"
+                  >我瞭解了，開始填寫自傳！</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card>
+
+      <!-- 開始套用履歷 -->
+      <v-card class="mx-auto my-5 pa-0" v-if="pickInfo">
+        <v-row class="ma-0 py-5" justify="center">
+          <v-col cols="9" md="9" lg="9" class="px-5 pt-5">
+            <div justify="center">
+              <v-responsive>
+                <v-img
+                  src="../../assets/certification.svg"
+                  max-height="300"
+                  contain
+                >
+                </v-img>
+              </v-responsive>
+            </div>
+          </v-col>
+          <v-col cols="9" md="9" lg="9" class="px-5 pt-0">
+            <div justify="center" class="my-4">
+              <p class="subtitle-2 my-2 text-center">
+                已經完成了履歷撰寫，現在讓我們來挑選要套用的版型吧！
+              </p>
+            </div>
+            <v-row justify="center" class="mb-2">
+              <v-col cols="10" md="5" lg="5">
+                <v-btn depressed large block color="primary" to="/template-list"
+                  >立即挑選履歷版型！</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -96,7 +179,9 @@ export default {
     autobiography: {
       chinese: "",
       english: ""
-    }
+    },
+    confirm: false,
+    pickInfo: false
   }),
   methods: {
     save() {
