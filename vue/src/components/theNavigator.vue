@@ -33,14 +33,34 @@
 export default {
   data: () => ({
     links: [
-      { text: "帳號設定", link: "/setting" },
-      { text: "帳號註冊", link: "/signup" },
-      { text: "基本資料", link: "/user-info" },
-      { text: "套用資料說明", link: "/apply-info-intro" },
-      { text: "套用資料", link: "/apply-info" },
-      { text: "履歷模版範本", link: "/template-list" }
+      { text: "履歷模版範本", link: "/template-list" },
+      { text: "套用資料說明", link: "/apply-info-intro" }
     ]
   }),
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin;
+    }
+  },
+  watch: {
+    isLogin(newCount, oldCount) {
+      if (this.$store.state.isLogin) {
+        // this.links = [
+        //   { text: "帳號設定", link: "/setting" },
+        //   { text: "基本資料", link: "/user-info" },
+        //   { text: "套用資料說明", link: "/apply-info-intro" },
+        //   { text: "套用資料", link: "/apply-info" },
+        //   { text: "履歷模版範本", link: "/template-list" }
+        // ]
+      } else {
+        // this.links = [
+        //   { text: "帳號設定", link: "/setting" },
+        //   { text: "套用資料", link: "/apply-info" },
+        //   { text: "履歷模版範本", link: "/template-list" }
+        // ]
+      }
+    }
+  },
   methods: {
     logout() {
       this.$store.commit("logout");

@@ -141,6 +141,7 @@ export default {
           alert("登入成功");
           console.log(response.data);
           this.$store.commit("login", response.data);
+          this.$router.push(this.$route.query.redirect || "/setting");
         })
         .catch(() => {
           alert("登入失敗");
