@@ -23,6 +23,7 @@ import AutobiographyApply from "../views/apply-info/AutobiographyApply";
 import ApplyInfoIntro from "../views/apply-info/ApplyInfoIntro";
 import TemplateList from "../views/TemplateList";
 import ResumeList from "../views/user-info/ResumeList";
+import Resume from "../views/user-info/Resume";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -214,6 +215,14 @@ const routes = [
     component: ResumeList,
     meta: {
       title: "履歷列表"
+    }
+  },
+  {
+    path: "/resume",
+    name: "Resume",
+    component: Resume,
+    meta: {
+      title: "履歷表"
     }
   },
   {

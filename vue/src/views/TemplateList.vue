@@ -93,11 +93,7 @@
                       </v-card>
                     </v-dialog>
 
-                    <v-btn
-                      icon
-                      :to="'/apply-info?templateId=' + item.id"
-                      :disabled="item.id > 1"
-                    >
+                    <v-btn icon @click="apply(item.id)" :disabled="item.id > 1">
                       <v-icon title="套用履歷" alt="套用履歷"
                         >mdi-bookmark-box-multiple-outline</v-icon
                       >
@@ -126,8 +122,17 @@ export default {
     });
   },
   data: () => ({
-    templates: []
+    templates: [],
+    resumeId: null
   }),
-  methods: {}
+  methods: {
+    apply(templateId) {
+      if (this.$route.query.resumeId > 0) {
+        // update resume with templateid then go to apply info
+        // this.$router.push({path:"/apply-info", query:{templateId, resumeId:this.$route.query.resumeId}})
+      } else {
+      }
+    }
+  }
 };
 </script>

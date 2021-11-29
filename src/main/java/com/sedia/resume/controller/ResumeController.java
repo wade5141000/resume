@@ -37,7 +37,7 @@ public class ResumeController {
     }
 
     @PostMapping
-    public boolean saveResume(@RequestBody ResumeEntity resume) {
+    public int saveResume(@RequestBody ResumeEntity resume) {
         return resumeService.insertResume(resume);
     }
 

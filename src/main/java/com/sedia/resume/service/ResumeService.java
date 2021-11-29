@@ -84,7 +84,7 @@ public class ResumeService {
 
     }
 
-    public boolean insertResume(ResumeEntity resume) {
+    public int insertResume(ResumeEntity resume) {
         try {
             log.debug("{}", resume);
             UserEntity currentUser = userService.getCurrentUser();
@@ -93,10 +93,10 @@ public class ResumeService {
             resume.setCreateUser(currentUser.getAccount());
             resume.setCreateDate(LocalDateTime.now());
             resumeMapper.insertResume(resume);
-            return true;
+            return resume.getId();
         } catch (Exception e) {
             log.error("新增失敗", e);
-            return false;
+            return 0;
         }
 
     }

@@ -147,7 +147,7 @@
             </div>
             <v-row justify="center" class="mb-2">
               <v-col cols="10" md="5" lg="5">
-                <v-btn depressed large block color="primary" to="/template-list"
+                <v-btn depressed large block color="primary" to="/resume"
                   >立即挑選履歷版型！</v-btn
                 >
               </v-col>
