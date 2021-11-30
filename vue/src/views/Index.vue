@@ -1,7 +1,12 @@
 <template>
   <v-row justify="center" class="white">
     <v-col cols="12" class="pa-0">
-      <v-carousel cycle hide-delimiter-background :show-arrows="false" :height="400">
+      <v-carousel
+        cycle
+        hide-delimiter-background
+        :show-arrows="false"
+        :height="400"
+      >
         <v-carousel-item
           v-for="(item, i) in items"
           :key="i"
@@ -18,21 +23,8 @@
           ><h3>多種模版<br />隨時想換就換</h3>
         </v-card-title>
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
-<<<<<<< HEAD
-          多種樣式模版，不同職務搭配不同模版<br>只要一鍵，即可快速更換
-=======
-          一鍵更換履歷模版
->>>>>>> d591b3bbffa6d9238d997f27f422d16c58be17ea
+          HEAD 多種樣式模版，不同職務搭配不同模版<br />只要一鍵，即可快速更換
         </v-card-subtitle>
-        <!-- <v-btn
-          outlined
-          color="blue"
-          class="ma-2 pa-5 white--text"
-          href="account/signup"
-        >
-          立即開始製作！
-          <v-icon right light> mdi-pencil-outline </v-icon>
-        </v-btn> -->
       </v-card>
     </v-col>
     <v-col col="9" lg="3" sm="3" class="my-5">
@@ -42,21 +34,8 @@
           ><h3>是履歷表<br />也是個人網站</h3>
         </v-card-title>
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
-<<<<<<< HEAD
-          除了是履歷表，也是作品集網站<br>讓你的作品一目瞭然精彩呈現
-=======
-          一鍵更換履歷模版
->>>>>>> d591b3bbffa6d9238d997f27f422d16c58be17ea
+          除了是履歷表，也是作品集網站<br />讓你的作品一目瞭然精彩呈現
         </v-card-subtitle>
-        <!-- <v-btn
-          outlined
-          color="blue"
-          class="ma-2 pa-5 white--text"
-          href="account/signup"
-        >
-          立即開始製作！
-          <v-icon right light> mdi-pencil-outline </v-icon>
-        </v-btn> -->
       </v-card>
     </v-col>
     <v-col col="9" lg="3" sm="3" class="my-5">
@@ -68,15 +47,6 @@
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
           一鍵更換履歷模版
         </v-card-subtitle>
-        <!-- <v-btn
-          outlined
-          color="blue"
-          class="ma-2 pa-5 white--text"
-          href="account/signup"
-        >
-          立即開始製作！
-          <v-icon right light> mdi-pencil-outline </v-icon>
-        </v-btn> -->
       </v-card>
     </v-col>
   </v-row>
