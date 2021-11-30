@@ -14,6 +14,8 @@
         <result column="CR_DATETIME" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="UP_USER" property="updateUser" jdbcType="VARCHAR"/>
         <result column="UP_DATETIME" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="BIO_CH" property="bioCh" jdbcType="TINYINT"/>
+        <result column="BIO_EN" property="bioEn" jdbcType="TINYINT"/>
     </resultMap>
 
     <select id="listResume" resultMap="ResumeResultMap">
@@ -55,6 +57,11 @@
   <update id="updateBio">
     UPDATE resume SET
       BIO_CH = #{bioCh}, BIO_EN = #{bioEn}
+    where id = #{id} and uid = #{uid};
+  </update>
+
+  <update id="updateTemplateId">
+    UPDATE resume SET TEMPLATE_ID = #{tid}
     where id = #{id} and uid = #{uid};
   </update>
 

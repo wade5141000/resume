@@ -71,10 +71,7 @@
                   large
                   block
                   color="primary"
-                  :to="
-                    '/educationinfo-apply?templateId=' +
-                      this.$route.query.templateId
-                  "
+                  :to="'/educationinfo-apply?resumeId=' + this.resume.id"
                   >回上一頁</v-btn
                 >
               </v-col>
@@ -102,13 +99,19 @@ export default {
   },
   watch: {},
   created: function() {
+    http
+      .get("/resume/" + this.$route.query.resumeId)
+      .then(response => {
+        this.resume = response.data;
+      })
+      .then(() => {
+        http.get("/template/" + this.resume.templateID).then(response => {
+          this.template = response.data;
+        });
+      });
+
     http.get("/experience").then(response => {
       this.experiences = response.data;
-    });
-
-    http.get("/template/" + this.$route.query.templateId).then(response => {
-      this.template = response.data;
-      console.log(response.data);
     });
   },
   data: () => ({
@@ -116,7 +119,8 @@ export default {
     experiences: [],
     selected: [],
     selectedCount: 0,
-    template: {}
+    template: {},
+    resume: {}
   }),
   methods: {
     nextStep() {
@@ -125,13 +129,11 @@ export default {
         alert("數量超出限制");
       } else {
         http
-          .put("/resume/" + this.template.id + "/experience", this.selected)
+          .put("/resume/" + this.resume.id + "/experience", this.selected)
           .then(response => {
             if (response.data == true) {
               alert("成功");
-              this.$router.push(
-                "/skillinfo-apply?templateId=" + this.$route.query.templateId
-              );
+              this.$router.push("/skillinfo-apply?resumeId=" + this.resume.id);
             } else {
               alert("操作失敗");
             }

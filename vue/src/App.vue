@@ -6,18 +6,30 @@
       </v-container>
       <v-spacer></v-spacer>
 
-      <v-menu offset-y>
+      <v-menu offset-y v-if="isLogin">
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="primary" dark v-bind="attrs" v-on="on"> 選單 </v-btn>
         </template>
         <v-list>
-          <v-list-item v-for="(item, index) in items" :key="index" link>
+          <v-list-item
+            v-for="(item, index) in items"
+            :key="index"
+            link
+            @click="routerTo(item.link)"
+          >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn class="mr-2 justify-end" text x-large color="blue" @click="logout">
-        登出
+      <v-btn
+        class="mr-2 justify-end"
+        text
+        x-large
+        color="blue"
+        @click="routerTo('/signup')"
+        v-if="!isLogin"
+      >
+        帳號註冊
       </v-btn>
     </v-app-bar>
     <v-main class="grey lighten-3">
@@ -43,30 +55,37 @@
 // @ is an alias to /src
 import theNavigator from "@/components/theNavigator.vue";
 export default {
-  created: function () {
-    console.log("aaaaa");
-  },
+  created: function() {},
   components: {
     theNavigator,
   },
   data: () => ({
-    isLogin: false,
     items: [
-      { title: "個人資料", link: "/login" },
-      { title: "我的履歷表", link: "" },
-      { title: "登出", link: "" },
-    ],
+      { title: "基本資料", link: "/setting" },
+      { title: "我的履歷表", link: "/resume-list" },
+      { title: "登出", link: "/logout" }
+    ]
   }),
-  methods: {
-    logout() {
-      this.$store.commit("logout");
-      alert("登出成功");
-      this.isLogin = false;
-      this.$router.push("/");
-    },
-    login() {
-      this.isLogin = true;
-    },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin;
+    }
   },
+  watch: {
+    isLogin(newCount, oldCount) {}
+  },
+  methods: {
+    routerTo(path) {
+      if (path === "/logout") {
+        this.$store.commit("logout");
+        alert("登出成功");
+        if (this.$router.currentRoute.path !== "/") {
+          this.$router.push("/");
+        }
+      } else if (this.$router.currentRoute.path !== path) {
+        this.$router.push({ path });
+      }
+    }
+  }
 };
 </script>

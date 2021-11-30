@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-col cols="12" md="10" lg="9">
       <theStepper step="1"></theStepper>
-      <v-expansion-panels v-model="panel" multiple class="mt-4">
+      <v-expansion-panels v-model="panel" multiple class="mt-4" v-if="confirm">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
             <template v-slot:actions>
@@ -313,6 +313,70 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+
+      <!-- 填寫基本資料注意事項 -->
+      <v-card class="mx-auto my-5 pa-0" v-if="!confirm">
+        <v-row class="ma-0 py-5" justify="center">
+          <v-col cols="9" md="4" lg="4" class="px-5 pt-5">
+            <div justify="end">
+              <v-responsive>
+                <v-img
+                  src="../../assets/interview.svg"
+                  max-height="350"
+                  contain
+                >
+                </v-img>
+              </v-responsive>
+            </div>
+          </v-col>
+          <v-col cols="9" md="5" lg="5" class="px-5 pt-0">
+            <div justify="start" class="my-4">
+              <h3 justify="center">個人基本資料（Personal information）</h3>
+              <p class="subtitle-2 my-2">
+                個人基本資料（Personal
+                information），就是一個人的表徵，出方便僱主查閱。記得列上聯絡方式，如：聯絡電話、E-mail，不然我想請你，也連絡不到你阿。
+              </p>
+              <p class="subtitle-2 my-2">
+                在台灣求職，在履歷表上附上照片是必要的，照片的選擇可以根據履歷表的類型、風格做相應地調整。一般個人履歷表的照片只要畫面乾淨清晰，人像大小適當即可，照片的選擇要依循以下
+                3 個要點：
+              </p>
+              <v-alert
+                dense
+                color="blue lighten-5"
+                prominent
+                border="left"
+                class="pa-1"
+              >
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title class="subtitle-2 my-1"
+                      >臉部大小比例適當的正面照 (自拍照除外)</v-list-item-title
+                    >
+                    <v-list-item-title class="subtitle-2 my-1"
+                      >無閑雜人等的個人照</v-list-item-title
+                    >
+                    <v-list-item-title class="subtitle-2 my-1"
+                      >背景顏色以淺色為主</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-alert>
+            </div>
+            <v-row justify="start" class="mb-2">
+              <v-col cols="10" md="5" lg="5">
+                <v-btn
+                  depressed
+                  large
+                  block
+                  color="primary"
+                  @click="confirm = true"
+                  >我瞭解了，開始填寫基本資料！</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -410,7 +474,8 @@ export default {
       { text: "Linkedin", value: "Linkedin" },
       { text: "Github", value: "Github" }
     ],
-    links: []
+    links: [],
+    confirm: false
   }),
   methods: {
     pickBirthDay(date) {

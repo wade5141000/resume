@@ -37,7 +37,7 @@ public class ResumeController {
     }
 
     @PostMapping
-    public boolean saveResume(@RequestBody ResumeEntity resume) {
+    public int saveResume(@RequestBody ResumeEntity resume) {
         return resumeService.insertResume(resume);
     }
 
@@ -57,6 +57,12 @@ public class ResumeController {
         // List<String> -> String, 放欄位名稱 , ex: ["aaa", "bbb", "ccc"] -> "aaa,bbb,ccc"
 
         return resumeService.updateBasicInfo(id, basicInfoType);
+    }
+
+    @PutMapping("/{id}/template/{tid}")
+    public boolean updateTemplateId(@PathVariable int id, @PathVariable int tid) {
+
+        return resumeService.updateTemplateId(id, tid);
     }
 
     // ====================================================================================

@@ -127,15 +127,14 @@ export default {
           })
           .then(response => {
             alert("註冊成功");
-            console.log("註冊成功");
           })
           .catch(error => {
             // console.log(error.response.data)
-            alert(error.response.data.message);
-            console.log(error.response.data.message);
+            alert("註冊失敗");
+            // console.log(error.response.data.message);
           });
       } else {
-        console.log("請輸入帳密");
+        alert("請輸入帳密");
       }
     }
   }

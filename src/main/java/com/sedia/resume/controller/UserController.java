@@ -8,6 +8,7 @@ import com.sedia.resume.repository.ResetPasswordTokenMapper;
 import com.sedia.resume.repository.UserMapper;
 import com.sedia.resume.service.ResetPasswordTokenService;
 import com.sedia.resume.service.UserService;
+import com.sedia.resume.utils.AwsUtils;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -19,8 +20,14 @@ import com.sendgrid.helpers.mail.objects.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +50,7 @@ public class UserController {
     final UserMapper userMapper;
     final ResetPasswordTokenMapper resetPasswordTokenMapper;
     final ResetPasswordTokenService resetPasswordTokenService;
+    final AwsUtils awsUtils;
 
     @GetMapping("/all")
     public List<UserEntity> getAllUser() {
@@ -79,14 +88,16 @@ public class UserController {
     public void getImage(HttpServletResponse response) throws IOException {
         int id = service.getCurrentUser().getId();
         String imgPath = service.getImgById(id);
-        File file = new ClassPathResource(imgPath).getFile();
-        // File file = new ClassPathResource("user.wade/profile/example.jpg").getFile();
-        final FileInputStream in = new FileInputStream(file);
-        response.setContentType("image/png"); // 如果是 jpg 則為 image/jpeg，svg 為 image/svg+xml 等
-        // IOUtils.copy(in, response.getOutputStream());
-        in.close();
-        response.getOutputStream().close();
+        if (StringUtils.isBlank(imgPath)) {
+            response.getWriter().print("");
+        } else {
+            InputStream source = awsUtils.downloadFileFromS3(imgPath);
+            // InputStreamResource resource = new InputStreamResource(source);
 
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+            IOUtils.copy(source, response.getOutputStream());
+
+        }
     }
 
     @PostMapping("/send-token")

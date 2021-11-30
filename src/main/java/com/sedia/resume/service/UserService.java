@@ -9,8 +9,8 @@ import com.sedia.resume.exception.ApiException;
 import com.sedia.resume.repository.LinkMapper;
 import com.sedia.resume.repository.ResetPasswordTokenMapper;
 import com.sedia.resume.repository.UserMapper;
-//import com.sedia.resume.utils.AwsUtils;
 
+import com.sedia.resume.utils.AwsUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +43,7 @@ public class UserService {
     final BCryptPasswordEncoder passwordEncoder;
     final UserMapper userMapper;
     final LinkMapper linkMapper;
-    // final AwsUtils awsUtils;
+    final AwsUtils awsUtils;
     final ResetPasswordTokenMapper resetPasswordTokenMapper;
 
     final ResetPasswordTokenMapper passwordTokenMapper;
@@ -134,6 +133,7 @@ public class UserService {
 
     public String getImgById(int id) {
         return userMapper.loadImg(id);
+
     }
 
     // * 1. 將圖片存到 resources/user/{account}/profile/{檔案名稱} (以後要換到 AWS S3 上)
@@ -143,57 +143,24 @@ public class UserService {
     // UserController for upload
     public boolean uptoS3(MultipartFile image) throws IOException {
 
-        // 取得token
-        UserEntity currentuser = this.getCurrentUser();
+        UserEntity currentUser = this.getCurrentUser();
 
         // 宣告預設檔名、根目錄、預設目錄、取得的圖片格式
-        // relative paths:server's workspace\src\main\resources\{userId}\profile\...
-        int name = currentuser.getId();
-        String rootpath = "src/main/resources/";
-        String strpath = "user/" + name + "/profile/";
-        String ext = FilenameUtils.getExtension(image.getOriginalFilename());
+        int uid = currentUser.getId();
+        String rootPath = "user" + uid + "/";
+        String fileName = "profile.jpg";
 
-        // 準備及確認使用者的資料夾狀況
-        File dirpath = new File(rootpath + strpath);
-        File filepath = null;
-        // 判斷此次使用者上傳的檔案副檔名符合後
-        if (checkImgExt(image)) {
-            // dir不存在則創建
-            if (!dirpath.exists()) {
-                dirpath.mkdirs();
-                // 否則取得原資料夾的檔案路徑
-            } else {
-                /************* 特別留意 ****************/
-                // 這邊記得說會給user預設頭像?
-                // 請給預設頭像檔名，初始化就創建該檔案
-                File[] files = dirpath.listFiles();
-                if (files.length > 1)
-                    filepath = files[0];
-                // 若該資料夾會放其他圖片再改。還需處理100行選擇圖片。
-                // for (int i = 0; i < files.length; i++)
-                // filepath = files[i];
-            }
-        }
+        boolean result = awsUtils.uploadFileToS3(rootPath + fileName, image.getInputStream());
 
-        // 若原資料夾有圖片檔案則刪除掉已有檔案
-        if (null != filepath && filepath.exists())
-            filepath.delete();
-
-        try {
-
-            // 如不須處理格式統一問題再用此方法
-            // 圖片改名並將圖片,路徑存入伺服器及資料庫
-            reImgName(image.getInputStream(), rootpath + strpath + name + "." + ext);
-
-            currentuser.setImgPath(strpath + name + "." + ext);
-            currentuser.setUpdateUser(currentuser.getAccount());
-            currentuser.setUpdateDate(LocalDateTime.now());
-            userMapper.upLoadImg(currentuser);
+        if (result) {
+            currentUser.setImgPath(rootPath + fileName);
+            currentUser.setUpdateUser(currentUser.getAccount());
+            currentUser.setUpdateDate(LocalDateTime.now());
+            userMapper.upLoadImg(currentUser);
             return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
         }
+        return false;
+
     }
 
     // image.transferTo(new File(name + "." + ext));將接收到的文件傳輸到給定的目標文件

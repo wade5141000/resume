@@ -37,6 +37,7 @@ instance.interceptors.response.use(
   error => {
     if (error.response) {
       if (error.response.status === 401 || error.response.status === 403) {
+        store.commit("logout");
         return router.push({ path: "/login" });
       }
     }

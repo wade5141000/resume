@@ -45,10 +45,7 @@
                   large
                   block
                   color="primary"
-                  :to="
-                    '/skillinfo-apply?templateId=' +
-                      this.$route.query.templateId
-                  "
+                  :to="'/skillinfo-apply?resumeId=' + this.resume.id"
                   >回上一頁</v-btn
                 >
               </v-col>
@@ -75,18 +72,23 @@ export default {
     theDialog
   },
   watch: {},
-  created: function() {},
+  created: function() {
+    http.get("/resume/" + this.$route.query.resumeId).then(response => {
+      this.resume = response.data;
+    });
+  },
   data: () => ({
     panel: [0],
     bioCh: false,
-    bioEn: false
+    bioEn: false,
+    resume: {}
   }),
   methods: {
     nextStep() {
       console.log(this.bioCh);
       console.log(this.bioEn);
       http
-        .put("/resume/" + this.$route.query.templateId + "/bio", {
+        .put("/resume/" + this.resume.id + "/bio", {
           bioCh: this.bioCh,
           bioEn: this.bioEn
         })

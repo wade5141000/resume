@@ -21,5 +21,7 @@ public class ResumeEntity extends GenericEntity {
     private String resumeName;
     private String basicInfo;
     private String filePath;
+    private boolean bioCh;
+    private boolean bioEn;
 
 }

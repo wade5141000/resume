@@ -23,7 +23,7 @@
           ><h3>多種模版<br />隨時想換就換</h3>
         </v-card-title>
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
-          HEAD 多種樣式模版，不同職務搭配不同模版<br />只要一鍵，即可快速更換
+           多種樣式模版，不同職務搭配不同模版<br />只要一鍵，即可快速更換
         </v-card-subtitle>
       </v-card>
     </v-col>

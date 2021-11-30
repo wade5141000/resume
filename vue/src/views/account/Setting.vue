@@ -11,7 +11,7 @@
               cols="12"
             >
               <v-avatar class="profile my-5" color="grey" size="225" circle>
-                <v-img src="../../assets/avatar_default.jpg"> </v-img>
+                <v-img :src="image"> </v-img>
               </v-avatar>
             </v-col>
             <v-col class="pa-0 ma-0">
@@ -31,10 +31,18 @@
                 outlined
                 color="blue"
                 class="ma-2 pa-2 white--text"
+                @click="upload"
               >
                 上傳頭像
                 <v-icon right light> mdi-image-area </v-icon>
               </v-btn>
+              <input
+                ref="uploader"
+                class="d-none"
+                type="file"
+                accept="image/*"
+                @change="onFileChanged"
+              />
             </v-col>
           </v-row>
         </v-img>
@@ -95,7 +103,7 @@
 import theStepper from "../../components/theStepper";
 import theDialog from "../../components/theDialog";
 import http from "../../utils/http";
-
+import axios from "axios";
 export default {
   components: {
     theStepper,
@@ -104,13 +112,80 @@ export default {
   watch: {},
   created: function() {
     http.get("/user").then(response => {
-      console.log(response.data);
       this.user = response.data;
     });
+
+    this.getImage();
   },
   data: () => ({
-    user: {}
+    user: {},
+    image: require("../../assets/avatar_default.jpg"),
+    selectedFile: null
   }),
-  methods: {}
+  methods: {
+    upload() {
+      this.$refs.uploader.click();
+    },
+    onFileChanged(e) {
+      this.selectedFile = e.target.files[0];
+
+      if (this.selectedFile != null) {
+        let user = localStorage.getItem("user");
+        user = JSON.parse(user);
+
+        let data = new FormData();
+        data.append("image", this.selectedFile);
+        axios
+          .post(process.env.VUE_APP_BACKEND_URL + "/user/image/upload", data, {
+            headers: {
+              accept: "application/json",
+              "Accept-Language": "en-US,en;q=0.8",
+              "Content-Type": `multipart/form-data;`,
+              Authorization: user.jwt
+            }
+          })
+          .then(response => {
+            if (response.data == true) {
+              alert("上傳成功");
+              this.image = URL.createObjectURL(this.selectedFile);
+            } else {
+              alert("上傳失敗");
+            }
+          })
+          .catch(error => {
+            alert("上傳失敗");
+          })
+          .finally(() => {
+            this.selectedFile = null;
+          });
+      }
+    },
+    getImage() {
+      let user = localStorage.getItem("user");
+      user = JSON.parse(user);
+      axios
+        .get(process.env.VUE_APP_BACKEND_URL + "/user/image", {
+          responseType: "arraybuffer",
+          headers: {
+            Authorization: user.jwt
+          }
+        })
+        .then(response => {
+          console.log(response.data.byteLength);
+          if (response.data.byteLength === 0) {
+            this.image = require("../../assets/avatar_default.jpg");
+          } else {
+            this.image =
+              "data:image/jpeg;base64," +
+              btoa(
+                new Uint8Array(response.data).reduce(
+                  (data, byte) => data + String.fromCharCode(byte),
+                  ""
+                )
+              );
+          }
+        });
+    }
+  }
 };
 </script>

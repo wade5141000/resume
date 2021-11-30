@@ -23,4 +23,6 @@ public interface ResumeMapper {
 
     void updateBio(int id, int uid, boolean bioCh, boolean bioEn);
 
+    void updateTemplateId(int id, int uid, int tid);
+
 }

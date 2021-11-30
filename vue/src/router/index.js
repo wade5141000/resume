@@ -22,6 +22,8 @@ import SkillInfoApply from "../views/apply-info/SkillInfoApply";
 import AutobiographyApply from "../views/apply-info/AutobiographyApply";
 import ApplyInfoIntro from "../views/apply-info/ApplyInfoIntro";
 import TemplateList from "../views/TemplateList";
+import ResumeList from "../views/user-info/ResumeList";
+import Resume from "../views/user-info/Resume";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -208,6 +210,22 @@ const routes = [
     }
   },
   {
+    path: "/resume-list",
+    name: "ResumeList",
+    component: ResumeList,
+    meta: {
+      title: "履歷列表"
+    }
+  },
+  {
+    path: "/resume",
+    name: "Resume",
+    component: Resume,
+    meta: {
+      title: "履歷表"
+    }
+  },
+  {
     path: "*",
     redirect: "/"
   }
@@ -224,6 +242,7 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title;
   }
 
+  // console.log(from);
   let allow = false;
   let allowPass = [
     "/",
@@ -232,22 +251,22 @@ router.beforeEach((to, from, next) => {
     "/resetpw",
     "/signup",
     "/terms",
-    "/apply-info",
-    "/educationinfo-apply",
-    "/experienceinfo-apply",
+    // "/apply-info",
+    // "/educationinfo-apply",
+    // "/experienceinfo-apply",
     "/privacy",
-    "/user-info",
-    "/education-list",
-    "/education",
-    "/experience-list",
-    "/experience",
-    "/skill",
-    "/autobiography",
-    "/skillinfo-apply",
-    "/autobiography-apply",
+    // "/user-info",
+    // "/education-list",
+    // "/education",
+    // "/experience-list",
+    // "/experience",
+    // "/skill",
+    // "/autobiography",
+    // "/skillinfo-apply",
+    // "/autobiography-apply",
     "/apply-info-intro",
-    "/template-list",
-    "/setting"
+    "/template-list"
+    // "/setting"
   ];
   allowPass.forEach(path => {
     if (path === to.path) {
@@ -263,10 +282,11 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       store.commit("logout");
-      next({ path: "/login" });
+      // next({ path: "/login" });
+      next({ path: "/login", query: { redirect: to.path } });
     }
   } else {
-    next({ path: "/login" });
+    next({ path: "/login", query: { redirect: to.path } });
   }
 });
 

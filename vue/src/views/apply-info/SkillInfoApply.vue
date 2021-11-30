@@ -133,10 +133,7 @@
                   large
                   block
                   color="primary"
-                  :to="
-                    '/experienceinfo-apply?templateId=' +
-                      this.$route.query.templateId
-                  "
+                  :to="'/experienceinfo-apply?resumeId=' + this.resume.id"
                   >回上一頁</v-btn
                 >
               </v-col>
@@ -174,12 +171,20 @@ export default {
       this.licenses = response.data;
     });
 
-    http.get("/template/" + this.$route.query.templateId).then(response => {
-      console.log(response.data);
-      this.template = response.data;
-      this.allow =
-        this.template.skill + this.template.licence + this.template.language;
-    });
+    http
+      .get("/resume/" + this.$route.query.resumeId)
+      .then(response => {
+        this.resume = response.data;
+      })
+      .then(() => {
+        http.get("/template/" + this.resume.templateID).then(response => {
+          this.template = response.data;
+          this.allow =
+            this.template.skill +
+            this.template.licence +
+            this.template.language;
+        });
+      });
   },
   data: () => ({
     panel: [0],
@@ -191,7 +196,8 @@ export default {
     licenseSelected: [],
     selectedCount: 0,
     template: {},
-    allow: 0
+    allow: 0,
+    resume: {}
   }),
   methods: {
     nextStep() {
@@ -203,27 +209,26 @@ export default {
         alert("數量超出限制");
       } else {
         http
-          .put("/resume/" + this.template.id + "/skill", this.skillSelected)
+          .put("/resume/" + this.resume.id + "/skill", this.skillSelected)
           .then(response => {
             if (response.data == true) {
               http
                 .put(
-                  "/resume/" + this.template.id + "/language",
+                  "/resume/" + this.resume.id + "/language",
                   this.languageSelected
                 )
                 .then(response2 => {
                   if (response2.data == true) {
                     http
                       .put(
-                        "/resume/" + this.template.id + "/license",
+                        "/resume/" + this.resume.id + "/license",
                         this.licenseSelected
                       )
                       .then(response3 => {
                         if (response3.data == true) {
                           alert("成功");
                           this.$router.push(
-                            "/autobiography-apply?templateId=" +
-                              this.$route.query.templateId
+                            "/autobiography-apply?resumeId=" + this.resume.id
                           );
                         } else {
                           alert("操作失敗");
