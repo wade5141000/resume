@@ -8,9 +8,7 @@
 
       <v-menu offset-y v-if="isLogin">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark v-bind="attrs" v-on="on">
-            選單
-          </v-btn>
+          <v-btn color="primary" dark v-bind="attrs" v-on="on"> 選單 </v-btn>
         </template>
         <v-list>
           <v-list-item
@@ -39,11 +37,28 @@
         <router-view />
       </v-container>
     </v-main>
-    <!--    <v-footer app color="blue">-->
-    <!--      <v-container class="px-0 py-0 fill-height">-->
-    <!--        <theNavigator />-->
-    <!--      </v-container>-->
-    <!--    </v-footer>-->
+    <v-footer color="primary" padless>
+      <v-row justify="center" no-gutters>
+        <v-col class="grey darken-4 py-1 text-center white--text" cols="12">
+          <a
+            @click="routerTo('/privacy')"
+            class="white--text"
+            style="text-decoration: none;"
+            >隱私權政策</a
+          >｜
+          <a
+            @click="routerTo('/terms')"
+            class="white--text"
+            style="text-decoration: none;"
+            >使用條款</a
+          >
+        </v-col>
+        <v-col class="grey darken-4 py-1 text-center white--text" cols="12">
+          Copyright ©{{ new Date().getFullYear() }} — ACE RESUME 履歷存摺. All
+          rights reserved.
+        </v-col>
+      </v-row>
+    </v-footer>
   </v-app>
 </template>
 

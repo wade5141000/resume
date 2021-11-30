@@ -25,15 +25,6 @@
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
           多種樣式模版，不同職務搭配不同模版<br />只要一鍵，即可快速更換
         </v-card-subtitle>
-        <!-- <v-btn
-          outlined
-          color="blue"
-          class="ma-2 pa-5 white--text"
-          href="account/signup"
-        >
-          立即開始製作！
-          <v-icon right light> mdi-pencil-outline </v-icon>
-        </v-btn> -->
       </v-card>
     </v-col>
     <v-col col="9" lg="3" sm="3" class="my-5">
@@ -45,15 +36,6 @@
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
           除了是履歷表，也是作品集網站<br />讓你的作品一目瞭然精彩呈現
         </v-card-subtitle>
-        <!-- <v-btn
-          outlined
-          color="blue"
-          class="ma-2 pa-5 white--text"
-          href="account/signup"
-        >
-          立即開始製作！
-          <v-icon right light> mdi-pencil-outline </v-icon>
-        </v-btn> -->
       </v-card>
     </v-col>
     <v-col col="9" lg="3" sm="3" class="my-5">
@@ -65,15 +47,6 @@
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
           一鍵更換履歷模版
         </v-card-subtitle>
-        <!-- <v-btn
-          outlined
-          color="blue"
-          class="ma-2 pa-5 white--text"
-          href="account/signup"
-        >
-          立即開始製作！
-          <v-icon right light> mdi-pencil-outline </v-icon>
-        </v-btn> -->
       </v-card>
     </v-col>
   </v-row>
