@@ -46,7 +46,7 @@ export default {
   data: () => ({}),
   methods: {
     routerTo(path) {
-      let variables = "?templateId=" + this.$route.query.templateId;
+      let variables = "?resumeId=" + this.$route.query.resumeId;
       path = path + variables;
       if (this.$router.currentRoute.path + variables !== path) {
         this.$router.push({ path });

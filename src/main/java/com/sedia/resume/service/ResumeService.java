@@ -127,6 +127,18 @@ public class ResumeService {
         }
     }
 
+    public boolean updateTemplateId(int id, int tid) {
+        try {
+            UserEntity currentUser = userService.getCurrentUser();
+            int uid = currentUser.getId();
+            resumeMapper.updateTemplateId(id, uid, tid);
+            return true;
+        } catch (Exception e) {
+            log.error("更新失敗", e);
+            return false;
+        }
+    }
+
     // 使用者挑選resumeId根據自己需要的eduId加入
     public boolean updateResumeEducation(int id, List<Integer> educationId) {
         // 資料庫rel_resume_edu table的RID跟EDU_ID都是PrimeKey

@@ -30,9 +30,7 @@
                     height="350px"
                     aspect-ratio="1"
                   >
-                    <v-card-title
-                      v-text="`履歷模版${index + 1}`"
-                    ></v-card-title>
+                    <v-card-title v-text="item.resumeName"></v-card-title>
                   </v-img>
 
                   <v-card-actions>
@@ -44,15 +42,20 @@
                       >
                     </v-btn>
 
-                    <v-btn icon>
+                    <v-btn icon @click="remove(item.id)">
                       <v-icon title="刪除履歷" alt="刪除履歷"
                         >mdi-trash-can-outline</v-icon
                       >
                     </v-btn>
 
-                    <v-btn icon>
+                    <v-btn icon @click="apply(item.id)">
                       <v-icon title="套用履歷" alt="套用履歷"
                         >mdi-bookmark-box-multiple-outline</v-icon
+                      >
+                    </v-btn>
+                    <v-btn icon @click="download">
+                      <v-icon title="下載履歷" alt="下載履歷"
+                        >mdi-file-download-outline</v-icon
                       >
                     </v-btn>
                   </v-card-actions>
@@ -71,13 +74,45 @@ import http from "../../utils/http";
 export default {
   watch: {},
   created: function() {
-    http.get("/resume").then(response => {
-      this.resumeList = response.data;
-    });
+    this.templateId = this.$route.query.templateId;
+    this.getResume();
   },
   data: () => ({
-    resumeList: []
+    resumeList: [],
+    templateId: 0
   }),
-  methods: {}
+  methods: {
+    getResume() {
+      http.get("/resume").then(response => {
+        this.resumeList = response.data;
+      });
+    },
+    remove(resumeId) {
+      http.delete("/resume/" + resumeId).then(response => {
+        if (response.data == true) {
+          alert("刪除成功");
+          this.getResume();
+        } else {
+          alert("刪除失敗");
+        }
+      });
+    },
+    apply(resumeId) {
+      if (this.templateId > 0) {
+        http
+          .put("/resume/".concat(resumeId, "/template/", this.templateId))
+          .then(response => {
+            if (response.data == true) {
+              this.$router.push({ path: "/apply-info", query: { resumeId } });
+            } else {
+              alert("操作失敗");
+            }
+          });
+      } else {
+        this.$router.push({ path: "/template-list", query: { resumeId } });
+      }
+    },
+    download() {}
+  }
 };
 </script>

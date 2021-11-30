@@ -213,7 +213,7 @@
                   block
                   outlined
                   color="primary"
-                  to="/template-list"
+                  :to="'/template-list?resumeId=' + this.resume.id"
                   >重新選擇版型</v-btn
                 >
               </v-col>
@@ -246,12 +246,18 @@ export default {
   },
   watch: {},
   created: function() {
+    http
+      .get("/resume/" + this.$route.query.resumeId)
+      .then(response => {
+        this.resume = response.data;
+      })
+      .then(() => {
+        http.get("/template/" + this.resume.templateID).then(response => {
+          this.template = response.data;
+        });
+      });
     http.get("/user").then(response => {
       this.user = response.data;
-    });
-    http.get("/template/" + this.$route.query.templateId).then(response => {
-      this.template = response.data;
-      console.log(response.data);
     });
   },
   data: () => ({
@@ -260,23 +266,23 @@ export default {
     selected: [],
     selectedCount: 0,
     template: {},
-    confirm: false
+    confirm: false,
+    resume: {}
   }),
   methods: {
     nextStep() {
       console.log(this.user);
-      console.log(this.selected);
+      // console.log(this.selected);
       if (this.selected.length > this.template.basicInfo) {
         alert("數量超出限制");
       } else {
         http
-          .put("/resume/" + this.template.id + "/basic-info", this.selected)
+          .put("/resume/" + this.resume.id + "/basic-info", this.selected)
           .then(response => {
             if (response.data == true) {
               alert("成功");
               this.$router.push(
-                "/educationinfo-apply?templateId=" +
-                  this.$route.query.templateId
+                "/educationinfo-apply?resumeId=" + this.resume.id
               );
             } else {
               alert("操作失敗");

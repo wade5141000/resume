@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="mt-12">
     <v-col cols="12" md="7" lg="8">
       <v-card class="mx-auto my-0 pa-0" max-width="800">
         <v-row class="ma-0">
@@ -38,6 +38,16 @@
                 >
                   建立履歷
                 </v-btn>
+                <div class="text-center my-5">
+                  <v-btn
+                    text
+                    x-large
+                    class="py-1 text-decoration-none"
+                    @click="resumeList"
+                  >
+                    選擇已建立的履歷！
+                  </v-btn>
+                </div>
                 <div class="text-center my-5"></div>
               </form>
             </v-sheet>
@@ -56,23 +66,44 @@ export default {
     theDialog
   },
   watch: {},
-  created: function() {},
+  created: function() {
+    this.templateId = this.$route.query.templateId;
+  },
   data: () => ({
-    resumeName: ""
+    resumeName: "",
+    templateId: null
   }),
   methods: {
     create() {
-      http.post("/resume", { resumeName: this.resumeName }).then(response => {
+      let data = { resumeName: this.resumeName };
+      if (this.templateId > 0) {
+        data["templateID"] = this.templateId;
+      }
+      http.post("/resume", data).then(response => {
         if (response.data != 0) {
           alert("建立成功");
-          this.$router.push({
-            path: "/template-list",
-            query: { resumeId: response.data }
-          });
+          if (this.templateId > 0) {
+            this.$router.push({
+              path: "/apply-info",
+              query: { resumeId: response.data }
+            });
+          } else {
+            this.$router.push({
+              path: "/template-list",
+              query: { resumeId: response.data }
+            });
+          }
         } else {
           alert("建立失敗");
         }
       });
+    },
+    resumeList() {
+      let data = { path: "/resume-list" };
+      if (this.templateId > 0) {
+        data["query"] = { templateId: this.templateId };
+      }
+      this.$router.push(data);
     }
   }
 };

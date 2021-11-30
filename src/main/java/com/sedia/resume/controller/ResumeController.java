@@ -59,6 +59,12 @@ public class ResumeController {
         return resumeService.updateBasicInfo(id, basicInfoType);
     }
 
+    @PutMapping("/{id}/template/{tid}")
+    public boolean updateTemplateId(@PathVariable int id, @PathVariable int tid) {
+
+        return resumeService.updateTemplateId(id, tid);
+    }
+
     // ====================================================================================
     @PutMapping("/{id}/education")
     public boolean updateEducation(@PathVariable int id, @RequestBody List<Integer> educationId) {

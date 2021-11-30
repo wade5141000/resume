@@ -114,6 +114,8 @@ import http from "../utils/http";
 export default {
   watch: {},
   created: function() {
+    this.resumeId = this.$route.query.resumeId;
+
     http.get("/template").then(response => {
       this.templates = response.data;
       for (let i = 0; i < 9; i++) {
@@ -127,10 +129,21 @@ export default {
   }),
   methods: {
     apply(templateId) {
-      if (this.$route.query.resumeId > 0) {
-        // update resume with templateid then go to apply info
-        // this.$router.push({path:"/apply-info", query:{templateId, resumeId:this.$route.query.resumeId}})
+      if (this.resumeId > 0) {
+        http
+          .put("/resume/".concat(this.resumeId, "/template/", templateId))
+          .then(response => {
+            if (response.data == true) {
+              this.$router.push({
+                path: "/apply-info",
+                query: { resumeId: this.resumeId }
+              });
+            } else {
+              alert("操作失敗");
+            }
+          });
       } else {
+        this.$router.push({ path: "/resume", query: { templateId } });
       }
     }
   }

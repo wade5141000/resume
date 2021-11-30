@@ -60,5 +60,10 @@
     where id = #{id} and uid = #{uid};
   </update>
 
+  <update id="updateTemplateId">
+    UPDATE resume SET TEMPLATE_ID = #{tid}
+    where id = #{id} and uid = #{uid};
+  </update>
+
 
 </mapper>
