@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" md="10" lg="9">
-      <theStepper step="1"></theStepper>
+      <theStepper step="5"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
@@ -75,6 +75,8 @@ export default {
   created: function() {
     http.get("/resume/" + this.$route.query.resumeId).then(response => {
       this.resume = response.data;
+      this.bioCh = this.resume.bioCh;
+      this.bioEn = this.resume.bioEn;
     });
   },
   data: () => ({

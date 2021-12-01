@@ -30,7 +30,6 @@
                   color="red darken-3"
                   value="name"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
@@ -39,7 +38,6 @@
                   color="red darken-3"
                   value="birthday"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
@@ -48,7 +46,6 @@
                   color="red darken-3"
                   value="sex"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
@@ -57,7 +54,6 @@
                   color="red darken-3"
                   value="militaryService"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="10" class="pa-0 mt-0">
@@ -66,7 +62,6 @@
                   color="red darken-3"
                   value="address"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
@@ -75,7 +70,6 @@
                   color="red darken-3"
                   value="phone"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
@@ -84,7 +78,6 @@
                   color="red darken-3"
                   value="email"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="10" lg="10" class="pa-0 mt-0">
@@ -93,7 +86,6 @@
                   color="red darken-3"
                   value="driverLicense"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col
@@ -108,7 +100,6 @@
                   color="red darken-3"
                   value="specialIdentity"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
             </v-row>
@@ -120,7 +111,6 @@
                   color="red darken-3"
                   value="introduction"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
             </v-row>
@@ -132,7 +122,6 @@
                   color="red darken-3"
                   value="feature"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
             </v-row>
@@ -244,12 +233,19 @@ export default {
     theStepper,
     theDialog
   },
-  watch: {},
+  computed: {
+    selectedCount() {
+      return this.selected.length;
+    }
+  },
   created: function() {
     http
       .get("/resume/" + this.$route.query.resumeId)
       .then(response => {
         this.resume = response.data;
+        if (this.resume.basicInfo != null && this.resume.basicInfo.length > 0) {
+          this.selected = this.resume.basicInfo.split(",");
+        }
       })
       .then(() => {
         http.get("/template/" + this.resume.templateID).then(response => {
@@ -264,7 +260,6 @@ export default {
     panel: [0],
     user: {},
     selected: [],
-    selectedCount: 0,
     template: {},
     confirm: false,
     resume: {}
@@ -289,9 +284,6 @@ export default {
             }
           });
       }
-    },
-    count() {
-      this.selectedCount = this.selected.length;
     }
   }
 };

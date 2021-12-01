@@ -10,6 +10,7 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.font.FontProvider;
+import com.sedia.resume.domain.ResumeRelation;
 import com.sedia.resume.domain.TemplateModel;
 import com.sedia.resume.entity.TemplateEntity;
 import com.sedia.resume.repository.LinkMapper;
@@ -317,6 +318,16 @@ public class ResumeService {
 
         // return new ByteArrayInputStream(sw.toString().getBytes(StandardCharsets.UTF_8));
         return sw.toString();
+
+    }
+
+    public ResumeRelation getResumeRelation(int id) {
+
+        return ResumeRelation.builder().education(resumeRelationMapper.getEducationIdByResumeId(id))
+                .experience(resumeRelationMapper.getExperienceIdByResumeId(id))
+                .skill(resumeRelationMapper.getSkillIdByResumeId(id))
+                .language(resumeRelationMapper.getLanguageIdByResumeId(id))
+                .license(resumeRelationMapper.getLicenseIdByResumeId(id)).build();
 
     }
 }

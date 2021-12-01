@@ -46,7 +46,6 @@
                         color="red darken-3"
                         :value="skill.id"
                         v-model="skillSelected"
-                        @change="count"
                       ></v-checkbox>
                     </v-col>
                   </v-row>
@@ -87,7 +86,6 @@
                         color="red darken-3"
                         :value="language.id"
                         v-model="languageSelected"
-                        @change="count"
                       ></v-checkbox>
                     </v-col>
                   </v-row>
@@ -118,7 +116,6 @@
                         color="red darken-3"
                         :value="license.sn"
                         v-model="licenseSelected"
-                        @change="count"
                       ></v-checkbox>
                     </v-col>
                   </v-row>
@@ -159,7 +156,15 @@ export default {
     theStepper,
     theDialog
   },
-  watch: {},
+  computed: {
+    selectedCount() {
+      return (
+        this.skillSelected.length +
+        this.languageSelected.length +
+        this.licenseSelected.length
+      );
+    }
+  },
   created: function() {
     http.get("/skill").then(response => {
       this.skills = response.data;
@@ -184,6 +189,13 @@ export default {
             this.template.licence +
             this.template.language;
         });
+      })
+      .then(() => {
+        http.get("/resume/" + this.resume.id + "/relation").then(response => {
+          this.skillSelected = response.data.skill;
+          this.languageSelected = response.data.language;
+          this.licenseSelected = response.data.license;
+        });
       });
   },
   data: () => ({
@@ -194,7 +206,6 @@ export default {
     skillSelected: [],
     languageSelected: [],
     licenseSelected: [],
-    selectedCount: 0,
     template: {},
     allow: 0,
     resume: {}
