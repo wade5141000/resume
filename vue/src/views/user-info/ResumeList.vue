@@ -4,7 +4,6 @@
       <v-card>
         <v-tabs color="primary" left class="pa-5">
           <v-tab><h3>我的履歷</h3></v-tab>
-
           <v-tab-item v-for="n in 1" :key="n">
             <v-row dense fluid>
               <v-col
@@ -15,7 +14,7 @@
                 md="3"
                 lg="3"
               >
-                <v-card class="ma-1">
+                <v-card class="ma-1" v-if="index !== resumeList.length - 1">
                   <v-img
                     :src="
                       `https://picsum.photos/500/300?image=${(index + 1) * 5 +
@@ -60,6 +59,11 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
+                <v-card class="ma-1" v-else height="400px" flat tile>
+                  <v-btn :to="'/resume?hide=true'">
+                    建立新的履歷
+                  </v-btn>
+                </v-card>
               </v-col>
             </v-row>
           </v-tab-item>
@@ -85,6 +89,7 @@ export default {
     getResume() {
       http.get("/resume").then(response => {
         this.resumeList = response.data;
+        this.resumeList.push({});
       });
     },
     remove(resumeId) {

@@ -87,8 +87,8 @@ export default {
   }),
   methods: {
     nextStep() {
-      console.log(this.bioCh);
-      console.log(this.bioEn);
+      // console.log(this.bioCh);
+      // console.log(this.bioEn);
       http
         .put("/resume/" + this.resume.id + "/bio", {
           bioCh: this.bioCh,
