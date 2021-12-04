@@ -52,7 +52,7 @@
                         >mdi-bookmark-box-multiple-outline</v-icon
                       >
                     </v-btn>
-                    <v-btn icon @click="download">
+                    <v-btn icon @click="download(item.id)">
                       <v-icon title="下載履歷" alt="下載履歷"
                         >mdi-file-download-outline</v-icon
                       >
@@ -75,6 +75,7 @@
 
 <script>
 import http from "../../utils/http";
+import axios from "axios";
 export default {
   watch: {},
   created: function() {
@@ -117,7 +118,31 @@ export default {
         this.$router.push({ path: "/template-list", query: { resumeId } });
       }
     },
-    download() {}
+    download(resumeId) {
+      let user = localStorage.getItem("user");
+      user = JSON.parse(user);
+
+      axios
+        .request({
+          responseType: "blob",
+          url: process.env.VUE_APP_BACKEND_URL + "/resume/download/" + resumeId,
+          method: "post",
+          headers: {
+            accept: "application/json",
+            "Accept-Language": "en-US,en;q=0.8",
+            "Content-Type": `multipart/form-data;`,
+            Authorization: user.jwt
+          }
+        })
+        .then(response => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", "resume.pdf");
+          document.body.appendChild(link);
+          link.click();
+        });
+    }
   }
 };
 </script>

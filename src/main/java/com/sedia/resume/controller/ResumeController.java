@@ -102,9 +102,9 @@ public class ResumeController {
     }
 
     @PutMapping("/apply/{resumeId}")
-    public void applyResume(@PathVariable int resumeId) throws Exception {
+    public boolean applyResume(@PathVariable int resumeId) throws Exception {
 
-        resumeService.applyResume(resumeId);
+        return resumeService.applyResume(resumeId);
 
     }
 

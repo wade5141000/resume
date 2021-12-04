@@ -39,7 +39,7 @@
             </v-row>
 
             <v-row justify="center" class="mb-2">
-              <v-col cols="6" md="5" lg="4">
+              <v-col cols="3">
                 <v-btn
                   depressed
                   large
@@ -49,9 +49,14 @@
                   >回上一頁</v-btn
                 >
               </v-col>
-              <v-col cols="6" md="5" lg="4">
-                <v-btn depressed large block color="primary" @click="nextStep"
+              <v-col cols="3">
+                <v-btn depressed large block color="primary" @click="save"
                   >儲存</v-btn
+                >
+              </v-col>
+              <v-col cols="3">
+                <v-btn depressed large block color="primary" @click="apply"
+                  >套用模板完成</v-btn
                 >
               </v-col>
             </v-row>
@@ -86,7 +91,7 @@ export default {
     resume: {}
   }),
   methods: {
-    nextStep() {
+    save() {
       // console.log(this.bioCh);
       // console.log(this.bioEn);
       http
@@ -101,6 +106,15 @@ export default {
             alert("操作失敗");
           }
         });
+    },
+    apply() {
+      http.put("/resume/apply/" + this.resume.id).then(response => {
+        if (response.data == true) {
+          alert("套用模板成功");
+        } else {
+          alert("套用模板失敗");
+        }
+      });
     }
   }
 };

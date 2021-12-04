@@ -20,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.sedia.resume.entity.ResumeEntity;
@@ -31,9 +33,7 @@ import com.sedia.resume.repository.ResumeRelationMapper;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,7 +58,7 @@ public class ResumeService {
     public ResumeEntity getResume(int id) {
         UserEntity currentUser = userService.getCurrentUser();
         int uid = currentUser.getId();
-        return resumeMapper.firstResume(id, uid).orElseThrow(() -> new ApiException("找不到語言"));
+        return resumeMapper.firstResume(id, uid).orElseThrow(() -> new ApiException("找不到履歷"));
 
     }
 
@@ -197,7 +197,7 @@ public class ResumeService {
         return true;
     }
 
-    public void applyResume(int resumeId) throws Exception {
+    public boolean applyResume(int resumeId) throws Exception {
 
         UserEntity user = userService.getCurrentUser();
         int userId = user.getId();
@@ -210,26 +210,47 @@ public class ResumeService {
 
         // TODO template size 判斷??
 
-        Map<String, String> basicInfoMap = new HashMap<>();
-
-        basicInfoMap.put("introduction", user.getIntroduction());
+        Map<String, String> basicInfoMap = new LinkedHashMap<>();
 
         for (String infoColumn : basicInfoColumns) {
             switch (infoColumn) {
             case "name":
-                basicInfoMap.put("name", user.getName());
+                basicInfoMap.put("姓名", user.getName());
+                break;
             case "birthday":
-                basicInfoMap.put("birthday", user.getBirthday().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+                basicInfoMap.put("生日", user.getBirthday().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+                break;
             case "sex":
-                basicInfoMap.put("sex", user.getSex());
+                basicInfoMap.put("性別", user.getSex());
+                break;
             case "phone":
-                basicInfoMap.put("phone", user.getPhone());
+                basicInfoMap.put("聯絡電話", user.getPhone());
+                break;
+            case "militaryService":
+                basicInfoMap.put("兵役狀況", user.getMilitaryService());
+                break;
+            case "address":
+                basicInfoMap.put("地址", user.getAddress());
+                break;
+            case "email":
+                basicInfoMap.put("email", user.getEmail());
+                break;
+            case "driverLicense":
+                basicInfoMap.put("駕照", user.getDriverLicense());
+                break;
+            case "specialIdentity":
+                basicInfoMap.put("特殊身分", user.getSpecialIdentity());
+                break;
             }
         }
 
         TemplateModel templateModel = new TemplateModel();
-
+        templateModel.setName(user.getName());
         templateModel.setBasicInfo(basicInfoMap);
+
+        templateModel.setFeature(user.getFeature());
+
+        templateModel.setIntro(user.getIntroduction());
 
         templateModel.setLinks(linkMapper.findAll(userId));
 
@@ -244,13 +265,17 @@ public class ResumeService {
         templateModel.setSkills(resumeRelationMapper.getSkillIdByResumeId(resumeId).stream().map(skillService::getSkill)
                 .collect(Collectors.toList()));
 
-        String filePath = makePdfAndSave(processTemplate(template.getName(), templateModel), resume.getResumeName(),
+        if (StringUtils.isNotBlank(user.getImgPath())) {
+            InputStream inputStream = awsUtils.downloadFileFromS3(user.getImgPath());
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            String base64 = Base64.getEncoder().encodeToString(bytes);
+            templateModel.setImage("data:image/jpeg;base64, " + base64);
+        }
+        String filePath = makePdfAndSave(processTemplate(template.getName(), templateModel), "resume" + resumeId,
                 userId);
-
-        resumeMapper.updateFilePath(filePath + resume.getResumeName() + ".pdf", resumeId, userId);
-
+        resumeMapper.updateFilePath(filePath + "resume" + resumeId + ".pdf", resumeId, userId);
+        return true;
         // makePdfAndSave(processTemplate("left_right_green.html", new TemplateModel()), "myresume");
-
     }
 
     @SneakyThrows
@@ -287,7 +312,7 @@ public class ResumeService {
 
             HtmlConverter.convertToPdf(html, pdf, prop);
 
-            String filePath = "user_" + userId + "/";
+            String filePath = "user" + userId + "/";
 
             boolean saveResult = awsUtils.uploadFileToS3(outFile, filePath);
 

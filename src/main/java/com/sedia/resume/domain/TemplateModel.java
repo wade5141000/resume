@@ -28,4 +28,12 @@ public class TemplateModel {
     List<SkillEntity> skills;
 
     List<LinkEntity> links;
+
+    String feature;
+
+    String image = "images/avatar_default.jpg";
+
+    String intro;
+
+    String name;
 }
