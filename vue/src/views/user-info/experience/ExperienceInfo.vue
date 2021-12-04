@@ -100,6 +100,29 @@
                   <template v-slot:btn>
                     <v-icon color="blue">mdi-chat-question</v-icon>看看範例
                   </template>
+                  <template v-slot:text>
+                    目前在國內旅遊公司服務，負責製作旅遊團活動物製作、企業戶旅遊手冊編排與設計、旅遊產品DM設計、異業合作活動攝影、公司網站美術設計、旅展場地布置:廣告物布置、展場監工。<br />
+                    使用者介面設計:<br />
+                    <ul>
+                      <li>RWD 切版，動態效果處理的開發經驗</li>
+                      <li>
+                        優化網站介面，簡化顧客瀏覽流程，增加易讀性及網站美感。
+                      </li>
+                      <li>HTML & CSS 開發設計</li>
+                      <li>Axure RP 製作 Wireframe</li>
+                      <li>Figma Mockup & Prototype</li>
+                      <li>Adobe Photoshop繪圖</li>
+                    </ul>
+                    使用者體驗設計:<br />
+                    <ul>
+                      <li>定義設計目的</li>
+                      <li>
+                        能運用同理心地圖/人物誌/顧客旅程地圖/使用者故事等進行UX分析
+                      </li>
+                      <li>易用性測試</li>
+                      <li>使用者訪談</li>
+                    </ul>
+                  </template>
                 </theDialog>
               </v-col>
             </v-row>

@@ -22,6 +22,12 @@
                   <template v-slot:btn>
                     <v-icon color="blue">mdi-chat-question</v-icon>看看範例
                   </template>
+                  <template v-slot:text>
+                    我是典型的射手座，熱愛美食，對異國文化與藝術感興趣，面對事物總抱持樂觀，喜愛四處旅行，藉此汲取自己的美術靈感。<br />
+                    在學時就讀輔仁大學
+                    應用美術系，因其是一所國際綜合大學，時常要與各種不同文化、背景的同學相處及合作，在學期間除學習系上課程內容，培養專業技能及設計工具，更積極去參與國內相關藝術設計競賽。<br />
+                    第一份工作從事至今，讓我更加深刻要從事設計相關工作是一點點的累積培養，主要負責工作是公司內部美術設計，包括活動物品設計、DM設計、場地布置，為精進自己的網站美術設計品質，另外學會HTML、CSS、JaveScript前端程式語言，並於2019年參加台灣國際平面設計展銀獎，感謝公司的栽培與肯定，在美術設計及相關領域上我仍期許自己能更精進一步。
+                  </template>
                 </theDialog>
               </v-col>
             </v-row>
@@ -44,6 +50,42 @@
                 <theDialog>
                   <template v-slot:btn>
                     <v-icon color="blue">mdi-chat-question</v-icon>看看範例
+                  </template>
+                  <template v-slot:text>
+                    Dear Hiring Manager,<br />
+                    I am looking for a position as a UIUX designer. With
+                    extensive experience in designing and implementing web-based
+                    user interfaces, I am well suited to this position.<br />
+                    For over one year I have been a designer at XYZ company. I’m
+                    not only responsible for graphic designs but also use HTML,
+                    CSS, and JavaScript to direct and design front-end projects
+                    from concept to completion. I have experience managing web
+                    and interactive communication projects from initial
+                    consultation through successful launch and have a proven
+                    ability to handle various projects at the same time and
+                    complete them by given deadline.<br />
+                    Some highlights of my experience include:<br />
+                    <ul>
+                      <li>
+                        Collaborated with developers and designers using
+                        Subversion for version control
+                      </li>
+                      <li>
+                        Completed UI redesign of website using usability case
+                        studies, wireframes, and prototypes to create a fully
+                        functional web application
+                      </li>
+                      <li>
+                        Designed and developed interactive prototypes and
+                        mockups using HTML5, CSS3, and jQuery for future
+                        enhancements of the website, then implemented them on
+                        the live web platform
+                      </li>
+                      <li>
+                        Worked with the development team to correct any UI
+                        problems or HTML/CSS issues
+                      </li>
+                    </ul>
                   </template>
                 </theDialog>
               </v-col>
