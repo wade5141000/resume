@@ -24,14 +24,20 @@
         </v-list>
       </v-menu>
       <v-btn
-        class="mr-2 justify-end"
-        text
-        x-large
-        color="blue"
+        class="mr-2 justify-end white--text"
+        large
+        depressed
+        color="blue darken-2"
         @click="routerTo('/signup')"
         v-if="!isLogin"
       >
         帳號註冊
+        <v-icon
+        right
+        dark
+      >
+        mdi-login
+      </v-icon>
       </v-btn>
     </v-app-bar>
     <v-main class="grey lighten-3">
