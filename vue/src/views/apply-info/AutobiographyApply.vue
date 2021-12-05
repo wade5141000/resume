@@ -110,7 +110,7 @@ export default {
     apply() {
       http.put("/resume/apply/" + this.resume.id).then(response => {
         if (response.data == true) {
-          alert("套用模板成功");
+          alert("套用模板成功，請到我的履歷表下載履歷");
         } else {
           alert("套用模板失敗");
         }

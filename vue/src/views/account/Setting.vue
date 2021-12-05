@@ -59,6 +59,7 @@
               outlined
               dense
               v-model="user.phone"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="7" lg="7">
@@ -67,6 +68,7 @@
               outlined
               dense
               v-model="user.email"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" lg="3">

@@ -8,7 +8,9 @@
 
       <v-menu offset-y v-if="isLogin">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark v-bind="attrs" v-on="on"> 選單 </v-btn>
+          <v-btn color="primary" dark v-bind="attrs" v-on="on">
+            我的選單
+          </v-btn>
         </template>
         <v-list>
           <v-list-item
