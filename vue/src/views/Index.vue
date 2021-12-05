@@ -2,8 +2,8 @@
   <v-row justify="center" class="white">
     <v-col cols="12" class="pa-0">
       <v-carousel
-        cycle
         hide-delimiter-background
+        hide-delimiters
         :show-arrows="false"
         :height="400"
       >
@@ -20,10 +20,10 @@
       <v-card class="mx-auto justify-center" max-width="250" :elevation="0">
         <v-img src="../assets/icon01.svg" height="290"></v-img>
         <v-card-title class="d-flex justify-center text-center my-2"
-          ><h3>多種模版<br />隨時想換就換</h3>
+          ><h3>斜槓人生<br />建立多份履歷</h3>
         </v-card-title>
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
-          多種樣式模版，不同職務搭配不同模版<br />只要一鍵，即可快速更換
+          依據不同職務，建立不同履歷<br />確保每份職務都有專屬的履歷
         </v-card-subtitle>
       </v-card>
     </v-col>
@@ -42,7 +42,7 @@
       <v-card class="mx-auto justify-center" max-width="250" :elevation="0">
         <v-img src="../assets/icon01.svg" height="290"></v-img>
         <v-card-title class="d-flex justify-center text-center my-2"
-          ><h3>客製化模版<br />隨我設計</h3>
+          ><h3>多種模版<br />一鍵輕鬆更換</h3>
         </v-card-title>
         <v-card-subtitle class="d-flex justify-center text-center pa-0 my-2">
           一鍵更換履歷模版
@@ -63,15 +63,6 @@ export default {
     src: "",
     show: false,
     items: [
-      {
-        src: require("../assets/slider01.jpg")
-      },
-      {
-        src: require("../assets/slider01.jpg")
-      },
-      {
-        src: require("../assets/slider01.jpg")
-      },
       {
         src: require("../assets/slider01.jpg")
       }
