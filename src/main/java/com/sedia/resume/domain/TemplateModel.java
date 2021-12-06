@@ -36,4 +36,8 @@ public class TemplateModel {
     String intro;
 
     String name;
+
+    String bioCh;
+
+    String bioEn;
 }

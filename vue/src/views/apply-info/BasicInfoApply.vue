@@ -152,7 +152,7 @@
             <div justify="end">
               <v-responsive>
                 <v-img
-                  src="../../assets/resume_template/resume01.png"
+                  src="../../assets/resume_template/resume1.png"
                   max-height="350"
                   contain
                 >

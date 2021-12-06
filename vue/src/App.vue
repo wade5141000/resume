@@ -32,12 +32,9 @@
         v-if="!isLogin"
       >
         帳號註冊
-        <v-icon
-        right
-        dark
-      >
-        mdi-login
-      </v-icon>
+        <v-icon right dark>
+          mdi-login
+        </v-icon>
       </v-btn>
     </v-app-bar>
     <v-main class="grey lighten-3">

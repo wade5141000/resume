@@ -474,8 +474,8 @@ export default {
     features: [],
     websites: [
       { text: "個人網站", value: "個人網站" },
-      { text: "Facebook", value: "Facebook" },
-      { text: "Instagram", value: "Instagram" },
+      { text: "FB", value: "FB" },
+      { text: "IG", value: "IG" },
       { text: "Linkedin", value: "Linkedin" },
       { text: "Github", value: "Github" }
     ],
