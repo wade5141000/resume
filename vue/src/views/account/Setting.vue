@@ -173,7 +173,6 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data.byteLength);
           if (response.data.byteLength === 0) {
             this.image = require("../../assets/avatar_default.jpg");
           } else {

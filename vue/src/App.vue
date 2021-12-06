@@ -79,6 +79,7 @@ export default {
     items: [
       { title: "基本資料", link: "/setting" },
       { title: "我的履歷表", link: "/resume-list" },
+      { title: "個人網站", link: "/website" },
       { title: "登出", link: "/logout" }
     ]
   }),
