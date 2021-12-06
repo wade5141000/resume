@@ -1,21 +1,11 @@
 <template>
   <v-row justify="center" class="white">
     <v-col justify="center" cols="12" class="pa-0 justify-center text-center">
-      <v-carousel
-        hide-delimiter-background
-        hide-delimiters
-        :show-arrows="false"
-        :height="500"
-      >
-        <v-carousel-item
-          v-for="(item, i) in items"
-          :key="i"
-          :src="item.src"
-          reverse-transition="fade-transition"
-          transition="fade-transition"
-        ></v-carousel-item>
-      </v-carousel>
-
+      <v-col src="../assets/webistebanner.png" col="12" lg="12" sm="12" class="my-1 d-flex justify-center text-center">
+        <v-avatar class="profile my-5" color="grey" size="225" circle>
+                <v-img src="../assets/avatar_default.jpg"> </v-img>
+              </v-avatar>
+      </v-col>
       <!-- 基本資料 -->
       <v-col
         justify="center"
