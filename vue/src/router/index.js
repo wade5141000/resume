@@ -24,6 +24,7 @@ import ApplyInfoIntro from "../views/apply-info/ApplyInfoIntro";
 import TemplateList from "../views/TemplateList";
 import ResumeList from "../views/user-info/ResumeList";
 import Resume from "../views/user-info/Resume";
+import WebsiteTemplate from "../views/WebsiteTemplate";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -91,6 +92,14 @@ const routes = [
     component: TemplateList,
     meta: {
       title: "履歷模版範本"
+    }
+  },
+  {
+    path: "/website-template",
+    name: "WebsiteTemplate",
+    component: WebsiteTemplate,
+    meta: {
+      title: "網站模版"
     }
   },
   {
@@ -265,6 +274,7 @@ router.beforeEach((to, from, next) => {
     // "/skillinfo-apply",
     // "/autobiography-apply",
     "/apply-info-intro",
+    "/website-template",
     "/template-list"
     // "/setting"
   ];
