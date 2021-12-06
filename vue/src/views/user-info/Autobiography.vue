@@ -39,8 +39,8 @@
                   rows="6"
                   auto-grow
                   no-resize
-                  maxLength="2000"
-                  counter="2000"
+                  maxLength="1000"
+                  counter="1000"
                   v-model="autobiography.chinese"
                 ></v-textarea>
               </v-col>
@@ -98,8 +98,8 @@
                   rows="6"
                   auto-grow
                   no-resize
-                  maxLength="4000"
-                  counter="4000"
+                  maxLength="2000"
+                  counter="2000"
                   v-model="autobiography.english"
                 ></v-textarea>
               </v-col>

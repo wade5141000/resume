@@ -17,21 +17,13 @@
                 lg="3"
               >
                 <v-card class="ma-1">
-                  <v-dialog width="500">
+                  <v-dialog width="535px">
                     <template v-slot:activator="{ on, attrs }">
                       <v-img
                         v-bind="attrs"
                         v-on="on"
-                        :src="
-                          `https://picsum.photos/500/300?image=${(index + 1) *
-                            5 +
-                            10}`
-                        "
-                        :lazy-:src="
-                          `https://picsum.photos/500/300?image=${(index + 1) *
-                            5 +
-                            10}`
-                        "
+                        :src="item.image"
+                        :lazy-:src="item.image"
                         class="white--text align-end"
                         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                         height="350px"
@@ -45,17 +37,10 @@
                     <v-card>
                       <v-img
                         class="white--text align-end"
-                        height="350px"
-                        :src="
-                          `https://picsum.photos/500/300?image=${(index + 1) *
-                            5 +
-                            10}`
-                        "
-                        :lazy-:src="
-                          `https://picsum.photos/500/300?image=${(index + 1) *
-                            5 +
-                            10}`
-                        "
+                        height="700px"
+                        width="535px"
+                        :src="item.image"
+                        :lazy-:src="item.image"
                       >
                         <!--                          <v-card-title>Top 10 Australian beaches</v-card-title>-->
                       </v-img>
@@ -64,7 +49,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-dialog width="500">
+                    <v-dialog width="535px">
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn icon v-bind="attrs" v-on="on">
                           <v-icon title="預覽履歷" alt="預覽履歷"
@@ -76,24 +61,17 @@
                       <v-card>
                         <v-img
                           class="white--text align-end"
-                          height="350px"
-                          :src="
-                            `https://picsum.photos/500/300?image=${(index + 1) *
-                              5 +
-                              10}`
-                          "
-                          :lazy-:src="
-                            `https://picsum.photos/500/300?image=${(index + 1) *
-                              5 +
-                              10}`
-                          "
+                          height="700px"
+                          width="535px"
+                          :src="item.image"
+                          :lazy-:src="item.image"
                         >
                           <!--                          <v-card-title>Top 10 Australian beaches</v-card-title>-->
                         </v-img>
                       </v-card>
                     </v-dialog>
 
-                    <v-btn icon @click="apply(item.id)" :disabled="item.id > 1">
+                    <v-btn icon @click="apply(item.id)" :disabled="item.id > 2">
                       <v-icon title="套用履歷" alt="套用履歷"
                         >mdi-bookmark-box-multiple-outline</v-icon
                       >
@@ -118,8 +96,19 @@ export default {
 
     http.get("/template").then(response => {
       this.templates = response.data;
-      for (let i = 0; i < 9; i++) {
-        this.templates.push({ id: i + 100 });
+      for (let i = 0; i < 12; i++) {
+        if (i === 0 || i === 1) {
+          this.templates[i][
+            "image"
+          ] = require("../assets/resume_template/resume" + (i + 1) + ".png");
+        } else {
+          this.templates.push({
+            id: i + 100,
+            image: require("../assets/resume_template/resume" +
+              (i + 1) +
+              ".png")
+          });
+        }
       }
     });
   },
