@@ -64,10 +64,10 @@
           </v-col>
           <v-col cols="12" md="7" lg="7">
             <v-text-field
-              label="聯絡email"
+              label="註冊email"
               outlined
               dense
-              v-model="user.email"
+              v-model="user.account"
               disabled
             ></v-text-field>
           </v-col>
@@ -77,7 +77,7 @@
               x-large
               color="blue"
               class="ma-2 pa-5 white--text"
-              to="/resetpw"
+              to="/forgetpw"
             >
               變更密碼
               <v-icon right light> mdi-lock-outline </v-icon>

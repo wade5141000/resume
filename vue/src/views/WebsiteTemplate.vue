@@ -102,16 +102,41 @@
             <v-icon color="blue" class="mr-1" v-if="item.platform == 'FB'"
               >mdi-facebook</v-icon
             >
+            <a
+              href="#"
+              class="text-decoration-none"
+              v-if="item.platform == 'FB'"
+              >{{ item.url }}</a
+            >
             <v-icon color="blue" class="mr-1" v-if="item.platform == 'Linkedin'"
               >mdi-linkedin</v-icon
+            >
+            <a
+              href="#"
+              class="text-decoration-none"
+              v-if="item.platform == 'Linkedin'"
+              >{{ item.url }}</a
             >
             <v-icon color="blue" class="mr-1" v-if="item.platform == 'IG'"
               >mdi-instagram</v-icon
             >
+            <a
+              :href="'https://www.instagram.com/' + item.url"
+              class="text-decoration-none"
+              target="_blank"
+              v-if="item.platform == 'IG'"
+              >{{ item.url }}</a
+            >
             <v-icon color="blue" class="mr-1" v-if="item.platform == '個人網站'"
               >mdi-web</v-icon
             >
-            <a href="#" class="text-decoration-none">{{ item.url }}</a>
+            <a
+              :href="item.url"
+              class="text-decoration-none"
+              target="_blank"
+              v-if="item.platform == '個人網站'"
+              >{{ item.url }}</a
+            >
           </v-col>
         </v-col>
       </v-col>

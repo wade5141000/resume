@@ -26,6 +26,7 @@
       height: 297mm;
       padding: 3mm;
       margin: 0 auto;
+      overflow: hidden;
     }
 
     section {
@@ -133,7 +134,7 @@
     }
 
     #autobiography-ch p{
-      padding: 5px;
+      padding: 15px;
     }
 
     .clear-fix {
@@ -147,15 +148,14 @@
   <div class="content">
     <div>
       <!-- column bottom -->
-      <div class="p-0 column-bottom">
+      <div class="p-0 column-bottom bg-white">
         <div>
           <!-- 自傳 education -->
-          <div id="autobiography-ch">
+          <div id="autobiography-ch" class="bg-white" style="color: #000;">
             <h4 class="text-title2 p-1 m-1"><strong>中文自傳</strong></h4>
-            ${bioCh}
-            
+            <p>${bioCh}</p>
 
-           
+
           </div>
           </div>
 

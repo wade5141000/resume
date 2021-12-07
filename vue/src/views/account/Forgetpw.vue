@@ -16,7 +16,7 @@
             <div class="my-4 align-center text-center">
               <h2 justify="center">忘記密碼</h2>
               <div class="subtitle-2 mt-2">
-                請填寫您的註冊 E-mail，我們將重新寄送密碼給您
+                請填寫您的註冊 E-mail，我們將寄送重置密碼連結給您
               </div>
             </div>
             <v-sheet max-width="400">
@@ -82,7 +82,7 @@ export default {
           .then(response => {
             console.log(response);
             if (response.data === true) {
-              alert("發送成功");
+              alert("發送成功，請到您的電子郵箱使用連結重置密碼。");
             } else {
               alert("發生錯誤!");
             }
