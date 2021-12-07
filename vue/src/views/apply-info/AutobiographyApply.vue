@@ -64,6 +64,14 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-col>
+
+    <v-overlay :value="overlay">
+      <v-progress-circular
+        size="64"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </v-overlay>
   </v-row>
 </template>
 
@@ -88,7 +96,8 @@ export default {
     panel: [0],
     bioCh: false,
     bioEn: false,
-    resume: {}
+    resume: {},
+    overlay: false
   }),
   methods: {
     save() {
@@ -108,13 +117,19 @@ export default {
         });
     },
     apply() {
-      http.put("/resume/apply/" + this.resume.id).then(response => {
-        if (response.data == true) {
-          alert("套用模板成功，請到我的履歷表下載履歷");
-        } else {
-          alert("套用模板失敗");
-        }
-      });
+      this.overlay = true;
+      http
+        .put("/resume/apply/" + this.resume.id)
+        .then(response => {
+          if (response.data == true) {
+            alert("套用模板成功，請到我的履歷表下載履歷");
+          } else {
+            alert("套用模板失敗");
+          }
+        })
+        .finally(() => {
+          this.overlay = false;
+        });
     }
   }
 };
