@@ -81,6 +81,14 @@
         </v-tabs>
       </v-card>
     </v-col>
+
+    <v-overlay :value="overlay">
+      <v-progress-circular
+        size="64"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </v-overlay>
   </v-row>
 </template>
 
@@ -95,7 +103,8 @@ export default {
   },
   data: () => ({
     resumeList: [],
-    templateId: 0
+    templateId: 0,
+    overlay: false
   }),
   methods: {
     getResume() {
@@ -144,6 +153,7 @@ export default {
       }
     },
     download(resumeId) {
+      this.overlay = true;
       let user = localStorage.getItem("user");
       user = JSON.parse(user);
 
@@ -166,6 +176,9 @@ export default {
           link.setAttribute("download", "resume.pdf");
           document.body.appendChild(link);
           link.click();
+        })
+        .finally(() => {
+          this.overlay = false;
         });
     }
   }
