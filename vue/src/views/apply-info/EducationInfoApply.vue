@@ -37,7 +37,6 @@
                       color="red"
                       :value="education.id"
                       v-model="selected"
-                      @change="count"
                     ></v-checkbox>
                   </v-card-title>
                   <v-row class="mx-auto mt-5 ml-10 pa-0">
@@ -100,7 +99,11 @@ export default {
     theStepper,
     theDialog
   },
-  watch: {},
+  computed: {
+    selectedCount() {
+      return this.selected.length;
+    }
+  },
   created: function() {
     http
       .get("/resume/" + this.$route.query.resumeId)
@@ -111,6 +114,11 @@ export default {
         http.get("/template/" + this.resume.templateID).then(response => {
           this.template = response.data;
         });
+      })
+      .then(() => {
+        http.get("/resume/" + this.resume.id + "/relation").then(response => {
+          this.selected = response.data.education;
+        });
       });
     http.get("/education").then(response => {
       this.educations = response.data;
@@ -120,7 +128,6 @@ export default {
     panel: [0],
     educations: [],
     selected: [],
-    selectedCount: 0,
     template: {},
     resume: {}
   }),
@@ -143,9 +150,6 @@ export default {
             }
           });
       }
-    },
-    count() {
-      this.selectedCount = this.selected.length;
     }
   }
 };

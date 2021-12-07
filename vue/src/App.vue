@@ -8,7 +8,16 @@
 
       <v-menu offset-y v-if="isLogin">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark v-bind="attrs" v-on="on"> 選單 </v-btn>
+          <v-btn
+            class="mr-2 justify-end white--text"
+            color="blue darken-2"
+            large
+            depressed
+            v-bind="attrs"
+            v-on="on"
+          >
+            我的選單
+          </v-btn>
         </template>
         <v-list>
           <v-list-item
@@ -30,12 +39,9 @@
         v-if="!isLogin"
       >
         帳號註冊
-        <v-icon
-        right
-        dark
-      >
-        mdi-login
-      </v-icon>
+        <v-icon right dark>
+          mdi-login
+        </v-icon>
       </v-btn>
     </v-app-bar>
     <v-main class="grey lighten-3">
@@ -80,6 +86,7 @@ export default {
     items: [
       { title: "基本資料", link: "/setting" },
       { title: "我的履歷表", link: "/resume-list" },
+      { title: "個人網站", link: "/website" },
       { title: "登出", link: "/logout" }
     ]
   }),

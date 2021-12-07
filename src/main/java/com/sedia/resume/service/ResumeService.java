@@ -8,8 +8,12 @@ import com.itextpdf.io.font.FontProgram;
 import com.itextpdf.io.font.FontProgramFactory;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.utils.PdfMerger;
 import com.itextpdf.layout.font.FontProvider;
+import com.sedia.resume.domain.ResumeRelation;
 import com.sedia.resume.domain.TemplateModel;
 import com.sedia.resume.entity.TemplateEntity;
 import com.sedia.resume.repository.LinkMapper;
@@ -19,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.sedia.resume.entity.ResumeEntity;
@@ -30,9 +36,7 @@ import com.sedia.resume.repository.ResumeRelationMapper;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,7 +61,7 @@ public class ResumeService {
     public ResumeEntity getResume(int id) {
         UserEntity currentUser = userService.getCurrentUser();
         int uid = currentUser.getId();
-        return resumeMapper.firstResume(id, uid).orElseThrow(() -> new ApiException("找不到語言"));
+        return resumeMapper.firstResume(id, uid).orElseThrow(() -> new ApiException("找不到履歷"));
 
     }
 
@@ -196,7 +200,7 @@ public class ResumeService {
         return true;
     }
 
-    public void applyResume(int resumeId) throws Exception {
+    public boolean applyResume(int resumeId) throws Exception {
 
         UserEntity user = userService.getCurrentUser();
         int userId = user.getId();
@@ -209,26 +213,50 @@ public class ResumeService {
 
         // TODO template size 判斷??
 
-        Map<String, String> basicInfoMap = new HashMap<>();
-
-        basicInfoMap.put("introduction", user.getIntroduction());
+        Map<String, String> basicInfoMap = new LinkedHashMap<>();
 
         for (String infoColumn : basicInfoColumns) {
             switch (infoColumn) {
             case "name":
-                basicInfoMap.put("name", user.getName());
+                basicInfoMap.put("姓名", user.getName());
+                break;
             case "birthday":
-                basicInfoMap.put("birthday", user.getBirthday().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+                basicInfoMap.put("生日", user.getBirthday().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")));
+                break;
             case "sex":
-                basicInfoMap.put("sex", user.getSex());
+                basicInfoMap.put("性別", user.getSex());
+                break;
             case "phone":
-                basicInfoMap.put("phone", user.getPhone());
+                basicInfoMap.put("聯絡電話", user.getPhone());
+                break;
+            case "militaryService":
+                basicInfoMap.put("兵役狀況", user.getMilitaryService());
+                break;
+            case "address":
+                basicInfoMap.put("地址", user.getAddress());
+                break;
+            case "email":
+                basicInfoMap.put("email", user.getEmail());
+                break;
+            case "driverLicense":
+                basicInfoMap.put("駕照", user.getDriverLicense());
+                break;
+            case "specialIdentity":
+                basicInfoMap.put("特殊身分", user.getSpecialIdentity());
+                break;
             }
         }
 
         TemplateModel templateModel = new TemplateModel();
-
+        templateModel.setName(user.getName());
         templateModel.setBasicInfo(basicInfoMap);
+
+        templateModel.setBioCh(user.getBioChn().replaceAll("(\n)", "<br />"));
+        templateModel.setBioEn(user.getBioEng().replaceAll("(\n)", "<br />"));
+
+        templateModel.setFeature(user.getFeature());
+
+        templateModel.setIntro(user.getIntroduction());
 
         templateModel.setLinks(linkMapper.findAll(userId));
 
@@ -243,26 +271,86 @@ public class ResumeService {
         templateModel.setSkills(resumeRelationMapper.getSkillIdByResumeId(resumeId).stream().map(skillService::getSkill)
                 .collect(Collectors.toList()));
 
-        String filePath = makePdfAndSave(processTemplate(template.getName(), templateModel), resume.getResumeName(),
-                userId);
+        if (StringUtils.isNotBlank(user.getImgPath())) {
+            InputStream inputStream = awsUtils.downloadFileFromS3(user.getImgPath());
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            String base64 = Base64.getEncoder().encodeToString(bytes);
+            templateModel.setImage("data:image/jpeg;base64, " + base64);
+        }
 
-        resumeMapper.updateFilePath(filePath + resume.getResumeName() + ".pdf", resumeId, userId);
+        File outFile = null;
+        File chFile = null;
+        File enFile = null;
+        File resultFile = null;
 
-        // makePdfAndSave(processTemplate("left_right_green.html", new TemplateModel()), "myresume");
+        List<String> bio = new ArrayList<>();
+        String filePath = "user" + userId + "/";
+        try {
+            outFile = new File("src/main/resources/temp/resume" + resumeId + ".pdf");
+            chFile = new File("src/main/resources/temp/ch" + resumeId + ".pdf");
+            enFile = new File("src/main/resources/temp/en" + resumeId + ".pdf");
+            resultFile = new File("src/main/resources/temp/result" + resumeId + ".pdf");
 
+            makePdfAndSave(processTemplate(template.getName(), templateModel, "index"), outFile);
+
+            if (resume.isBioCh()) {
+                bio.add("ch");
+                makePdfAndSave(processTemplate(template.getName(), templateModel, "ch"), chFile);
+            }
+
+            if (resume.isBioEn()) {
+                bio.add("en");
+                makePdfAndSave(processTemplate(template.getName(), templateModel, "en"), enFile);
+            }
+
+            if (bio.size() > 0) {
+                PdfDocument pdf = new PdfDocument(new PdfWriter(resultFile));
+                PdfMerger merger = new PdfMerger(pdf);
+
+                PdfDocument firstSourcePdf = new PdfDocument(new PdfReader(outFile));
+                merger.merge(firstSourcePdf, 1, firstSourcePdf.getNumberOfPages());
+
+                for (int i = 0; i < bio.size(); i++) {
+                    PdfDocument secondSourcePdf;
+                    if (bio.get(i).equals("ch")) {
+                        secondSourcePdf = new PdfDocument(new PdfReader(chFile));
+                    } else {
+                        secondSourcePdf = new PdfDocument(new PdfReader(enFile));
+                    }
+                    merger.merge(secondSourcePdf, 1, secondSourcePdf.getNumberOfPages());
+                    secondSourcePdf.close();
+                }
+                firstSourcePdf.close();
+                pdf.close();
+                awsUtils.uploadFileToS3(resultFile, filePath);
+                resumeMapper.updateFilePath(filePath + "result" + resumeId + ".pdf", resumeId, userId);
+            } else {
+                awsUtils.uploadFileToS3(outFile, filePath);
+                resumeMapper.updateFilePath(filePath + "resume" + resumeId + ".pdf", resumeId, userId);
+            }
+        } finally {
+            if (outFile != null && outFile.exists()) {
+                FileUtils.forceDelete(outFile);
+            }
+            if (chFile != null && chFile.exists()) {
+                FileUtils.forceDelete(chFile);
+            }
+            if (enFile != null && enFile.exists()) {
+                FileUtils.forceDelete(enFile);
+            }
+            if (resultFile != null && resultFile.exists()) {
+                FileUtils.forceDelete(resultFile);
+            }
+        }
+        return true;
     }
 
     @SneakyThrows
-    private String makePdfAndSave(String html, String pdfName, int userId) {
-
-        File outFile = null;
+    private void makePdfAndSave(String html, File outFile) {
 
         try {
-
-            outFile = new File("src/main/resources/temp/" + pdfName + ".pdf");
             if (!outFile.exists()) {
                 FileUtils.touch(outFile);
-
             }
 
             PdfWriter writer = new PdfWriter(outFile);
@@ -286,37 +374,33 @@ public class ResumeService {
 
             HtmlConverter.convertToPdf(html, pdf, prop);
 
-            String filePath = "user_" + userId + "/";
-
-            boolean saveResult = awsUtils.uploadFileToS3(outFile, filePath);
-
-            if (!saveResult) {
-                log.error("save to s3 失敗");
-                throw new RuntimeException("save to s3 失敗");
-            }
-            return filePath;
-
         } catch (Exception e) {
             log.error("產生PDF失敗", e);
             throw e;
-        } finally {
-            if (outFile != null && outFile.exists()) {
-                FileUtils.forceDelete(outFile);
-            }
         }
 
     }
 
-    private String processTemplate(String template, TemplateModel templateModel) throws Exception {
+    private String processTemplate(String template, TemplateModel templateModel, String html) throws Exception {
 
         StringWriter sw = new StringWriter();
 
         // freemarker.getTemplate("template_A4.html").process(user, sw);
-        freemarker.getTemplate("html/" + template + "/index.html").process(templateModel, sw);
+        freemarker.getTemplate("html/" + template + "/" + html + ".html").process(templateModel, sw);
         log.info("Process template result: {}", sw.toString());
 
         // return new ByteArrayInputStream(sw.toString().getBytes(StandardCharsets.UTF_8));
         return sw.toString();
+
+    }
+
+    public ResumeRelation getResumeRelation(int id) {
+
+        return ResumeRelation.builder().education(resumeRelationMapper.getEducationIdByResumeId(id))
+                .experience(resumeRelationMapper.getExperienceIdByResumeId(id))
+                .skill(resumeRelationMapper.getSkillIdByResumeId(id))
+                .language(resumeRelationMapper.getLanguageIdByResumeId(id))
+                .license(resumeRelationMapper.getLicenseIdByResumeId(id)).build();
 
     }
 }

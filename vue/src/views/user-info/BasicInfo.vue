@@ -216,6 +216,11 @@
                   <template v-slot:btn>
                     <v-icon color="blue">mdi-chat-question</v-icon>看看範例
                   </template>
+                  <template v-slot:text>
+                    我個性開朗活潑，興趣是戶外攝影、網路購物，在學時以嚴謹謙虛的態度學習設計相關技能，加上長輩及老師的指導，本著將來能在社會上貢獻一技之長，我相信自己能往卓越的UI/UX設計師方向發展。<br /><br />
+                    我有較高的美術感知與設計思維能力，曾參與國內多項設計競賽，並奪得獎項，在網站美術設計、介面互動設計、圖形樣式設計都有涉略，會使用photoshop、dreamweaver、illustrator等工具。<br /><br />
+                    久聞貴公司是專業的設計水平，獨特的設計美感，嫻熟的專業團隊服務，在業界頗有知名度，希望能有機會參與貴公司面試。
+                  </template>
                 </theDialog>
               </v-col>
             </v-row>
@@ -469,8 +474,8 @@ export default {
     features: [],
     websites: [
       { text: "個人網站", value: "個人網站" },
-      { text: "Facebook", value: "Facebook" },
-      { text: "Instagram", value: "Instagram" },
+      { text: "FB", value: "FB" },
+      { text: "IG", value: "IG" },
       { text: "Linkedin", value: "Linkedin" },
       { text: "Github", value: "Github" }
     ],

@@ -109,6 +109,7 @@ export default {
             console.log(response);
             if (response.data === true) {
               alert("修改成功");
+              this.$router.push("/login");
             } else {
               alert("發生錯誤!");
             }

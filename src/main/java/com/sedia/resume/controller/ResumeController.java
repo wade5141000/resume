@@ -1,6 +1,7 @@
 package com.sedia.resume.controller;
 
 import com.sedia.resume.domain.BioRequest;
+import com.sedia.resume.domain.ResumeRelation;
 import com.sedia.resume.entity.ResumeEntity;
 import com.sedia.resume.entity.UserEntity;
 import com.sedia.resume.service.ResumeService;
@@ -101,10 +102,15 @@ public class ResumeController {
     }
 
     @PutMapping("/apply/{resumeId}")
-    public void applyResume(@PathVariable int resumeId) throws Exception {
+    public boolean applyResume(@PathVariable int resumeId) throws Exception {
 
-        resumeService.applyResume(resumeId);
+        return resumeService.applyResume(resumeId);
 
+    }
+
+    @GetMapping("/{id}/relation")
+    public ResumeRelation getResumeRelations(@PathVariable int id) {
+        return resumeService.getResumeRelation(id);
     }
 
     @PostMapping("/download/{resumeId}")

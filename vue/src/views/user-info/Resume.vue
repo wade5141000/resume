@@ -44,6 +44,7 @@
                     x-large
                     class="py-1 text-decoration-none"
                     @click="resumeList"
+                    v-if="!this.$route.query.hide"
                   >
                     選擇已建立的履歷！
                   </v-btn>
@@ -86,6 +87,10 @@ export default {
             this.$router.push({
               path: "/apply-info",
               query: { resumeId: response.data }
+            });
+          } else if (this.$route.query.hide) {
+            this.$router.push({
+              path: "/resume-list"
             });
           } else {
             this.$router.push({

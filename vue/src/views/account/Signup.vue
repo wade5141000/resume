@@ -127,6 +127,7 @@ export default {
           })
           .then(response => {
             alert("註冊成功");
+            this.$router.push("/login");
           })
           .catch(error => {
             // console.log(error.response.data)

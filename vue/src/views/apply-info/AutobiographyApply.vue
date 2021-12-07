@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="12" md="10" lg="9">
-      <theStepper step="1"></theStepper>
+      <theStepper step="5"></theStepper>
       <v-expansion-panels v-model="panel" multiple class="mt-4">
         <v-expansion-panel>
           <v-expansion-panel-header color="blue">
@@ -39,7 +39,7 @@
             </v-row>
 
             <v-row justify="center" class="mb-2">
-              <v-col cols="6" md="5" lg="4">
+              <v-col cols="3">
                 <v-btn
                   depressed
                   large
@@ -49,9 +49,14 @@
                   >回上一頁</v-btn
                 >
               </v-col>
-              <v-col cols="6" md="5" lg="4">
-                <v-btn depressed large block color="primary" @click="nextStep"
+              <v-col cols="3">
+                <v-btn depressed large block color="primary" @click="save"
                   >儲存</v-btn
+                >
+              </v-col>
+              <v-col cols="3">
+                <v-btn depressed large block color="primary" @click="apply"
+                  >套用模板完成</v-btn
                 >
               </v-col>
             </v-row>
@@ -75,6 +80,8 @@ export default {
   created: function() {
     http.get("/resume/" + this.$route.query.resumeId).then(response => {
       this.resume = response.data;
+      this.bioCh = this.resume.bioCh;
+      this.bioEn = this.resume.bioEn;
     });
   },
   data: () => ({
@@ -84,9 +91,9 @@ export default {
     resume: {}
   }),
   methods: {
-    nextStep() {
-      console.log(this.bioCh);
-      console.log(this.bioEn);
+    save() {
+      // console.log(this.bioCh);
+      // console.log(this.bioEn);
       http
         .put("/resume/" + this.resume.id + "/bio", {
           bioCh: this.bioCh,
@@ -99,6 +106,15 @@ export default {
             alert("操作失敗");
           }
         });
+    },
+    apply() {
+      http.put("/resume/apply/" + this.resume.id).then(response => {
+        if (response.data == true) {
+          alert("套用模板成功，請到我的履歷表下載履歷");
+        } else {
+          alert("套用模板失敗");
+        }
+      });
     }
   }
 };

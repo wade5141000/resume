@@ -26,74 +26,66 @@
             <v-row no-gutters class="mt-6 mx-auto" justify="center">
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.name"
+                  :label="'姓名: ' + user.name"
                   color="red darken-3"
                   value="name"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.birthday"
+                  :label="'生日: ' + user.birthday"
                   color="red darken-3"
                   value="birthday"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.sex"
+                  :label="'性別: ' + user.sex"
                   color="red darken-3"
                   value="sex"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.militaryService"
+                  :label="'服役狀況: ' + user.militaryService"
                   color="red darken-3"
                   value="militaryService"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="10" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.address"
+                  :label="'聯絡地址: ' + user.address"
                   color="red darken-3"
                   value="address"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.phone"
+                  :label="'聯絡電話: ' + user.phone"
                   color="red darken-3"
                   value="phone"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="5" lg="5" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.email"
+                  :label="'e-mail: ' + user.email"
                   color="red darken-3"
                   value="email"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col cols="10" md="10" lg="10" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.driverLicense"
+                  :label="'駕照: ' + user.driverLicense"
                   color="red darken-3"
                   value="driverLicense"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
               <v-col
@@ -104,11 +96,10 @@
                 justify="start"
               >
                 <v-checkbox
-                  :label="user.specialIdentity"
+                  :label="'特殊身分: ' + user.specialIdentity"
                   color="red darken-3"
                   value="specialIdentity"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
             </v-row>
@@ -116,11 +107,10 @@
             <v-row no-gutters class="mt-6" justify="center">
               <v-col cols="10" md="10" lg="10" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.introduction"
+                  :label="'自我簡介: ' + user.introduction"
                   color="red darken-3"
                   value="introduction"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
             </v-row>
@@ -128,11 +118,10 @@
             <v-row no-gutters class="mt-6" justify="center">
               <v-col cols="10" md="10" lg="10" class="pa-0 mt-0">
                 <v-checkbox
-                  :label="user.feature"
+                  :label="'個人特色: ' + user.feature"
                   color="red darken-3"
                   value="feature"
                   v-model="selected"
-                  @change="count"
                 ></v-checkbox>
               </v-col>
             </v-row>
@@ -173,9 +162,9 @@
           </v-col>
           <v-col cols="9" md="5" lg="5" class="px-5 pt-0">
             <div justify="start" class="my-4">
-              <h3 justify="center">您選擇的履歷版顯示內容及數量如下：</h3>
+              <h3 justify="center">您選擇的履歷模板類型：專家</h3>
               <p class="subtitle-2 my-2">
-                此版型設計簡潔乾淨，分為左右欄，以綠、黃、灰為主要顏色適合應徵工程師、程式設計師…等使用。
+                求職履歷格式的撰寫要點在於自身的經歷及成就，唯有借此展現過往職涯中習得的技能與經驗，才能凸顯出求職者的專長及領導能力。
               </p>
               <v-alert
                 dense
@@ -244,12 +233,19 @@ export default {
     theStepper,
     theDialog
   },
-  watch: {},
+  computed: {
+    selectedCount() {
+      return this.selected.length;
+    }
+  },
   created: function() {
     http
       .get("/resume/" + this.$route.query.resumeId)
       .then(response => {
         this.resume = response.data;
+        if (this.resume.basicInfo != null && this.resume.basicInfo.length > 0) {
+          this.selected = this.resume.basicInfo.split(",");
+        }
       })
       .then(() => {
         http.get("/template/" + this.resume.templateID).then(response => {
@@ -264,7 +260,6 @@ export default {
     panel: [0],
     user: {},
     selected: [],
-    selectedCount: 0,
     template: {},
     confirm: false,
     resume: {}
@@ -289,9 +284,6 @@ export default {
             }
           });
       }
-    },
-    count() {
-      this.selectedCount = this.selected.length;
     }
   }
 };
