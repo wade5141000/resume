@@ -63,6 +63,12 @@
             class="white--text"
             style="text-decoration: none;"
             >使用條款</a
+          >｜
+          <a
+            @click="routerTo('/faq')"
+            class="white--text"
+            style="text-decoration: none;"
+            >常見問題</a
           >
         </v-col>
         <v-col class="grey darken-4 py-1 text-center white--text" cols="12">
