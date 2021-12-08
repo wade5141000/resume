@@ -25,6 +25,7 @@ import TemplateList from "../views/TemplateList";
 import ResumeList from "../views/user-info/ResumeList";
 import Resume from "../views/user-info/Resume";
 import Website from "../views/WebsiteTemplate";
+import Faq from "../views/Faq";
 import store from "../store";
 
 Vue.use(VueRouter);
@@ -126,7 +127,14 @@ const routes = [
       title: "套用基本資料"
     }
   },
-
+  {
+    path: "/faq",
+    name: "Faq",
+    component: Faq,
+    meta: {
+      title: "常見問題"
+    }
+  },
   {
     path: "/educationinfo-apply",
     name: "EducationInfoApply",
@@ -275,7 +283,8 @@ router.beforeEach((to, from, next) => {
     // "/autobiography-apply",
     "/apply-info-intro",
     // "/website",
-    "/template-list"
+    "/template-list",
+    "/faq"
     // "/setting"
   ];
   allowPass.forEach(path => {
