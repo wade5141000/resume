@@ -4,7 +4,7 @@
       <v-card>
         <v-tabs color="primary" left class="pa-5">
           <v-tab><h3>履歷表模版</h3></v-tab>
-          <v-tab><h3>作品集模版</h3></v-tab>
+          <v-tab><h3>網站模版</h3></v-tab>
 
           <v-tab-item>
             <v-row dense fluid>
@@ -105,7 +105,7 @@
                         aspect-ratio="1"
                       >
                         <v-card-title
-                          v-text="`作品集模版${index + 1}`"
+                          v-text="`網站模版${index + 1}`"
                         ></v-card-title>
                       </v-img>
                     </template>
@@ -181,7 +181,7 @@ export default {
 
     for (let i = 0; i < 3; i++) {
       this.websites.push({
-        image: require("../assets/web_template/web" + 1 + ".png")
+        image: require("../assets/web_template/web" + (i + 1) + ".png")
       });
     }
   },
