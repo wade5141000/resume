@@ -8,4 +8,7 @@ resume:
   mail:
     frontend-host: http://localhost:9000
 
+server:
+  port: 8080
+
 #debug: true
